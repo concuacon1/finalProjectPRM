@@ -1,2 +1,4 @@
-package com.example.homeactivity;public class LoginActivity {
+package com.example.homeactivity;
+
+public class LoginActivity {
 }

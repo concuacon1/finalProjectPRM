@@ -3,4 +3,13 @@
     <string name="btn_create_save">Save</string>
     <string name="create_course_title">Create Course</string>
     <string name="course_name">Course Name</string>
+    <string name="btn_start">START</string>
+    <string name="title_test">Wizard Test</string>
+    <string name="btn_test">Start Test</string>
+    <string name="question">Question: abcxyz</string>
+    <string name="answer_a">A: Answer A</string>
+    <string name="answer_b">B: Answer B</string>
+    <string name="answer_c">C: Answer C</string>
+    <string name="answer_d">D: Answer D</string>
+    <string name="confirm_answer">Confirm</string>
 </resources>

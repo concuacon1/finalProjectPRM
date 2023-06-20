@@ -3,12 +3,12 @@ package com.example.homeactivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Button;
 
-public class CreateCourseActivity extends AppCompatActivity {
-
+public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_course);
+        setContentView(R.layout.activity_test);
     }
 }

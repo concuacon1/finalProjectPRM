@@ -1,4 +1,4 @@
-package com.example.homeactivity;
+package com.example.homeactivity.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.homeactivity.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

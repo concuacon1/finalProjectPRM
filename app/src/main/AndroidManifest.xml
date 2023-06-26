@@ -13,13 +13,13 @@
         android:theme="@style/Theme.HomeActivity"
         tools:targetApi="31">
         <activity
-            android:name=".View.TestActivity"
+            android:name=".Views.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".View.StartTestActivity"
+            android:name=".Views.StartTestActivity"
             android:exported="false" />
         <activity
-            android:name=".View.MainActivity"
+            android:name=".Views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

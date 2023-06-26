@@ -1,4 +1,4 @@
-package com.example.homeactivity.View;
+package com.example.homeactivity.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.CreateStudySetAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.Term;
 
 public class CreateStudySetActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemList.add(new Term("",""));
+                itemList.add(new Term(1, "",""));
                 createStudySetAdapter.notifyDataSetChanged();
             }
         });
@@ -48,7 +48,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
 
     private List<Term> getListCreateStudySet() {
         List<Term> list = new ArrayList<>();
-        list.add(new Term("1",""));
+        list.add(new Term(1, "1",""));
         return list;
     }
 

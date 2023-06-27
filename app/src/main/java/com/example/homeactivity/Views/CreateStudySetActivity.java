@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.CreateStudySetAdapter;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
 
+    private StudySetController studySetController;
     private RecyclerView rcvCreateStudySet;
     private Button btnAddCard;
     private Button btnCreate;
@@ -54,7 +56,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<Term> termList = createStudySetAdapter.GetData();
-                System.out.println(termList.toString());
+                studySetController.CreateStudySet(termList);
             }
         });
 

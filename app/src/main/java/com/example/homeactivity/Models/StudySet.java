@@ -4,6 +4,8 @@ import com.google.firebase.Timestamp;
 
 public class StudySet {
     private int id;
+    private int userId;
+
     private String description;
     private String title;
     private Timestamp createdAt;
@@ -11,6 +13,16 @@ public class StudySet {
     private boolean isAvailable;
 
     public StudySet() {
+    }
+
+    public StudySet(int id, int userId, String description, String title, Timestamp createdAt, Timestamp updatedAt, boolean isAvailable) {
+        this.id = id;
+        this.userId = userId;
+        this.description = description;
+        this.title = title;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isAvailable = isAvailable;
     }
 
     public StudySet(int id, String description, String title,
@@ -29,6 +41,14 @@ public class StudySet {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getDescription() {

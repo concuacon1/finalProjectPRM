@@ -15,8 +15,8 @@
 
         <ImageButton
             android:id="@+id/delete_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="15dp"
@@ -30,19 +30,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="1"
+            android:text=""
             android:textSize="20dp"
             android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/et_term"
             android:layout_width="400dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="60dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:text="Enter term"
             android:textColor="@color/white"/>
 
@@ -50,40 +50,44 @@
             android:id="@+id/tv_term"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/et_term"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="15dp"
             android:text="TERM"
             android:textColor="@color/white"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/et_definition"
             android:layout_width="400dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_term"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="11dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:text="Enter definition"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tv_definition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/et_definition"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="210dp"
+            android:layout_marginTop="15dp"
             android:text="DEFINITION"
-            android:textSize="14dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/tv_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_definition"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="240dp"
+            android:layout_marginTop="11dp"
             android:text="" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

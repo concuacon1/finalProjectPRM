@@ -26,7 +26,8 @@
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:text="Description" />
+            android:hint="Add a description..."
+            android:textColorHint="#C3C3C3"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -66,7 +67,8 @@
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:text="Title" />
+            android:hint="Enter a title..."
+            android:textColorHint="#C3C3C3" />
 
         <TextView
             android:id="@+id/textView4"

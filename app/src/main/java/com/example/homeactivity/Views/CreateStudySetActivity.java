@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
@@ -18,8 +19,10 @@ import java.util.List;
 public class CreateStudySetActivity extends AppCompatActivity {
 
     private RecyclerView rcvCreateStudySet;
-    Button btnAddCard;
+    private Button btnAddCard;
+    private Button btnCreate;
     private CreateStudySetAdapter createStudySetAdapter;
+    private List<Term> mListTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         rcvCreateStudySet.setLayoutManager(linearLayoutManager);
 
         List<Term> itemList = getListCreateStudySet();
-        createStudySetAdapter.setData(itemList);
+        createStudySetAdapter.SetData(itemList);
         rcvCreateStudySet.setAdapter(createStudySetAdapter);
 
         btnAddCard = findViewById(R.id.btnAddCard);
@@ -41,9 +44,21 @@ public class CreateStudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.add(new Term(1, "",""));
-                createStudySetAdapter.notifyDataSetChanged();
+//                createStudySetAdapter.notifyDataSetChanged();
+                rcvCreateStudySet.scrollToPosition(itemList.size()-1);
             }
         });
+
+        btnCreate = findViewById(R.id.btnCreate);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Term> termList = createStudySetAdapter.GetData();
+                System.out.println(termList.toString());
+            }
+        });
+
+
     }
 
     private List<Term> getListCreateStudySet() {

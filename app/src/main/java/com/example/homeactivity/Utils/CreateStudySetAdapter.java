@@ -2,6 +2,8 @@ package com.example.homeactivity.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
         this.mContext = mContext;
     }
 
-    public void setData(List<Term> list) {
+    public void SetData(List<Term> list) {
         this.mListTerm = list;
         notifyDataSetChanged();
     }
@@ -49,7 +51,6 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
 //        holder.tvTermNumber.setText("1");
         holder.tvTerm.setText("TERM");
         holder.tvDefinition.setText("DEFINITION");
-
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +59,40 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
                 notifyItemRangeChanged(position, mListTerm.size());
             }
         });
+        holder.etTerm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mListTerm.get(position).setTerm(String.valueOf(holder.etTerm.getText()));
+            }
+        });
+
+        holder.etDefinition.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mListTerm.get(position).setDefinition(String.valueOf(holder.etDefinition.getText()));
+            }
+        });
+
     }
 
     @Override
@@ -68,6 +103,9 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
         return 0;
     }
 
+    public List<Term> GetData() {
+        return mListTerm;
+    }
     public class CreateStudySetViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tvTermNumber;

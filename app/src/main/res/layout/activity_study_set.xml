@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".View.StudySetActivity">
+        tools:context=".Views.StudySetActivity">
 
         <TextView
             android:id="@+id/txtTitle"

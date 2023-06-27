@@ -1,9 +1,8 @@
-package com.example.homeactivity.View;
+package com.example.homeactivity.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.example.homeactivity.R;
 

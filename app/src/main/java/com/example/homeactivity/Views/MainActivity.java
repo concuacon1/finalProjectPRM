@@ -1,4 +1,4 @@
-package com.example.homeactivity.View;
+package com.example.homeactivity.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,20 +8,22 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.homeactivity.R;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
 
-public class StartTestActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_test);
-        ((Button)findViewById(R.id.btn_start)).setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_main);
+        ((Button)findViewById(R.id.btn_test)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartTestActivity.this,TestActivity.class);
+                Intent intent = new Intent(MainActivity.this,StartTestActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 }

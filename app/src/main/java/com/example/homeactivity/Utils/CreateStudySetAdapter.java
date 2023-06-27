@@ -1,4 +1,4 @@
-package com.example.homeactivity.View;
+package com.example.homeactivity.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,11 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 
 import java.util.List;
 
-import model.Term;
 
 public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAdapter.CreateStudySetViewHolder>{
 
@@ -31,6 +31,7 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
         this.mListTerm = list;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public CreateStudySetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -1,4 +1,4 @@
-package com.example.homeactivity.View;
+package com.example.homeactivity.Views;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

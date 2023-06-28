@@ -20,12 +20,12 @@ import com.example.homeactivity.R;
 import java.util.List;
 
 
-public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAdapter.CreateStudySetViewHolder>{
+public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.CreateStudySetViewHolder>{
 
     private Context mContext;
     private List<Term> mListTerm;
 
-    public CreateStudySetAdapter(Context mContext) {
+    public CreateTermAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -48,7 +48,7 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
             return;
         }
 
-//        holder.tvTermNumber.setText("1");
+        holder.tvTermNumber.setText(String.valueOf(position+1));
         holder.tvTerm.setText("TERM");
         holder.tvDefinition.setText("DEFINITION");
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -122,9 +122,9 @@ public class CreateStudySetAdapter extends RecyclerView.Adapter<CreateStudySetAd
 
             tvTermNumber = itemView.findViewById(R.id.tv_term_number);
             etTerm = itemView.findViewById(R.id.et_term);
-            tvTerm = itemView.findViewById(R.id.tv_term);
+            tvTerm = itemView.findViewById(R.id.tv_term_create);
             etDefinition = itemView.findViewById(R.id.et_definition);
-            tvDefinition = itemView.findViewById(R.id.tv_definition);
+            tvDefinition = itemView.findViewById(R.id.tv_definition_create);
             tvSpace = itemView.findViewById(R.id.tv_space);
             deleteButton = itemView.findViewById(R.id.delete_button);
         }

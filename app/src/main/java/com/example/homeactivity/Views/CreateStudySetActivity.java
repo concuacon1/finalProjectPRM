@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Utils.CreateStudySetAdapter;
+import com.example.homeactivity.Utils.CreateTermAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private RecyclerView rcvCreateStudySet;
     private Button btnAddCard;
     private Button btnCreate;
-    private CreateStudySetAdapter createStudySetAdapter;
+    private CreateTermAdapter createTermAdapter;
     private List<Term> mListTerm;
 
     @Override
@@ -32,21 +31,20 @@ public class CreateStudySetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_study_set);
 
         rcvCreateStudySet = findViewById(R.id.rcv_create_term);
-        createStudySetAdapter = new CreateStudySetAdapter(this);
+        createTermAdapter = new CreateTermAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCreateStudySet.setLayoutManager(linearLayoutManager);
 
         List<Term> itemList = getListCreateStudySet();
-        createStudySetAdapter.SetData(itemList);
-        rcvCreateStudySet.setAdapter(createStudySetAdapter);
+        createTermAdapter.SetData(itemList);
+        rcvCreateStudySet.setAdapter(createTermAdapter);
 
         btnAddCard = findViewById(R.id.btnAddCard);
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemList.add(new Term(1, "",""));
-//                createStudySetAdapter.notifyDataSetChanged();
                 rcvCreateStudySet.scrollToPosition(itemList.size()-1);
             }
         });
@@ -55,7 +53,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Term> termList = createStudySetAdapter.GetData();
+                List<Term> termList = createTermAdapter.GetData();
                 studySetController.CreateStudySet(termList);
             }
         });

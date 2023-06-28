@@ -54,7 +54,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<Term> termList = createTermAdapter.GetData();
-                studySetController.CreateStudySet(termList);
+//                studySetController.CreateStudySet(termList);
             }
         });
 

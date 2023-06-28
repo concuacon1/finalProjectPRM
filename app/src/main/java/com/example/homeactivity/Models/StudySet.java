@@ -1,33 +1,47 @@
 package com.example.homeactivity.Models;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
+import java.io.Serializable;
+import java.util.Map;
+
+@IgnoreExtraProperties
 public class StudySet {
-    private int id;
+    private String id;
     private String description;
     private String title;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private boolean isAvailable;
 
+    private Map<String, Boolean> categories;
+
+    private String userId;
+
+
     public StudySet() {
     }
 
-    public StudySet(int id, String description, String title,
-                    Timestamp createdAt, Timestamp updatedAt, boolean isAvailable) {
+    public StudySet(String id, String description, String title, Timestamp createdAt, Timestamp updatedAt,
+                    boolean isAvailable, Map<String, Boolean> categories, String userId) {
         this.id = id;
         this.description = description;
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isAvailable = isAvailable;
+        this.categories = categories;
+        this.userId = userId;
     }
 
-    public int getId() {
+    @Exclude
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -69,5 +83,21 @@ public class StudySet {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public Map<String, Boolean> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Map<String, Boolean> categories) {
+        this.categories = categories;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

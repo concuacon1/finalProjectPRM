@@ -1,9 +1,14 @@
 package com.example.homeactivity.Models;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
+
+@IgnoreExtraProperties
 public class User {
-    private int id;
+
+    private String id;
     private String name;
     private String nickname;
     private String email;
@@ -14,9 +19,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String nickname, String email,
+    public User(String name, String nickname, String email,
                 String password, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
         this.name = name;
         this.nickname = nickname;
         this.email = email;
@@ -25,11 +29,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public int getId() {
+    @Exclude
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

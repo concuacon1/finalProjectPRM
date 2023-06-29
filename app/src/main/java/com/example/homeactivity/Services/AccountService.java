@@ -1,4 +1,4 @@
-package com.example.homeactivity.Controllers;
+package com.example.homeactivity.Services;
 
 import android.util.Log;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class UserController {
+public class AccountService {
     private final DatabaseConnector connector;
 
-    public UserController() {
+    public AccountService() {
 
         connector = new DatabaseConnector("Account");
     }
@@ -71,11 +71,19 @@ public class UserController {
     public void updateAccount(Account updatedAccount) {
         updatedAccount.setUpdatedAt(Timestamp.now());
 
-        connector.updateDocument(updatedAccount.getId(), updatedAccount)
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreError", e.getMessage());
-                    throw new RuntimeException("Failed to update user", e);
-                });
+        findAccount(updatedAccount.getId(), account -> {
+            if (account != null) {
+                connector.updateDocument(updatedAccount.getId(), updatedAccount)
+                        .addOnFailureListener(e -> {
+                            Log.e("FireStoreError", e.getMessage());
+                            throw new RuntimeException("Failed to update user", e);
+                        });
+            }
+            else {
+                throw new RuntimeException("User does not exist");
+            }
+        });
+
     }
 
     public void listAllAccounts(Consumer<List<Account>> onSuccess) {

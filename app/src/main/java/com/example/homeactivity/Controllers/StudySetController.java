@@ -3,10 +3,7 @@ package com.example.homeactivity.Controllers;
 import android.util.Log;
 
 import com.example.homeactivity.Models.StudySet;
-import com.example.homeactivity.Models.User;
 import com.example.homeactivity.Utils.DatabaseConnector;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -14,8 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 public class StudySetController {
     private final DatabaseConnector connector;
@@ -41,38 +37,25 @@ public class StudySetController {
                 });
     }
 
-    public StudySet findStudySet(String studySetId) {
-        AtomicReference<StudySet> studySet = new AtomicReference<>();
+    public void findStudySet(String studySetId, Consumer<StudySet> onSuccess) {
+        connector.getDocumentReference(studySetId)
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to retrieve Study Set", task.getException());
+                    }
 
-        Thread thread = new Thread(() -> {
-            try {
-                Task<DocumentSnapshot> task = connector
-                        .getDocumentReference(studySetId);
-                DocumentSnapshot documentSnapshot = Tasks.await(task);
+                    DocumentSnapshot documentSnapshot = task.getResult();
 
-                if (documentSnapshot.exists()) {
-                    studySet.set(documentSnapshot.toObject(StudySet.class));
-                }
-            } catch (ExecutionException | InterruptedException e) {
-                Log.e("FireStoreError", e.getMessage());
-                throw new RuntimeException("Failed to retrieve Study Set", e);
-            }
-        });
+                    if (!documentSnapshot.exists()) {
+                        onSuccess.accept(null);
+                        return;
+                    }
 
-        thread.start();
+                    StudySet studySet = documentSnapshot.toObject(StudySet.class);
+                    studySet.setId(studySetId);
 
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Log.e("FireStoreError", e.getMessage());
-            throw new RuntimeException("Thread interrupted", e);
-        }
-
-        //Because user don't have userId field in db
-        StudySet ss = studySet.get();
-        ss.setId(studySetId);
-
-        return ss;
+                    onSuccess.accept(studySet);
+                });
     }
 
     public void deleteStudySet(String studySetId) {
@@ -93,75 +76,50 @@ public class StudySetController {
                 });
     }
 
-    public List<StudySet> listAllStudySets() {
-        AtomicReference<List<StudySet>> studySets = new AtomicReference<>();
+    public void listAllStudySets(Consumer<List<StudySet>> onSuccess){
+        connector.getAllDocuments()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to retrieve Study Set", task.getException());
+                    }
 
-        Thread thread = new Thread(() -> {
-            try {
-                Task<QuerySnapshot> task = connector.getAllDocuments();
-                QuerySnapshot querySnapshot = Tasks.await(task);
+                    QuerySnapshot querySnapshot = task.getResult();
 
-                List<StudySet> studySetList = new ArrayList<>();
+                    List<StudySet> studySetList = new ArrayList<>();
 
-                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                    StudySet studySet = documentSnapshot.toObject(StudySet.class);
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        StudySet studySet = documentSnapshot.toObject(StudySet.class);
 
-                    studySet.setId(documentSnapshot.getId());
-                    studySetList.add(studySet);
-                }
-
-                studySets.set(studySetList);
-            } catch (Exception e) {
-                Log.e("FireStoreError", e.getMessage(), e);
-                throw new RuntimeException("Failed to retrieve Study Sets", e);
-            }
-        });
-
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Log.e("FireStoreError", e.getMessage());
-            throw new RuntimeException("Thread interrupted", e);
-        }
-
-        return studySets.get();
-    }
-
-    public List<StudySet> listAllStudySets(String userId) {
-        AtomicReference<List<StudySet>> studySets = new AtomicReference<>();
-
-        Thread thread = new Thread(() -> {
-            try {
-                QuerySnapshot querySnapshot = Tasks.await(connector.getAllDocuments());
-
-                List<StudySet> studySetList = new ArrayList<>();
-
-                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                    StudySet studySet = documentSnapshot.toObject(StudySet.class);
-                    if (studySet.getUserId().equals(userId)) {
                         studySet.setId(documentSnapshot.getId());
                         studySetList.add(studySet);
                     }
-                }
 
-                studySets.set(studySetList);
-            } catch (Exception e) {
-                Log.e("FireStoreError", e.getMessage(), e);
-                throw new RuntimeException("Failed to retrieve Study Sets", e);
-            }
-        });
-
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Log.e("FireStoreError", e.getMessage());
-            throw new RuntimeException("Thread interrupted", e);
-        }
-
-        return studySets.get();
+                    onSuccess.accept(studySetList);
+                });
     }
+
+    public void listAllStudySets(String userId, Consumer<List<StudySet>> onSuccess){
+        connector.getAllDocuments()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to retrieve Study Set", task.getException());
+                    }
+
+                    QuerySnapshot querySnapshot = task.getResult();
+
+                    List<StudySet> studySetList = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        StudySet studySet = documentSnapshot.toObject(StudySet.class);
+                        if (studySet.getUserId().equals(userId)) {
+                            studySet.setId(documentSnapshot.getId());
+                            studySetList.add(studySet);
+                        }
+                    }
+
+                    onSuccess.accept(studySetList);
+                });
+    }
+
+
 }

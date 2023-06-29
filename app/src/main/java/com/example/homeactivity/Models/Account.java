@@ -6,7 +6,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 
 
 @IgnoreExtraProperties
-public class User {
+public class Account {
 
     private String id;
     private String name;
@@ -16,11 +16,11 @@ public class User {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public User() {
+    public Account() {
     }
 
-    public User(String name, String nickname, String email,
-                String password, Timestamp createdAt, Timestamp updatedAt) {
+    public Account(String name, String nickname, String email,
+                   String password, Timestamp createdAt, Timestamp updatedAt) {
         this.name = name;
         this.nickname = nickname;
         this.email = email;

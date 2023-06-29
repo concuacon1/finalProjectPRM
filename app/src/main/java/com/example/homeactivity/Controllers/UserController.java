@@ -2,10 +2,8 @@ package com.example.homeactivity.Controllers;
 
 import android.util.Log;
 
-import com.example.homeactivity.Models.User;
+import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.Utils.DatabaseConnector;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -13,68 +11,56 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 public class UserController {
     private final DatabaseConnector connector;
 
     public UserController() {
 
-        connector = new DatabaseConnector("User");
+        connector = new DatabaseConnector("Account");
     }
 
-    public void createUser(User user) {
+    public void createAccount(Account account) {
 
-        user.setCreatedAt(Timestamp.now());
+        account.setCreatedAt(Timestamp.now());
 
-        connector.insertDocument(user)
+        connector.insertDocument(account)
                 .addOnSuccessListener(documentReference -> {
                     String documentId = documentReference.getId();
 
-                    //Because user don't have userId field in db
-                    user.setId(documentId);
+                    //Because account don't have userId field in db
+                    account.setId(documentId);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreError", e.getMessage());
-                    throw new RuntimeException("Failed to create user", e);
+                    throw new RuntimeException("Failed to create account", e);
                 });
     }
 
-    public User findUser(String userId) {
-        AtomicReference<User> user = new AtomicReference<>();
 
-        Thread thread = new Thread(() -> {
-            try {
-                Task<DocumentSnapshot> task = connector.getDocumentReference(userId);
-                DocumentSnapshot documentSnapshot = Tasks.await(task);
+    public void findAccount(String userId, Consumer<Account> onSuccess) {
+        connector.getDocumentReference(userId)
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to find account", task.getException());
+                    }
 
-                if (documentSnapshot.exists()) {
-                    user.set(documentSnapshot.toObject(User.class));
-                }
-            } catch (ExecutionException | InterruptedException e) {
-                Log.e("FireStoreError", e.getMessage());
-                throw new RuntimeException("Failed to retrieve user", e);
-            }
-        });
+                    DocumentSnapshot documentSnapshot = task.getResult();
 
-        thread.start();
+                    if (!documentSnapshot.exists()) {
+                        onSuccess.accept(null);
+                        return;
+                    }
 
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Log.e("FireStoreError", e.getMessage());
-            throw new RuntimeException("Thread interrupted", e);
-        }
+                    Account account = documentSnapshot.toObject(Account.class);
+                    account.setId(userId);
 
-        //Because user don't have userId field in db
-        User u = user.get();
-        u.setId(userId);
-
-        return u;
+                    onSuccess.accept(account);
+                });
     }
 
-    public void deleteUser(String userId) {
+    public void deleteAccount(String userId) {
         connector.deleteDocument(userId)
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreError", e.getMessage());
@@ -82,51 +68,39 @@ public class UserController {
                 });
     }
 
-    public void updateUser(User updatedUser){
-        updatedUser.setUpdatedAt(Timestamp.now());
+    public void updateAccount(Account updatedAccount) {
+        updatedAccount.setUpdatedAt(Timestamp.now());
 
-        connector.updateDocument(updatedUser.getId(), updatedUser)
+        connector.updateDocument(updatedAccount.getId(), updatedAccount)
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreError", e.getMessage());
                     throw new RuntimeException("Failed to update user", e);
                 });
     }
 
-    public List<User> listAllUsers() {
-        AtomicReference<List<User>> users = new AtomicReference<>();
+    public void listAllAccounts(Consumer<List<Account>> onSuccess) {
+        connector.getAllDocuments()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to find all users", task.getException());
+                    }
 
-        Thread thread = new Thread(() -> {
-            try {
-                Task<QuerySnapshot> task = connector.getAllDocuments();
-                QuerySnapshot querySnapshot = Tasks.await(task);
+                    QuerySnapshot querySnapshot = task.getResult();
 
-                List<User> userList = new ArrayList<>();
+                    List<Account> accountList = new ArrayList<>();
 
-                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                    User user = documentSnapshot.toObject(User.class);
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        Account account = documentSnapshot.toObject(Account.class);
 
-                    //Because user don't have userId field in db
-                    user.setId(documentSnapshot.getId());
-                    userList.add(user);
-                }
+                        //Because account don't have userId field in db
+                        account.setId(documentSnapshot.getId());
+                        accountList.add(account);
+                    }
 
-                users.set(userList);
-            } catch (Exception e) {
-                Log.e("FireStoreError", e.getMessage(), e);
-                throw new RuntimeException("Failed to retrieve users", e);
-            }
-        });
+                    onSuccess.accept(accountList);
 
-        thread.start();
+                });
 
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            Log.e("FireStoreError", e.getMessage());
-            throw new RuntimeException("Thread interrupted", e);
-        }
-
-        return users.get();
     }
 
 }

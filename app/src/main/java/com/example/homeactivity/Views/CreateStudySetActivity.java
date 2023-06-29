@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.homeactivity.Controllers.StudySetController;
+import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.CreateTermAdapter;
@@ -18,10 +20,12 @@ import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
 
-    private StudySetController studySetController;
+    private StudySetController studySetController = new StudySetController();
     private RecyclerView rcvCreateStudySet;
     private Button btnAddCard;
     private Button btnCreate;
+    private EditText etTitle;
+    private EditText etDefinition;
     private CreateTermAdapter createTermAdapter;
     private List<Term> mListTerm;
 
@@ -31,6 +35,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_study_set);
 
         rcvCreateStudySet = findViewById(R.id.rcv_create_term);
+        btnAddCard = findViewById(R.id.btnAddCard);
+        btnCreate = findViewById(R.id.btnCreate);
+        etTitle = findViewById(R.id.etTitle);
+        etDefinition = findViewById(R.id.etDescription);
+
+
         createTermAdapter = new CreateTermAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -40,7 +50,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
         createTermAdapter.SetData(itemList);
         rcvCreateStudySet.setAdapter(createTermAdapter);
 
-        btnAddCard = findViewById(R.id.btnAddCard);
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +58,15 @@ public class CreateStudySetActivity extends AppCompatActivity {
             }
         });
 
-        btnCreate = findViewById(R.id.btnCreate);
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StudySet studySet = new StudySet();
+                studySet.setTitle(etTitle.getText().toString());
+                studySet.setDescription(etDefinition.getText().toString());
+
                 List<Term> termList = createTermAdapter.GetData();
-//                studySetController.CreateStudySet(termList);
+                studySetController.createStudySet(studySet);
             }
         });
 

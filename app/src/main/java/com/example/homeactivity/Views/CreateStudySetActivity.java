@@ -27,7 +27,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etDefinition;
     private CreateTermAdapter createTermAdapter;
-    private List<Term> mListTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

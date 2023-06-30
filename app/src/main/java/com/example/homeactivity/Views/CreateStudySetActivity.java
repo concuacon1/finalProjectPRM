@@ -65,7 +65,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 studySet.setDescription(etDefinition.getText().toString());
 
                 List<Term> termList = createTermAdapter.GetData();
-                studySetController.createStudySet(studySet);
+//                studySetController.createStudySet(studySet);
             }
         });
 

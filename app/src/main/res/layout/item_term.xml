@@ -20,8 +20,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
             android:text="kkkkkkkk\nkkkkkkkkkkkkkkkk\nkkkkkkkkkk"/>
 
         <TextView
@@ -32,8 +32,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
             android:text="kkkkkkkk\nkkkkkkkkkkkkkkkk\nkkkkkkkkkk"
             android:layout_below="@+id/tv_term"/>
 

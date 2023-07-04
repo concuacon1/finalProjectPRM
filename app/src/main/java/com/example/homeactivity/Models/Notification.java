@@ -13,7 +13,6 @@ public class Notification {
         this.scheduledTime = scheduledTime;
     }
 
-    // Getters and Setters
     public int getNotificationId() {
         return notificationId;
     }

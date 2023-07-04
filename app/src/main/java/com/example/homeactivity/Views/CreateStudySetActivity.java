@@ -32,7 +32,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvCreateStudySet.setLayoutManager(linearLayoutManager);
 
-        List<Term> itemList = getListCreateStudySet();
+/*        List<Term> itemList = getListCreateStudySet();
         createStudySetAdapter.setData(itemList);
         rcvCreateStudySet.setAdapter(createStudySetAdapter);
 
@@ -44,12 +44,13 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 createStudySetAdapter.notifyDataSetChanged();
             }
         });
+ */
     }
 
-    private List<Term> getListCreateStudySet() {
-        List<Term> list = new ArrayList<>();
-        list.add(new Term(1, "1",""));
-        return list;
-    }
+//    private List<Term> getListCreateStudySet() {
+//        List<Term> list = new ArrayList<>();
+//        list.add(new Term(1, "1",""));
+//        return list;
+//    }
 
 }

@@ -8,17 +8,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homeactivity.Controllers.AccountController;
-import com.example.homeactivity.Models.Account;
-import com.example.homeactivity.Models.StudySet;
-import com.example.homeactivity.Models.Term;
-import com.example.homeactivity.Services.AccountService;
-import com.example.homeactivity.Services.StudySetService;
+import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Services.TermService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        StudySetService services = new StudySetService();
+        StudySetController services = new StudySetController();
         services.findStudySet("id", studySet -> {
             if (studySet !=null) {
                 Log.i("Debug",studySet.getId());

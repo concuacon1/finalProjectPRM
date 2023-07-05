@@ -72,7 +72,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
             @Override
             public void afterTextChanged(Editable s) {
-                mListTerm.get(position).setTerm(String.valueOf(holder.etTerm.getText()));
+                mListTerm.get(position).setTerm(String.valueOf(holder.etTerm.getText()).trim());
             }
         });
 
@@ -89,7 +89,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
             @Override
             public void afterTextChanged(Editable s) {
-                mListTerm.get(position).setDefinition(String.valueOf(holder.etDefinition.getText()));
+                mListTerm.get(position).setDefinition(String.valueOf(holder.etDefinition.getText()).trim());
             }
         });
 

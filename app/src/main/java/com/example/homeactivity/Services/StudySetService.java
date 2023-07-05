@@ -13,6 +13,7 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class StudySetService {
@@ -22,7 +23,7 @@ public class StudySetService {
         connector = new DatabaseConnector("StudySet");
     }
 
-    public void createStudySet(StudySet studySet) {
+    public String createStudySet(StudySet studySet) {
         studySet.setCreatedAt(Timestamp.now());
 
         WriteBatch batch = connector.getBatch();
@@ -42,9 +43,11 @@ public class StudySetService {
                 Log.e("FireStoreError", "Failed to create Study Set: " + e.getMessage());
                 throw new RuntimeException("Failed to create Study Set", e);
             });
+        return studySet.getId();
     }
 
-    public void findStudySet(String studySetId, Consumer<StudySet> onSuccess) {
+    public StudySet findStudySet(String studySetId, Consumer<StudySet> onSuccess) {
+        AtomicReference<StudySet> studySet1 = null;
         connector.getDocumentSnapshot(studySetId)
             .addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
@@ -59,9 +62,10 @@ public class StudySetService {
                 }
 
                 StudySet studySet = documentSnapshot.toObject(StudySet.class);
-
+                studySet1.set(studySet);
                 onSuccess.accept(studySet);
             });
+        return studySet1.get();
     }
 
     public void deleteStudySet(String studySetId) {

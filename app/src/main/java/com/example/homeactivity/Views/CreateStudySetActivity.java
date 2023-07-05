@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Models.StudySet;
@@ -61,29 +62,47 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StudySet studySet = new StudySet();
-                studySet.setTitle(etTitle.getText().toString());
-                studySet.setDescription(etDefinition.getText().toString());
-
-                List<Term> termList = createTermAdapter.GetData();
-//                studySetController.createStudySet(studySet);
-            }
-        });
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
-                startActivity(intent);
-                finish();
+                createStudySet();
             }
         });
 
 
     }
 
+    private void createStudySet() {
+        StudySet studySet = new StudySet();
+        studySet.setTitle(etTitle.getText().toString());
+        if (studySet.getTitle().matches("")) {
+            Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        studySet.setDescription(etDefinition.getText().toString());
+        if (studySet.getDescription().matches("")) {
+            Toast.makeText(CreateStudySetActivity.this, "Empty description", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        List<Term> termList = createTermAdapter.GetData();
+        for (Term t: termList
+        ) {
+            if (t.getTerm() == null || t.getTerm().isEmpty()) {
+                Toast.makeText(CreateStudySetActivity.this, "Empty term", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (t.getDefinition() == null || t.getDefinition().isEmpty()) {
+                Toast.makeText(CreateStudySetActivity.this, "Empty definition", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        studySetController.createStudySet(studySet, termList);
+        Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
+        intent.putExtra("studySetId",studySet.getId());
+        startActivity(intent);
+        finish();
+    }
+
     private List<Term> getListCreateStudySet() {
         List<Term> list = new ArrayList<>();
-        list.add(new Term("123213", "1","","adsad"));
+        list.add(new Term());
         return list;
     }
 

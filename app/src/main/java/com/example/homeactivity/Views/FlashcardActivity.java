@@ -104,13 +104,6 @@ public class FlashcardActivity extends AppCompatActivity {
 
     public void mockData() {
         termList = new ArrayList<>();
-        termList.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
-        termList.add(new Term(2,"2+2","4"));
-        termList.add(new Term(3,"4+4","8"));
-        termList.add(new Term(4,"8+8","16"));
         tvFront.setText(termList.get(0).getTerm());
         tvBack.setText(termList.get(0).getDefinition());
         tvPosition.setText(String.format("1/%d", termList.size()));

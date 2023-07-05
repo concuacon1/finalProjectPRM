@@ -55,26 +55,10 @@ public class StudySetActivity extends AppCompatActivity {
 
     private List<Term> getListTerm() {
         List<Term> list = new ArrayList<>();
-        list.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
+        list.add(new Term("1","A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
                 "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
                 "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
-        list.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
-        list.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
-        list.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
-        list.add(new Term(1,"A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội"));
+                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội","123"));
         tvTermsNumber.setText("Terms in this set ("+list.size()+")");
         return list;
     }

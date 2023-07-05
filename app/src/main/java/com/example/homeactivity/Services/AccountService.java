@@ -5,9 +5,11 @@ import android.util.Log;
 import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.Utils.DatabaseConnector;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,47 +27,52 @@ public class AccountService {
 
         account.setCreatedAt(Timestamp.now());
 
-        connector.insertDocument(account)
-                .addOnSuccessListener(documentReference -> {
-                    String documentId = documentReference.getId();
+        WriteBatch batch = connector.getBatch();
 
-                    //Because account don't have userId field in db
-                    account.setId(documentId);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreError", e.getMessage());
-                    throw new RuntimeException("Failed to create account", e);
-                });
+        DocumentReference accountRef = connector.getDocumentReference();
+
+        // Set the ID for the Account object
+        account.setId(accountRef.getId());
+
+        // Add the document insertion operation to the batch
+        batch.set(accountRef, account);
+
+        // Commit the batch write operation
+        batch.commit()
+            .addOnFailureListener(e -> {
+                // Batch write failed
+                Log.e("FireStoreError", "Failed to create Account: " + e.getMessage());
+                throw new RuntimeException("Failed to create Account", e);
+            });
     }
 
 
     public void findAccount(String userId, Consumer<Account> onSuccess) {
-        connector.getDocumentReference(userId)
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        throw new RuntimeException("Failed to find account", task.getException());
-                    }
+        connector.getDocumentSnapshot(userId)
+            .addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    throw new RuntimeException("Failed to find account", task.getException());
+                }
 
-                    DocumentSnapshot documentSnapshot = task.getResult();
+                DocumentSnapshot documentSnapshot = task.getResult();
 
-                    if (!documentSnapshot.exists()) {
-                        onSuccess.accept(null);
-                        return;
-                    }
+                if (!documentSnapshot.exists()) {
+                    onSuccess.accept(null);
+                    return;
+                }
 
-                    Account account = documentSnapshot.toObject(Account.class);
-                    account.setId(userId);
+                Account account = documentSnapshot.toObject(Account.class);
 
-                    onSuccess.accept(account);
-                });
+                onSuccess.accept(account);
+            });
     }
 
     public void deleteAccount(String userId) {
         connector.deleteDocument(userId)
-                .addOnFailureListener(e -> {
-                    Log.e("FireStoreError", e.getMessage());
-                    throw new RuntimeException("Failed to delete user", e);
-                });
+            .addOnFailureListener(e -> {
+                Log.e("FireStoreError", e.getMessage());
+                throw new RuntimeException("Failed to delete user", e);
+            });
     }
 
     public void updateAccount(Account updatedAccount) {
@@ -74,10 +81,10 @@ public class AccountService {
         findAccount(updatedAccount.getId(), account -> {
             if (account != null) {
                 connector.updateDocument(updatedAccount.getId(), updatedAccount)
-                        .addOnFailureListener(e -> {
-                            Log.e("FireStoreError", e.getMessage());
-                            throw new RuntimeException("Failed to update user", e);
-                        });
+                    .addOnFailureListener(e -> {
+                        Log.e("FireStoreError", e.getMessage());
+                        throw new RuntimeException("Failed to update user", e);
+                    });
             }
             else {
                 throw new RuntimeException("User does not exist");
@@ -86,28 +93,29 @@ public class AccountService {
 
     }
 
+    //List all accounts exist in db, for debug purpose only
     public void listAllAccounts(Consumer<List<Account>> onSuccess) {
         connector.getAllDocuments()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        throw new RuntimeException("Failed to find all users", task.getException());
-                    }
+            .addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    throw new RuntimeException("Failed to find all users", task.getException());
+                }
 
-                    QuerySnapshot querySnapshot = task.getResult();
+                QuerySnapshot querySnapshot = task.getResult();
 
-                    List<Account> accountList = new ArrayList<>();
+                List<Account> accountList = new ArrayList<>();
 
-                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                        Account account = documentSnapshot.toObject(Account.class);
+                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                    Account account = documentSnapshot.toObject(Account.class);
 
-                        //Because account don't have userId field in db
-                        account.setId(documentSnapshot.getId());
-                        accountList.add(account);
-                    }
+                    //Because account don't have userId field in db
+                    account.setId(documentSnapshot.getId());
+                    accountList.add(account);
+                }
 
-                    onSuccess.accept(accountList);
+                onSuccess.accept(accountList);
 
-                });
+            });
 
     }
 

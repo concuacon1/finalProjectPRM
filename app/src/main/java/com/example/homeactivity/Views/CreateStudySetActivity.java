@@ -53,7 +53,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemList.add(new Term(1, "",""));
+                itemList.add(new Term());
                 rcvCreateStudySet.scrollToPosition(itemList.size()-1);
             }
         });
@@ -83,7 +83,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
 
     private List<Term> getListCreateStudySet() {
         List<Term> list = new ArrayList<>();
-        list.add(new Term(1, "1",""));
+        list.add(new Term("123213", "1","","adsad"));
         return list;
     }
 

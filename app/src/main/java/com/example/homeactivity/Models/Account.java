@@ -1,11 +1,7 @@
 package com.example.homeactivity.Models;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.Exclude;
-import com.google.firebase.firestore.IgnoreExtraProperties;
 
-
-@IgnoreExtraProperties
 public class Account {
 
     private String id;
@@ -29,7 +25,6 @@ public class Account {
         this.updatedAt = updatedAt;
     }
 
-    @Exclude
     public String getId() {
         return id;
     }

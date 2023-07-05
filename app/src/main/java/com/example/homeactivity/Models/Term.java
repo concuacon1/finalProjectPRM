@@ -1,41 +1,27 @@
 package com.example.homeactivity.Models;
 
 public class Term {
-    private int id;
-    private int studySet;
+    private String id;
     private String term;
     private String definition;
+    private String studySetId;
 
     public Term() {
     }
 
-    public Term(int id, int studySet, String term, String definition) {
-        this.id = id;
-        this.studySet = studySet;
-        this.term = term;
-        this.definition = definition;
-    }
-
-    public Term(int id, String term, String definition) {
+    public Term(String id, String term, String definition, String studySetId) {
         this.id = id;
         this.term = term;
         this.definition = definition;
+        this.studySetId = studySetId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public int getStudySet() {
-        return studySet;
-    }
-
-    public void setStudySet(int studySet) {
-        this.studySet = studySet;
     }
 
     public String getTerm() {
@@ -52,5 +38,13 @@ public class Term {
 
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+
+    public String getStudySetId() {
+        return studySetId;
+    }
+
+    public void setStudySetId(String studySetId) {
+        this.studySetId = studySetId;
     }
 }

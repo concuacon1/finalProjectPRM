@@ -6,12 +6,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 public class DatabaseConnector {
-    private FirebaseFirestore db;
+    private final FirebaseFirestore db;
 
     private CollectionReference collectionReference;
-
 
     public DatabaseConnector() {
         db = FirebaseFirestore.getInstance();
@@ -42,12 +42,14 @@ public class DatabaseConnector {
         return collectionRef.get();
     }
 
-    public Task<DocumentSnapshot> getDocumentReference(String collectionName, String documentId) {
+    public Task<DocumentSnapshot> getDocumentSnapshot(String collectionName, String documentId) {
         return db.collection(collectionName).document(documentId).get();
     }
 
-
     public Task<DocumentReference> insertDocument(Object documentData) {
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
         return collectionReference.add(documentData);
     }
 
@@ -56,14 +58,54 @@ public class DatabaseConnector {
     }
 
     public Task<Void> deleteDocument(String documentId) {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
         return collectionReference.document(documentId).delete();
     }
 
     public Task<QuerySnapshot> getAllDocuments() {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
         return collectionReference.get();
     }
 
-    public Task<DocumentSnapshot> getDocumentReference(String documentId) {
+    public Task<DocumentSnapshot> getDocumentSnapshot(String documentId) {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
         return collectionReference.document(documentId).get();
+    }
+
+    public DocumentReference getDocumentReference() {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
+        return collectionReference.document();
+    }
+
+    public DocumentReference getDocumentReference(String documentId) {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
+        return collectionReference.document(documentId);
+    }
+
+    public CollectionReference getCollectionReference() {
+        //Need to specify which collection through constructor
+        if (collectionReference == null) {
+            throw new IllegalStateException("No collection was initialize");
+        }
+        return collectionReference;
+    }
+
+    public WriteBatch getBatch(){
+        return db.batch();
     }
 }

@@ -1,13 +1,9 @@
 package com.example.homeactivity.Models;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.Exclude;
-import com.google.firebase.firestore.IgnoreExtraProperties;
 
-import java.io.Serializable;
 import java.util.Map;
 
-@IgnoreExtraProperties
 public class StudySet {
     private String id;
     private String description;
@@ -36,7 +32,6 @@ public class StudySet {
         this.userId = userId;
     }
 
-    @Exclude
     public String getId() {
         return id;
     }

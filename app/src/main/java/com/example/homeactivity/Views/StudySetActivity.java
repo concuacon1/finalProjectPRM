@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
+import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
@@ -25,6 +26,7 @@ public class StudySetActivity extends AppCompatActivity {
     private TermAdapter termAdapter;
     private TextView tvTermsNumber;
     private StudySetController studySetController;
+    private TermController termList;
     private TextView tvTitle;
 
     private static final String id = "4zT2o8R6a1uJm3cnWE9G";;
@@ -42,15 +44,19 @@ public class StudySetActivity extends AppCompatActivity {
 
         //load data
         studySetController = new StudySetController();
+        termList = new TermController();
+
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        StudySet studySet = studySetController.getStudySet(id);
-        tvTitle.setText(studySet.getTitle());
-        List<Term> termList = studySetController.getTerms(id);
+        studySetController.findStudySet(id, studySet -> {
+            tvTitle.setText(studySet.getTitle());
+        });
 
+        termList.listAllTerms(id, termList ->{
+            termAdapter.SetData(termList);
+            tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
+        });
 
-
-        termAdapter.SetData(termList);
         rcvTerm.setAdapter(termAdapter);
         ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,15 +73,5 @@ public class StudySetActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private List<Term> getListTerm() {
-        List<Term> list = new ArrayList<>();
-        list.add(new Term("1","A","QN=362 Trong di chúc Hồ Chí Minh viết rằng\n" +
-                "a. Đảng phải có kế hoạch tốt để phát triển kinh tế, văn hóa\n" +
-                "b. Đảng phải có kế hoạch tốt để phát triển kinh tế, chính trị\n" +
-                "c. Đảng phải có kế hoạch tốt để phát triển kinh tế, xã hội","123"));
-        tvTermsNumber.setText("Terms in this set ("+list.size()+")");
-        return list;
     }
 }

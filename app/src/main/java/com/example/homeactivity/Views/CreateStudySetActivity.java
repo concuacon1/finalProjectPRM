@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.homeactivity.Controllers.StudySetController;
+import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
@@ -22,7 +23,8 @@ import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
 
-    private StudySetController studySetController = new StudySetController();
+    private StudySetController studySetController;
+    private TermController termController;
     private RecyclerView rcvCreateStudySet;
     private Button btnAddCard;
     private Button btnCreate;
@@ -40,7 +42,8 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.btnCreate);
         etTitle = findViewById(R.id.etTitle);
         etDefinition = findViewById(R.id.etDescription);
-
+        studySetController = new StudySetController();
+        termController = new TermController();
 
         createTermAdapter = new CreateTermAdapter(this);
 
@@ -93,7 +96,17 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 return;
             }
         }
-        studySetController.createStudySet(studySet, termList);
+        try {
+            String studySetId = studySetController.createStudySet(studySet);
+            for (Term t: termList
+            ) {
+                t.setStudySetId(studySetId);
+            }
+            termController.createTerms(termList);
+        } catch (Exception e) {
+            Toast.makeText(CreateStudySetActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
         intent.putExtra("studySetId",studySet.getId());
         startActivity(intent);

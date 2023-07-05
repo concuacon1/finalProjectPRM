@@ -48,11 +48,11 @@ public class StudySetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(id, studySet -> {
+        studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
         });
 
-        termList.listAllTerms(id, termList ->{
+        termList.listAllTerms(studySetId, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
         });

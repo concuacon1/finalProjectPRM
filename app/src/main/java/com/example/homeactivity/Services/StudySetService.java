@@ -22,7 +22,7 @@ public class StudySetService {
         connector = new DatabaseConnector("StudySet");
     }
 
-    public void createStudySet(StudySet studySet) {
+    public String createStudySet(StudySet studySet) {
         studySet.setCreatedAt(Timestamp.now());
 
         WriteBatch batch = connector.getBatch();
@@ -30,7 +30,8 @@ public class StudySetService {
         DocumentReference studySetRef = connector.getDocumentReference();
 
         // Set the ID for the study set object
-        studySet.setId(studySetRef.getId());
+        String id = studySetRef.getId();
+        studySet.setId(id);
 
         // Add the document insertion operation to the batch
         batch.set(studySetRef, studySet);
@@ -42,6 +43,8 @@ public class StudySetService {
                 Log.e("FireStoreError", "Failed to create Study Set: " + e.getMessage());
                 throw new RuntimeException("Failed to create Study Set", e);
             });
+
+        return id;
     }
 
     public void findStudySet(String studySetId, Consumer<StudySet> onSuccess) {

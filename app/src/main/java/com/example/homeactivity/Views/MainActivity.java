@@ -2,6 +2,7 @@ package com.example.homeactivity.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,21 +36,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List<Term> terms = new ArrayList<>();
+        StudySetService services = new StudySetService();
+        services.findStudySet("id", studySet -> {
+            if (studySet !=null) {
+                Log.i("Debug",studySet.getId());
+            }
+        });
 
-        for (int i = 0; i < 10; i++) {
-            Term t = new Term();
-            terms.add(t);
-        }
-
-        TermService service = new TermService();
-        service.createTerms(terms);
-
-        Term term = new Term();
-        term.setTerm("Hello");
-        term.setDefinition("Xin Chao");
-
-        service.createTerm(term);
 
 
     }

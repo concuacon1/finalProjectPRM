@@ -23,7 +23,7 @@ public class AccountService {
         connector = new DatabaseConnector("Account");
     }
 
-    public void createAccount(Account account) {
+    public String  createAccount(Account account) {
 
         account.setCreatedAt(Timestamp.now());
 
@@ -32,7 +32,8 @@ public class AccountService {
         DocumentReference accountRef = connector.getDocumentReference();
 
         // Set the ID for the Account object
-        account.setId(accountRef.getId());
+        String id = accountRef.getId();
+        account.setId(id);
 
         // Add the document insertion operation to the batch
         batch.set(accountRef, account);
@@ -44,6 +45,8 @@ public class AccountService {
                 Log.e("FireStoreError", "Failed to create Account: " + e.getMessage());
                 throw new RuntimeException("Failed to create Account", e);
             });
+
+        return id;
     }
 
 

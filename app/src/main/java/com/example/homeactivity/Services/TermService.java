@@ -21,11 +21,12 @@ public class TermService {
         connector = new DatabaseConnector("Term");
     }
 
-    public void createTerm(Term term) {
+    public String createTerm(Term term) {
         DocumentReference termRef = connector.getDocumentReference();
 
         // Set the ID for the term object
-        term.setId(termRef.getId());
+        String id = termRef.getId();
+        term.setId(id);
 
         // Create a new batch
         WriteBatch batch = connector.getBatch();
@@ -40,6 +41,7 @@ public class TermService {
                 Log.e("FireStoreError", "Failed to create term: " + e.getMessage());
                 throw new RuntimeException("Failed to create term", e);
             });
+        return id;
     }
 
     //Using Batch for multiple adding will more efficient

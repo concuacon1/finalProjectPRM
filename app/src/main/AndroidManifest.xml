@@ -16,10 +16,16 @@
             android:name=".Views.TestActivity"
             android:exported="false" />
         <activity
+            android:name=".Views.CreateStudySetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.FlashcardActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.StartTestActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.MainActivity"
+            android:name=".Views.StudySetActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

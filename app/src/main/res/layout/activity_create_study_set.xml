@@ -18,15 +18,16 @@
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="370dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="32dp"
             android:ems="10"
             android:inputType="text"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:text="Description" />
+            android:hint="Add a description..."
+            android:textColorHint="@color/text_hint_color"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -36,8 +37,8 @@
             android:layout_marginTop="1dp"
             android:text="DESCRIPTION"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
@@ -49,8 +50,7 @@
             android:layout_marginTop="32dp"
             android:text="Create a new study set"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,15 +58,16 @@
         <EditText
             android:id="@+id/etTitle"
             android:layout_width="370dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:ems="10"
             android:inputType="text"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:text="Title" />
+            android:hint="Enter a title..."
+            android:textColorHint="@color/text_hint_color" />
 
         <TextView
             android:id="@+id/textView4"
@@ -75,15 +76,15 @@
             android:layout_marginStart="30dp"
             android:text="TITLE"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_create_term"
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:visibility="visible"
@@ -98,20 +99,31 @@
             android:id="@+id/btnCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="30dp"
             android:text="Create"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rcv_create_term" />
 
         <Button
             android:id="@+id/btnAddCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
             android:layout_marginBottom="30dp"
             android:text="+ Add card"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rcv_create_term" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -43,11 +43,11 @@ public class StudySetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(id, studySet -> {
+        studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
         });
 
-        termController.listAllTerms(id, termList ->{
+        termController.listAllTerms(studySetId, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
         });
@@ -71,7 +71,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
-                intent.putExtra("updateStudySet", id);
+                intent.putExtra("updateStudySet", studySetId);
                 startActivity(intent);
             }
         });

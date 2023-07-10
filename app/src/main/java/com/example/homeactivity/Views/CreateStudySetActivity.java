@@ -100,11 +100,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private void createStudySet() {
         StudySet studySet = new StudySet();
         studySet.setTitle(etTitle.getText().toString());
-        if (studySet.getTitle().matches("")) {
+        studySet.setDescription(etDescription.getText().toString());
+        if (studySet.getTitle() == null || studySet.getTitle().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (studySet.getDescription().matches("")) {
+        if (studySet.getDescription() == null || studySet.getDescription().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty description", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -128,7 +129,8 @@ public class CreateStudySetActivity extends AppCompatActivity {
             }
             termController.createTerms(termList);
         } catch (Exception e) {
-            Toast.makeText(CreateStudySetActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateStudySetActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);

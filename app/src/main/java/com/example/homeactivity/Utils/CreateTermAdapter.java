@@ -55,10 +55,11 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
         holder.etTerm.setText(term.getTerm());
         holder.etDefinition.setText(term.getDefinition());
-
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String inputValue = holder.etTerm.getText().toString();
+
                 mListTerm.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mListTerm.size());
@@ -77,7 +78,12 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
             @Override
             public void afterTextChanged(Editable s) {
-                mListTerm.get(position).setTerm(String.valueOf(holder.etTerm.getText()).trim());
+                try {
+                    mListTerm.get(position).setTerm(String.valueOf(holder.etTerm.getText()).trim());
+                } catch (Exception ignored) {
+
+                }
+
             }
         });
 
@@ -94,7 +100,11 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
             @Override
             public void afterTextChanged(Editable s) {
-                mListTerm.get(position).setDefinition(String.valueOf(holder.etDefinition.getText()).trim());
+                try {
+                    mListTerm.get(position).setDefinition(String.valueOf(holder.etDefinition.getText()).trim());
+                } catch (Exception ignored) {
+
+                }
             }
         });
 
@@ -120,6 +130,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         private TextView tvSpace;
 
         private ImageButton deleteButton;
+        boolean isTextWatcherEnabled;
 
         public CreateStudySetViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -131,6 +142,14 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
             tvDefinition = itemView.findViewById(R.id.tv_definition_create);
             tvSpace = itemView.findViewById(R.id.tv_space);
             deleteButton = itemView.findViewById(R.id.delete_button);
+        }
+
+        public void disableTextWatcher() {
+            isTextWatcherEnabled = false;
+        }
+
+        public void enableTextWatcher() {
+            isTextWatcherEnabled = true;
         }
     }
 }

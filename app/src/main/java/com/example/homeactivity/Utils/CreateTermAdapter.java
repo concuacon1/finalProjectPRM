@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,6 +52,10 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         holder.tvTermNumber.setText(String.valueOf(position+1));
         holder.tvTerm.setText("TERM");
         holder.tvDefinition.setText("DEFINITION");
+
+        holder.etTerm.setText(term.getTerm());
+        holder.etDefinition.setText(term.getDefinition());
+
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +99,6 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         });
 
     }
-
     @Override
     public int getItemCount() {
         if (mListTerm != null) {

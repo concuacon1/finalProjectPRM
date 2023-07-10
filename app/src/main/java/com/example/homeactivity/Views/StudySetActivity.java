@@ -12,13 +12,8 @@ import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
-import com.example.homeactivity.Models.StudySet;
-import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.TermAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StudySetActivity extends AppCompatActivity {
 
@@ -26,10 +21,10 @@ public class StudySetActivity extends AppCompatActivity {
     private TermAdapter termAdapter;
     private TextView tvTermsNumber;
     private StudySetController studySetController;
-    private TermController termList;
+    private TermController termController;
     private TextView tvTitle;
 
-    private static final String id = "4zT2o8R6a1uJm3cnWE9G";;
+    private static final String id = "4zT2o8R6a1uJm3cnWE9G";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +39,7 @@ public class StudySetActivity extends AppCompatActivity {
 
         //load data
         studySetController = new StudySetController();
-        termList = new TermController();
+        termController = new TermController();
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
@@ -52,7 +47,7 @@ public class StudySetActivity extends AppCompatActivity {
             tvTitle.setText(studySet.getTitle());
         });
 
-        termList.listAllTerms(id, termList ->{
+        termController.listAllTerms(id, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
         });
@@ -72,6 +67,13 @@ public class StudySetActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        ((Button) findViewById(R.id.btnEdit)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
+                intent.putExtra("updateStudySet", id);
+                startActivity(intent);
+            }
+        });
     }
 }

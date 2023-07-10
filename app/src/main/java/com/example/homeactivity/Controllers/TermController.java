@@ -52,6 +52,7 @@ public class TermController {
             DocumentReference termRef = connector.getDocumentReference();
             term.setId(termRef.getId());
             batch.set(termRef, term);
+
         }
 
         batch.commit()

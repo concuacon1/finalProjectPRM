@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeActivity"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".Views.TestActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".Views.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.TestActivity"
+            android:exported="false" />
         <activity
             android:name=".Views.StudySetActivity"
             android:exported="false" />

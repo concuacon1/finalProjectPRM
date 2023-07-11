@@ -30,13 +30,13 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         init();
-        QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
-        questionView.setAdapter(questionAdapter);
+        //QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
+        //questionView.setAdapter(questionAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         questionView.setLayoutManager(layoutManager);
         setSnapHelper();
-        setClickListeners();
+        //setClickListeners();
     }
 
     private void init() {
@@ -48,8 +48,8 @@ public class TestActivity extends AppCompatActivity {
         nextQuestion = findViewById(R.id.next_question);
         menu = findViewById(R.id.test_menu);
         questionNumber = 0;
-        tvquestionID.setText("1/" + String.valueOf(listOfQuestion.size()));
-        studySetName.setText(listOfStudySet.get(studySetIndex).getName());
+        //tvquestionID.setText("1/" + String.valueOf(listOfQuestion.size()));
+        //studySetName.setText(listOfStudySet.get(studySetIndex).getName());
 
     }
 
@@ -63,7 +63,7 @@ public class TestActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 View view = snapHelper.findSnapView(recyclerView.getLayoutManager());
                 questionNumber = recyclerView.getLayoutManager().getPosition(view);
-                tvquestionID.setText(String.valueOf(questionNumber + 1) + " / " + String.valueOf(listOfQuestion.size()));
+                //tvquestionID.setText(String.valueOf(questionNumber + 1) + " / " + String.valueOf(listOfQuestion.size()));
             }
 
             @Override
@@ -73,7 +73,7 @@ public class TestActivity extends AppCompatActivity {
         });
     }
 
-    private void setClickListeners() {
+    /*private void setClickListeners() {
         prevQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,5 +91,5 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }

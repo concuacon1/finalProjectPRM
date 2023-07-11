@@ -50,12 +50,9 @@ public class TermController {
 
         for (Term term : terms) {
             DocumentReference termRef = connector.getDocumentReference();
-            DocumentSnapshot termSnapshot = termRef.get().getResult();
+            term.setId(termRef.getId());
+            batch.set(termRef, term);
 
-            if (!termSnapshot.exists()) {
-                term.setId(termRef.getId());
-                batch.set(termRef, term);
-            }
         }
 
         batch.commit()

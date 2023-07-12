@@ -19,7 +19,6 @@ import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.CreateTermAdapter;
 import com.example.homeactivity.Utils.LoadingDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
@@ -95,6 +94,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
     }
 
     private void createStudySet() {
+        loadingDialog.startLoadingDialog();
         StudySet studySet = new StudySet();
         studySet.setTitle(etTitle.getText().toString());
         studySet.setDescription(etDescription.getText().toString());
@@ -129,7 +129,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             Toast.makeText(CreateStudySetActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
             return;
         }
-
+        loadingDialog.dismisssDialog();
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
         intent.putExtra("studySetId",studySet.getId());
         startActivity(intent);
@@ -137,7 +137,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
     }
 
     private void updateStudySet(String studySetId) {
-//        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog();
         StudySet studySet = new StudySet();
         studySet.setId(studySetId);
         studySet.setTitle(etTitle.getText().toString());
@@ -188,7 +188,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         termController.listAllTerms(studySetId, termList1 -> {
             for (Term t: termList1
             ) {
-                if (termList.contains(t)) {
+                if (!termList.contains(t)) {
                     try {
                         termController.deleteTerm(t.getId());
                     } catch (Exception e) {
@@ -198,10 +198,11 @@ public class CreateStudySetActivity extends AppCompatActivity {
             }
 
         });
-//        loadingDialog.dismisssDialog();
+        loadingDialog.dismisssDialog();
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
         intent.putExtra("studySetId",studySet.getId());
         startActivity(intent);
         finish();
     }
+
 }

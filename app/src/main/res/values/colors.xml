@@ -5,6 +5,10 @@
     <color name="app_background">#F6F7FB</color>
     <color name="term_background">#9EEAE5</color>
     <color name="button_color">#00857F</color>
+    <color name="button_submit_test">#FFEB3B</color>
+    <color name="background_test">#e0faf9</color>
     <color name="text_hint_color">#C3C3C3</color>
     <color name="text_color">#FF000000</color>
+    <color name="selected_button">#9AFFF6</color>
+    <color name="unselected_button">#FFFFFFFF</color>
 </resources>

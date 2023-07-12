@@ -49,7 +49,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(CreateStudySetActivity.this);
 
-        List<Term> itemList =  new ArrayList<>();
         Intent intent = getIntent();
         createTermAdapter = new CreateTermAdapter(this);
         String studySetId = intent.getStringExtra("updateStudySet");
@@ -59,8 +58,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 etDescription.setText(studySet.getDescription());
             });
             termController.listAllTerms(studySetId, termList -> {
-                itemList.addAll(termList);
-                createTermAdapter.SetData(itemList);
+                createTermAdapter.SetData(termList);
             });
             btnCreate.setText("Update");
             btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +68,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 }
             });
         } else {
-            itemList.add(new Term());
-            createTermAdapter.SetData(itemList);
+            createTermAdapter.NewList();
             btnCreate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,8 +86,8 @@ public class CreateStudySetActivity extends AppCompatActivity {
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemList.add(new Term());
-                rcvCreateStudySet.scrollToPosition(itemList.size()-1);
+                createTermAdapter.AddItem();
+                rcvCreateStudySet.scrollToPosition(createTermAdapter.getItemCount()-1);
             }
         });
 

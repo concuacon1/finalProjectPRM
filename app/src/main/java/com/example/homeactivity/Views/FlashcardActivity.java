@@ -37,7 +37,7 @@ public class FlashcardActivity extends AppCompatActivity {
         findViews();
         loadAnimations();
         changeCameraDistance();
-        mockData();
+        loadData();
         position =0;
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +102,8 @@ public class FlashcardActivity extends AppCompatActivity {
         }
     }
 
-    public void mockData() {
-        termList = new ArrayList<>();
+    public void loadData() {
+        termList = (List<Term>) getIntent().getSerializableExtra("terms");
         tvFront.setText(termList.get(0).getTerm());
         tvBack.setText(termList.get(0).getDefinition());
         tvPosition.setText(String.format("1/%d", termList.size()));

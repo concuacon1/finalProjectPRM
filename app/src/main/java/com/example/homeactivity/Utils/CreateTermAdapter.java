@@ -35,6 +35,15 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         notifyDataSetChanged();
     }
 
+    public void AddItem() {
+        mListTerm.add(new Term());
+        notifyItemInserted(mListTerm.size());
+    }
+
+    public void NewList() {
+        mListTerm = new ArrayList<>();
+        mListTerm.add(new Term());
+    }
     @NonNull
     @Override
     public CreateStudySetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

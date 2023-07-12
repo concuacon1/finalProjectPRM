@@ -12,8 +12,13 @@ import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
+import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.TermAdapter;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class StudySetActivity extends AppCompatActivity {
 
@@ -43,23 +48,27 @@ public class StudySetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(studySetId, studySet -> {
+        studySetController.findStudySet(id, studySet -> {
             tvTitle.setText(studySet.getTitle());
         });
 
-        termController.listAllTerms(studySetId, termList ->{
+        termController.listAllTerms(id, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
+
+            ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(StudySetActivity.this, FlashcardActivity.class);
+                    intent.putExtra("terms", (Serializable) termList);
+                    startActivity(intent);
+                }
+            });
+
         });
 
         rcvTerm.setAdapter(termAdapter);
-        ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StudySetActivity.this, FlashcardActivity.class);
-                startActivity(intent);
-            }
-        });
+
         ((Button) findViewById(R.id.btnTest)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +80,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
-                intent.putExtra("updateStudySet", studySetId);
+                intent.putExtra("updateStudySet", id);
                 startActivity(intent);
             }
         });

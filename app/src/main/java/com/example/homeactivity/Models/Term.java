@@ -1,6 +1,8 @@
 package com.example.homeactivity.Models;
 
-public class Term {
+import java.io.Serializable;
+
+public class Term implements Serializable {
     private String id;
     private String term;
     private String definition;

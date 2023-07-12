@@ -1,6 +1,7 @@
 package com.example.homeactivity.Models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Term implements Serializable {
     private String id;
@@ -48,5 +49,18 @@ public class Term implements Serializable {
 
     public void setStudySetId(String studySetId) {
         this.studySetId = studySetId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Term term = (Term) o;
+        return id.equals(term.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -24,9 +24,9 @@
         <activity
             android:name=".Views.FlashcardActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Views.StartTestActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".Views.StartTestActivity"
+            android:exported="false" />
         <activity
             android:name=".Views.StudySetActivity"
             android:exported="true">

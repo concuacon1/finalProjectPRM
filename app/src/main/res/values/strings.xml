@@ -12,4 +12,5 @@
     <string name="answer_c">C: Answer C</string>
     <string name="answer_d">D: Answer D</string>
     <string name="confirm_answer">Confirm</string>
+    <string name="search_hint">Search Study Set</string>
 </resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textviewtitlepopular"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="POPULAR"
+        android:textColor="#191717"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="572dp"
+        android:layout_below="@+id/textviewtitlepopular">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textviewviewmore"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/listview"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#c9c7c7"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Xem thêm "
+        android:textColor="#0a0a0a"
+        android:textSize="19sp" />
+
+</RelativeLayout>

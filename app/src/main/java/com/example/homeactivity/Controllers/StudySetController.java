@@ -143,16 +143,12 @@ public class StudySetController {
     public void searchStudySets(String queryText, Consumer<List<String>> onSuccess) {
         String lowercaseQueryText = queryText.toLowerCase();
 
-        LoadingDialog loadingDialog = new LoadingDialog(SearchActivity.this);
-        loadingDialog.startLoadingDialog();
-
         connector.getCollectionReference()
                 .orderBy("title")
                 .startAt(lowercaseQueryText)
                 .endAt(lowercaseQueryText + "\uf8ff")
                 .get()
                 .addOnCompleteListener(task -> {
-                    loadingDialog.dismisssDialog();
 
                     if (task.isSuccessful()) {
                         List<String> searchResults = new ArrayList<>();

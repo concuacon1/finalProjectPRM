@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Utils.DatabaseConnector;
+import com.example.homeactivity.Utils.LoadingDialog;
+import com.example.homeactivity.Views.SearchActivity;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -136,6 +138,35 @@ public class StudySetController {
 
                 onSuccess.accept(studySetList);
             });
+    }
+
+    public void searchStudySets(String queryText, Consumer<List<String>> onSuccess) {
+        String lowercaseQueryText = queryText.toLowerCase();
+
+        LoadingDialog loadingDialog = new LoadingDialog(SearchActivity.this);
+        loadingDialog.startLoadingDialog();
+
+        connector.getCollectionReference()
+                .orderBy("title")
+                .startAt(lowercaseQueryText)
+                .endAt(lowercaseQueryText + "\uf8ff")
+                .get()
+                .addOnCompleteListener(task -> {
+                    loadingDialog.dismisssDialog();
+
+                    if (task.isSuccessful()) {
+                        List<String> searchResults = new ArrayList<>();
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            StudySet studySet = document.toObject(StudySet.class);
+                            searchResults.add(studySet.getTitle());
+                        }
+
+                        onSuccess.accept(searchResults);
+                    } else {
+                        Log.e("FirestoreError", "Failed to search for study sets: " + task.getException());
+                    }
+                });
     }
 
 }

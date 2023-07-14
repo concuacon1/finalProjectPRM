@@ -1,12 +1,12 @@
 package com.example.homeactivity.Views;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.SearchHistoryDbHelper;
 
@@ -33,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<String> historySearch;
     SearchHistoryDbHelper dbHelper;
     Toolbar toolbar;
+    StudySetController studySetController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class SearchActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+
+        studySetController = new StudySetController();
 
         dbHelper = new SearchHistoryDbHelper(this);
         historySearch = new ArrayList<>(dbHelper.getSearchHistory());
@@ -85,12 +89,23 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                int visibility = TextUtils.isEmpty(newText) ? View.VISIBLE : View.INVISIBLE;
-                tvDelAll.setVisibility(visibility);
-                tvSearchHistory.setVisibility(visibility);
-                btnDelAll.setVisibility(visibility);
+                if (TextUtils.isEmpty(newText)) {
+                    tvDelAll.setVisibility(View.VISIBLE);
+                    tvSearchHistory.setVisibility(View.VISIBLE);
+                    btnDelAll.setVisibility(View.VISIBLE);
 
-                adapter.getFilter().filter(newText);
+                    adapter.clear();
+                    adapter.addAll(historySearch);
+                } else {
+                    tvDelAll.setVisibility(View.INVISIBLE);
+                    tvSearchHistory.setVisibility(View.INVISIBLE);
+                    btnDelAll.setVisibility(View.INVISIBLE);
+
+                    studySetController.searchStudySets(newText, searchResults -> {
+                        adapter.clear();
+                        adapter.addAll(searchResults);
+                    });
+                }
                 return true;
             }
         });
@@ -99,9 +114,19 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onDeleteAll(View view) {
-        dbHelper.deleteAllSearchHistory();
-        historySearch.clear();
-        historySearch.addAll(dbHelper.getSearchHistory());
-        adapter.notifyDataSetChanged();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Delete")
+                .setMessage("Are you sure you want to delete all search history?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbHelper.deleteAllSearchHistory();
+                        historySearch.clear();
+                        historySearch.addAll(dbHelper.getSearchHistory());
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }

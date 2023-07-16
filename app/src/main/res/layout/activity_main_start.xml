@@ -8,9 +8,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Views.MainStartActivity"
-    tools:openDrawer="start"
-    >
 
+    >
+<!--    tools:openDrawer="start"-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_gravity="start"
@@ -33,24 +33,50 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00008577"
+            android:background="@color/term_background"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/menu" />
-        <fragment
-            android:name="com.example.homeactivity.Fragment.RecentFragment"
-            android:id="@+id/fragment_banner"
+            app:navigationIcon="@drawable/menu"
+            />
+        <TextView
+            android:id="@+id/textViewPopular"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </fragment>
-        <fragment
-            android:name="com.example.homeactivity.Fragment.PopularFragment"
-            android:id="@+id/fragment_playlist"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:text="Popular" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/term_background"
+            android:id="@+id/popularView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/popularBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VIEW MORE" />
+        <TextView
+            android:id="@+id/textViewRecent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:text="Recent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/term_background"
+            android:id="@+id/recentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/recentBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VIEW MORE" />
     </LinearLayout>
     </ScrollView>
 </androidx.drawerlayout.widget.DrawerLayout>

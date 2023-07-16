@@ -16,16 +16,10 @@ import com.example.homeactivity.R;
 import java.util.List;
 
 public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.TermViewHolder >{
-    private Context mContext;
     private List<StudySet> studySetList;
 
-    public MainStartAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
-
-    public void SetData(List<StudySet> list) {
+    public MainStartAdapter(List<StudySet> list) {
         this.studySetList = list;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,13 +35,12 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
         if (studySet == null) {
             return;
         }
-
         holder.quiz_name.setText(studySet.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return studySetList.size();
     }
     public class TermViewHolder extends RecyclerView.ViewHolder {
 

@@ -50,7 +50,6 @@
             android:text="Popular" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/term_background"
             android:id="@+id/popularView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -67,7 +66,6 @@
             android:textAlignment="center"
             android:text="Recent" />
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/term_background"
             android:id="@+id/recentView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

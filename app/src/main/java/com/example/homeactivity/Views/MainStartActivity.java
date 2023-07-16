@@ -41,17 +41,20 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         /*---------------------recycleview------------------------*/
         popularView = findViewById(R.id.popularView);
         recentView = findViewById(R.id.recentView);
+
+        studySetController = new StudySetController();
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
         studySetController.listAllStudySets( termList ->{
-            mainStartAdapter.SetData(termList);
+            mainStartAdapter = new MainStartAdapter(termList);
+            popularView.setAdapter(mainStartAdapter);
         });
-        popularView.setAdapter(mainStartAdapter);
+
         LinearLayoutManager linearLayoutManager_recent = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recentView.setLayoutManager(linearLayoutManager_recent);
-        studySetController.listAllStudySets(id, termList ->{
-            mainStartAdapter.SetData(termList);
-        });
+//        studySetController.listAllStudySets(id, termList ->{
+//            mainStartAdapter.SetData(termList);
+//        });
         recentView.setAdapter(mainStartAdapter);
         /*---------------------Hooks------------------------*/
         drawerLayout=findViewById(R.id.drawer_layout);

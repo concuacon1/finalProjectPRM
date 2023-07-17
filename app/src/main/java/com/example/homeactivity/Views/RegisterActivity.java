@@ -35,10 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     registerUser(username, email, password);
                 }
             }

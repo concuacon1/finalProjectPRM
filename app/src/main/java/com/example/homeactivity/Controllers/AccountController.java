@@ -25,7 +25,7 @@ public class AccountController {
     }
 
 
-    public void createAccount(Account account, Consumer<String> onError) {
+    public void createAccount(Account account, Consumer<String> onSuccess, Consumer<String> onError) {
         String email = account.getEmail();
         String nickname = account.getNickname();
 
@@ -56,6 +56,10 @@ public class AccountController {
                     account.setId(id);
                     batch.set(accountRef, account);
                     batch.commit()
+                            .addOnSuccessListener(aVoid -> {
+                                // Account creation successful
+                                onSuccess.accept("Register account success");
+                            })
                             .addOnFailureListener(e -> {
                                 // Batch write failed
                                 Log.e("FireStoreError", "Failed to create Account: " + e.getMessage());

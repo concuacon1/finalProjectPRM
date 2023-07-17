@@ -17,13 +17,10 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Utils.SearchHistoryDbHelper;
 import com.example.homeactivity.Utils.SearchSuggestionProvider;
 
 import java.util.ArrayList;
@@ -33,11 +30,8 @@ public class SearchActivity extends AppCompatActivity{
     ListView listView;
     TextView tvDelAll, tvSearchHistory;
     ImageButton btnDelAll;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> historySearch;
-    SearchHistoryDbHelper dbHelper;
+
     Toolbar toolbar;
-    StudySetController studySetController;
     SearchView searchView;
 
     @Override

@@ -6,16 +6,20 @@ public class Questions {
     String optionB;
     String optionC;
     String optionD;
+    int correctAns;
+    int selectedAns;
 
     public Questions() {
     }
 
-    public Questions(String question, String optionA, String optionB, String optionC, String optionD) {
+    public Questions(String question, String optionA, String optionB, String optionC, String optionD, int correctAns, int selectedAns) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
         this.optionC = optionC;
         this.optionD = optionD;
+        this.correctAns = correctAns;
+        this.selectedAns = selectedAns;
     }
 
     public String getQuestion() {
@@ -56,5 +60,21 @@ public class Questions {
 
     public void setOptionD(String optionD) {
         this.optionD = optionD;
+    }
+
+    public int getCorrectAns() {
+        return correctAns;
+    }
+
+    public void setCorrectAns(int correctAns) {
+        this.correctAns = correctAns;
+    }
+
+    public int getSelectedAns() {
+        return selectedAns;
+    }
+
+    public void setSelectedAns(int selectedAns) {
+        this.selectedAns = selectedAns;
     }
 }

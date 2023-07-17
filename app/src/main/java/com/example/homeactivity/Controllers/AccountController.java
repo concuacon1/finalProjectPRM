@@ -23,7 +23,8 @@ public class AccountController {
         connector = new DatabaseConnector("Account");
     }
 
-    public String  createAccount(Account account) {
+
+    public String createAccount(Account account) {
 
         account.setCreatedAt(Timestamp.now());
 
@@ -117,9 +118,53 @@ public class AccountController {
                 }
 
                 onSuccess.accept(accountList);
-
             });
+    }
 
+    public void login(String emailOrNickname, String password, Consumer<Account> onSuccess) {
+        connector.getCollectionReference()
+                .whereEqualTo("email", emailOrNickname)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (querySnapshot.isEmpty()) {
+                        // No user found with the provided email, try searching with nickname
+                        connector.getCollectionReference()
+                                .whereEqualTo("nickname", emailOrNickname)
+                                .limit(1)
+                                .get()
+                                .addOnSuccessListener(querySnapshot1 -> {
+                                    if (querySnapshot1.isEmpty()) {
+                                        // No user found with the provided email/nickname
+                                        onSuccess.accept(null);
+                                    } else {
+                                        DocumentSnapshot documentSnapshot = querySnapshot1.getDocuments().get(0);
+                                        Account account = documentSnapshot.toObject(Account.class);
+                                        // Check if the provided password matches the stored password
+                                        if (account != null && account.getPassword().equals(password)) {
+                                            onSuccess.accept(account);
+                                        } else {
+                                            onSuccess.accept(null); // Password doesn't match
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    throw new RuntimeException("Login failed: " + e.getMessage());
+                                });
+                    } else {
+                        DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
+                        Account account = documentSnapshot.toObject(Account.class);
+                        // Check if the provided password matches the stored password
+                        if (account != null && account.getPassword().equals(password)) {
+                            onSuccess.accept(account);
+                        } else {
+                            onSuccess.accept(null); // Password doesn't match
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    throw new RuntimeException("Login failed: " + e.getMessage());
+                });
     }
 
 }

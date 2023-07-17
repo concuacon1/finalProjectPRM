@@ -25,6 +25,7 @@ public class Account {
         this.updatedAt = updatedAt;
     }
 
+
     public String getId() {
         return id;
     }

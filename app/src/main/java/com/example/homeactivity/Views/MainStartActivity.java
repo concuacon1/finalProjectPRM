@@ -52,10 +52,10 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         LinearLayoutManager linearLayoutManager_recent = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recentView.setLayoutManager(linearLayoutManager_recent);
-//        studySetController.listAllStudySets(id, termList ->{
-//            mainStartAdapter.SetData(termList);
-//        });
-        recentView.setAdapter(mainStartAdapter);
+        studySetController.listAllStudySets(id, termList ->{
+            mainStartAdapter = new MainStartAdapter(termList);
+            recentView.setAdapter(mainStartAdapter);
+        });
         /*---------------------Hooks------------------------*/
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);

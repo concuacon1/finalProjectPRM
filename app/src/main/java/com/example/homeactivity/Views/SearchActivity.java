@@ -1,7 +1,10 @@
 package com.example.homeactivity.Views;
 
+import android.app.SearchManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,10 +24,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.SearchHistoryDbHelper;
+import com.example.homeactivity.Utils.SearchSuggestionProvider;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity{
 
     ListView listView;
     TextView tvDelAll, tvSearchHistory;
@@ -34,12 +38,14 @@ public class SearchActivity extends AppCompatActivity {
     SearchHistoryDbHelper dbHelper;
     Toolbar toolbar;
     StudySetController studySetController;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        handleSearch(getIntent());
 
         listView = findViewById(R.id.lst_hint);
         tvDelAll = findViewById(R.id.tv_delete_history);
@@ -48,18 +54,24 @@ public class SearchActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleSearch(intent);
+    }
 
-        studySetController = new StudySetController();
+    public void handleSearch( Intent intent)
+    {
+        if (Intent.ACTION_SEARCH.equalsIgnoreCase(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
 
-        dbHelper = new SearchHistoryDbHelper(this);
-        historySearch = new ArrayList<>(dbHelper.getSearchHistory());
+            SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this,
+                    SearchSuggestionProvider.AUTHORITY,SearchSuggestionProvider.MODE);
 
-        // Set adapter to ListView
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dbHelper.getSearchHistory());
-
-        listView.setAdapter(adapter);
-
-
+            searchRecentSuggestions.saveRecentQuery(query,null);
+        }
     }
 
     @Override
@@ -69,75 +81,18 @@ public class SearchActivity extends AppCompatActivity {
 
         // Get the search item from the menu
         MenuItem searchItem = menu.findItem(R.id.search_bar);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
 
         // Customize the search view
         searchView.setIconifiedByDefault(true); // Set to true for iconified view by default
         searchView.setSubmitButtonEnabled(true); // Disable submit button
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                adapter.clear();
-                adapter.addAll(historySearch);
-                return false;
-            }
-        });
+        SearchManager searchManager = (SearchManager) getSystemService(SearchActivity.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (!TextUtils.isEmpty(query)) {
-                    dbHelper.insertSearchQuery(query);
-                    historySearch.add(query);
-                    adapter.notifyDataSetChanged();
-                }
-                return true;
-            }
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint(getResources().getString(R.string.search_hint));
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                    tvDelAll.setVisibility(View.VISIBLE);
-                    tvSearchHistory.setVisibility(View.VISIBLE);
-                    btnDelAll.setVisibility(View.VISIBLE);
-
-                    adapter.clear();
-                    adapter.addAll(historySearch);
-                    return false;
-                }
-
-                tvDelAll.setVisibility(View.INVISIBLE);
-                tvSearchHistory.setVisibility(View.INVISIBLE);
-                btnDelAll.setVisibility(View.INVISIBLE);
-
-                studySetController.searchStudySets(newText, searchResults -> {
-                    adapter.clear();
-                    adapter.addAll(searchResults);
-                });
-
-                return true;
-            }
-        });
-
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
-
-    public void onDeleteAll(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirm Delete")
-                .setMessage("Are you sure you want to delete all search history?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dbHelper.deleteAllSearchHistory();
-                        historySearch.clear();
-                        adapter.clear();
-                        adapter.notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
-
 }

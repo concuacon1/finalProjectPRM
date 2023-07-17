@@ -22,7 +22,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private AccountController accountController;
     private EditText name, nick_name, email;
 
-    private static final String id = "4zT2o8R6a1uJm3cnWE9G";
+    private static final String id = "pRUsw0OO4gXmPBZ73XHm";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +35,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
         accountController = new AccountController();
         accountController.findAccount(id,account -> {
             name.setText(account.getName());
-            nick_name.setText(account.getName());
-            email.setText(account.getName());
+            nick_name.setText(account.getNickname());
+            email.setText(account.getEmail());
         });
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,12 +52,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
         String account_name = name.getText().toString().trim();
         String account_nickname = nick_name.getText().toString().trim();
         String account_email = email.getText().toString().trim();
-        AtomicReference<Account> account_update = new AtomicReference<>(new Account());
-        accountController = new AccountController();
-        accountController.findAccount(id,account -> {
-            account_update.set(new Account(account_name, account_nickname, account_email, account.getPassword(), account.getCreatedAt(), currentTimestamp));
-        });
-        return account_update.get();
+        return new Account(id,account_name, account_nickname, account_email, currentTimestamp);
+
     }
 
 }

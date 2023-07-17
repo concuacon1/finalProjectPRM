@@ -2,6 +2,7 @@ package com.example.homeactivity.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.MainStartAdapter;
@@ -30,18 +32,21 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     NavigationView navigationView;
     StudySetController studySetController;
     MainStartAdapter mainStartAdapter;
-    RecyclerView popularView, recentView;
+    RecyclerView popularView;
+    TextView first_word,name_user;
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
-    private static final String id = "4zT2o8R6a1uJm3cnWE9G";
+    private AccountController accountController;
+
+    private static final String id = "pRUsw0OO4gXmPBZ73XHm";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_start);
         /*---------------------recycleview------------------------*/
         popularView = findViewById(R.id.popularView);
-        recentView = findViewById(R.id.recentView);
-
+        first_word = findViewById(R.id.first_word);
+        name_user = findViewById(R.id.name_user);
         studySetController = new StudySetController();
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
@@ -49,14 +54,15 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             mainStartAdapter = new MainStartAdapter(termList);
             popularView.setAdapter(mainStartAdapter);
         });
-
-        LinearLayoutManager linearLayoutManager_recent = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        recentView.setLayoutManager(linearLayoutManager_recent);
-        studySetController.listAllStudySets(id, termList ->{
-            mainStartAdapter = new MainStartAdapter(termList);
-            recentView.setAdapter(mainStartAdapter);
+        accountController = new AccountController();
+        accountController.findAccount(id,account -> {
+            name_user.setText(account.getName());
+            String account_name = name_user.getText().toString().trim().substring(0,1);
+            first_word.setText(account_name);
         });
+
         /*---------------------Hooks------------------------*/
+
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
@@ -82,6 +88,18 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        if(item.getItemId() == R.id.nav_course){
+            Intent intent_course = new Intent(MainStartActivity.this,StudySetActivity.class);
+            startActivity(intent_course);}
+
+
+        if(item.getItemId() == R.id.nav_profile){
+            Intent intent_profine = new Intent(MainStartActivity.this,StudySetActivity.class);
+            startActivity(intent_profine);}
+
+        if(item.getItemId() == R.id.nav_logout){
+            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
+            startActivity(intent_logout);}
         return true;
     }
 

@@ -1,6 +1,5 @@
 package com.example.homeactivity.Utils;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Controllers.StudySetController;
-import com.example.homeactivity.Models.Questions;
+import com.example.homeactivity.Models.Question;
 import com.example.homeactivity.R;
 
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    private List<Questions> questionsList;
+    private List<Question> questionList;
 
-    public QuestionAdapter(List<Questions> questionsList) {
-        this.questionsList = questionsList;
+    public QuestionAdapter(List<Question> questionList) {
+        this.questionList = questionList;
     }
 
     @NonNull
@@ -57,11 +56,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void setData(final int position) {
-            ques.setText(questionsList.get(position).getQuestion());
-            optionA.setText(questionsList.get(position).getOptionA());
-            optionB.setText(questionsList.get(position).getOptionB());
-            optionC.setText(questionsList.get(position).getOptionC());
-            optionD.setText(questionsList.get(position).getOptionD());
+            ques.setText(questionList.get(position).getQuestion());
+            optionA.setText(questionList.get(position).getOptionA());
+            optionB.setText(questionList.get(position).getOptionB());
+            optionC.setText(questionList.get(position).getOptionC());
+            optionD.setText(questionList.get(position).getOptionD());
 
             optionA.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,17 +91,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         private void selectOption(Button btn, int optionNum, int quesID) {
             if (prevSelectedBtn == null) {
                 btn.setBackgroundResource(R.drawable.selected_button);
-                questionsList.get(quesID).setSelectedAns(optionNum);
+                questionList.get(quesID).setSelectedAns(optionNum);
                 prevSelectedBtn = btn;
             } else {
                 if (prevSelectedBtn.getId() == btn.getId()) {
                     btn.setBackgroundResource(R.drawable.unselected_button);
-                    questionsList.get(quesID).setSelectedAns(-1);
+                    questionList.get(quesID).setSelectedAns(-1);
                     prevSelectedBtn = null;
                 } else {
                     prevSelectedBtn.setBackgroundResource(R.drawable.unselected_button);
                     btn.setBackgroundResource(R.drawable.selected_button);
-                    questionsList.get(quesID).setSelectedAns(optionNum);
+                    questionList.get(quesID).setSelectedAns(optionNum);
                     prevSelectedBtn = btn;
                 }
             }

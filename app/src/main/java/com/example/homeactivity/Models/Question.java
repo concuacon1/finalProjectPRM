@@ -1,6 +1,6 @@
 package com.example.homeactivity.Models;
 
-public class Questions {
+public class Question {
     String question;
     String optionA;
     String optionB;
@@ -9,10 +9,10 @@ public class Questions {
     int correctAns;
     int selectedAns;
 
-    public Questions() {
+    public Question() {
     }
 
-    public Questions(String question, String optionA, String optionB, String optionC, String optionD, int correctAns, int selectedAns) {
+    public Question(String question, String optionA, String optionB, String optionC, String optionD, int correctAns, int selectedAns) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;

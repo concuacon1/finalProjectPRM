@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.TermController;
@@ -36,5 +37,12 @@ public class StartTestActivity extends AppCompatActivity {
             tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
         });
 
+        ((ImageButton)findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartTestActivity.this,StudySetActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

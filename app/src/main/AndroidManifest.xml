@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HomeActivity"
         tools:targetApi="31">
         <activity
+            android:name=".Views.ScoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.TestActivity"
             android:exported="false" />
         <activity
@@ -27,6 +30,9 @@
         <activity
             android:name=".Views.StartTestActivity"
             android:exported="false" />
+        <activity
+            android:name=".Views.StudySetActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".Views.SearchActivity"
             android:exported="true">

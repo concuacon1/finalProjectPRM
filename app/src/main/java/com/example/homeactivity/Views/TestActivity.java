@@ -1,6 +1,7 @@
 package com.example.homeactivity.Views;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -152,6 +153,39 @@ public class TestActivity extends AppCompatActivity {
                 if (questionNumber < listOfQuestion.size() - 1) {
                     questionView.smoothScrollToPosition(questionNumber + 1);
                 }
+            }
+        });
+        submitB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitTest();
+            }
+        });
+
+    }
+    public void submitTest(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
+        builder.setCancelable(true);
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_layout,null);
+        Button cancelB = view.findViewById(R.id.btn_cancel);
+        Button confirmB = view.findViewById(R.id.btn_confirm);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        cancelB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        confirmB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
+                startActivity(intent);
+                TestActivity.this.finish();
             }
         });
     }

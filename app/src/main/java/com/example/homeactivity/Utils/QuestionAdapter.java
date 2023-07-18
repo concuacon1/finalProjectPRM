@@ -101,17 +101,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 btn.setBackgroundResource(R.drawable.selected_button);
                 q.setSelectedAns(chosenOption);
                 prevSelectedBtn = btn;
-                Log.i("prevBtn", "a: " + prevSelectedBtn);
 
             } else {
-                Log.i("prevBtn", "b: " + prevSelectedBtn);
                 if (prevSelectedBtn.getId() == btn.getId()) {
-                    Log.i("prevBtn", "c: " + prevSelectedBtn);
                     btn.setBackgroundResource(R.drawable.unselected_button);
                     q.setSelectedAns(null);
                     prevSelectedBtn = null;
                 } else {
-                    Log.i("prevBtn", "d: " + prevSelectedBtn);
                     prevSelectedBtn.setBackgroundResource(R.color.unselected_button);
                     btn.setBackgroundResource(R.drawable.selected_button);
                     q.setSelectedAns(chosenOption);

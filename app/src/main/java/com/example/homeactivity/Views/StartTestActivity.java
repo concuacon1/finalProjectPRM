@@ -14,6 +14,7 @@ import com.example.homeactivity.R;
 
 public class StartTestActivity extends AppCompatActivity {
     private TextView tvNumberOfQuestionStt;
+    private ImageButton backBtn;
     TermController termController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class StartTestActivity extends AppCompatActivity {
 
 
         tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
-
+        backBtn=findViewById(R.id.btn_back);
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetID1");
         termController.listAllTerms(studySetId, studySet -> {
@@ -39,8 +40,14 @@ public class StartTestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartTestActivity.this,StudySetActivity.class);
+                startActivity(intent);
+            }
+        });
         //Intent intent = getIntent();
         //String studySetId = intent.getStringExtra("studySetId");
         termController.listAllTerms("CQtc0QhQ3WkaRtC2Ntz5", studySet -> {

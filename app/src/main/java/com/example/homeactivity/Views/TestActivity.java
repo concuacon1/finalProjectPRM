@@ -41,9 +41,10 @@ public class TestActivity extends AppCompatActivity {
     private TermController termController;
 
     private List<Term> listTerm;
-    private List<Question> questions;
+    private List<Question> listOfQuestion;
 
     String studySetId;
+    int correctAns, wrongAns, uncheckAns, finalScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,8 @@ public class TestActivity extends AppCompatActivity {
         termController.listAllTerms(studySetId, terms -> {
             tvNumberOfQuestion.setText("/" + String.valueOf(terms.size()));
             listTerm = terms;
-            questions = generateQuestions(listTerm);
-            QuestionAdapter questionAdapter = new QuestionAdapter(questions);
+            listOfQuestion = generateQuestions(listTerm);
+            QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
             questionView.setAdapter(questionAdapter);
         });
     }
@@ -157,14 +158,31 @@ public class TestActivity extends AppCompatActivity {
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (questionNumber < questions.size() - 1) {
+                if (questionNumber < listOfQuestion.size() - 1) {
                     questionView.smoothScrollToPosition(questionNumber + 1);
                 }
             }
         });
+
+
         submitB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                correctAns = 0;
+                wrongAns = 0;
+                uncheckAns = 0;
+                for (int i = 0; i < listOfQuestion.size(); i++) {
+                    if (listOfQuestion.get(i).getSelectedAns() == null) {
+                        uncheckAns++;
+                    } else {
+                        if (listOfQuestion.get(i).getSelectedAns() == listOfQuestion.get(i).getCorrectAns()) {
+                            correctAns++;
+                        } else wrongAns++;
+                    }
+                }
+                if (listOfQuestion.size() > 0) {
+                    finalScore = (correctAns * 100) / listOfQuestion.size();
+                }
                 submitTest();
             }
         });
@@ -190,7 +208,12 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
+                intent.putExtra("correctAns", correctAns);
+                intent.putExtra("wrongAns", wrongAns);
+                intent.putExtra("uncheckAns", uncheckAns);
+                intent.putExtra("finalScore", finalScore);
                 startActivity(intent);
                 TestActivity.this.finish();
             }

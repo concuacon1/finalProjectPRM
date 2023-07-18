@@ -76,7 +76,10 @@ public class ScoreActivity extends AppCompatActivity {
         tvWrong.setText(String.valueOf(wrongAns));
         tvUncheck.setText(String.valueOf(uncheckAns));
 
-        int finalScore = (correctAns*100)/listOfQuestion.size();
+        int finalScore = 0;
+        if (listOfQuestion.size()>0){
+            finalScore = (correctAns*100)/listOfQuestion.size();
+        }
 
         tvScore.setText(String.valueOf(finalScore));
     }

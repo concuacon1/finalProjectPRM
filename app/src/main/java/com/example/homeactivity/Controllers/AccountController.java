@@ -80,14 +80,12 @@ public class AccountController {
                 }
 
                 DocumentSnapshot documentSnapshot = task.getResult();
-
                 if (!documentSnapshot.exists()) {
                     onSuccess.accept(null);
                     return;
                 }
 
                 Account account = documentSnapshot.toObject(Account.class);
-
                 onSuccess.accept(account);
             });
     }

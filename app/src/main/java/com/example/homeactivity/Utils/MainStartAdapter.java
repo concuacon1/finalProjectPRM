@@ -12,10 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Models.StudySet;
-import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Views.LoginActivity;
-import com.example.homeactivity.Views.MainStartActivity;
 import com.example.homeactivity.Views.StudySetActivity;
 
 import java.util.List;
@@ -32,7 +29,7 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     @NonNull
     @Override
     public MainStartAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quiz_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_study_set_main,parent,false);
         return new MainStartAdapter.TermViewHolder(view);
     }
 

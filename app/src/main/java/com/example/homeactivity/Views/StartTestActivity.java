@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.TermController;
@@ -38,5 +39,13 @@ public class StartTestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
+
+        //Intent intent = getIntent();
+        //String studySetId = intent.getStringExtra("studySetId");
+        termController.listAllTerms("rdKlzh42W3RR3r8T59hp", studySet -> {
+            tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
+        });
+
     }
 }

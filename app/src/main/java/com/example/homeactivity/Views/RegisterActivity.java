@@ -1,9 +1,12 @@
 package com.example.homeactivity.Views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +24,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonRegister;
+    private ImageButton btnClose;
     private AccountController accountController;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
+        btnClose = findViewById(R.id.close_button_4);
+        accountController = new AccountController();
+        context = this;
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = editTextUsername.getText().toString();
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
-
 
                 if (username.isEmpty() || email.isEmpty() || password.isEmpty()||fullName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "\n" +
@@ -50,10 +57,17 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void registerUser(String username, String email, String password) {
-        AccountController accountController = new AccountController();
+        accountController = new AccountController();
         Account account = new Account();
         account.setNickname(username);
         account.setEmail(email);

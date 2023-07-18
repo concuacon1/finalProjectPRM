@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.homeactivity.Models.Term;
@@ -39,6 +40,12 @@ public class FlashcardActivity extends AppCompatActivity {
         changeCameraDistance();
         loadData();
         position =0;
+        ((ImageView)findViewById(R.id.back_btn_FlashCard)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +66,6 @@ public class FlashcardActivity extends AppCompatActivity {
                     tvFront.setText(termList.get(position).getTerm());
                     tvBack.setText(termList.get(position).getDefinition());
                 }
-            }
-        });
-        ((ImageButton) findViewById(R.id.close_button_3)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 

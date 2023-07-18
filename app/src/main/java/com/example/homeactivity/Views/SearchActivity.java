@@ -1,10 +1,8 @@
 package com.example.homeactivity.Views;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.SearchRecentSuggestions;
@@ -18,10 +16,9 @@ import android.widget.CursorAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
@@ -29,11 +26,14 @@ import com.example.homeactivity.Utils.SearchRecentSuggestionsLimited;
 import com.example.homeactivity.Utils.SearchResultAdapter;
 import com.example.homeactivity.Utils.SearchSuggestionProvider;
 
-public class SearchActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class SearchActivity extends AppCompatActivity{
 
     RecyclerView recyclerView;
     TextView tvResult;
     Toolbar toolbar;
+    StudySetController studySetController;
     SearchView searchView;
     SearchResultAdapter adapter;
     private final Handler searchHandler = new Handler();
@@ -50,7 +50,12 @@ public class SearchActivity extends AppCompatActivity {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
 
+        listView = findViewById(R.id.lst_hint);
+        tvDelAll = findViewById(R.id.tv_delete_history);
+        btnDelAll = findViewById(R.id.btn_delete_history);
+        tvSearchHistory = findViewById(R.id.tv_search_history);
         toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         context = this;
 
@@ -69,6 +74,24 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleSearch(intent);
+    }
+
+    public void handleSearch( Intent intent)
+    {
+        if (Intent.ACTION_SEARCH.equalsIgnoreCase(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+
+            SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this,
+                    SearchSuggestionProvider.AUTHORITY,SearchSuggestionProvider.MODE);
+
+            searchRecentSuggestions.saveRecentQuery(query,null);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setIconifiedByDefault(true); // Set to true for iconified view by default
         searchView.setSubmitButtonEnabled(true); // Disable submit button
 
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getSystemService(SearchActivity.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));

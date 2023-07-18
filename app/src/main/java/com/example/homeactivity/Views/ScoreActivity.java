@@ -22,42 +22,42 @@ public class ScoreActivity extends AppCompatActivity {
     private Button btnReAttempt, btnHome;
     private List<Question> listOfQuestion = new ArrayList<>();
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_score);
-//        tvScore = findViewById(R.id.tv_score);
-//        tvCorrect = findViewById(R.id.tv_correct_ques);
-//        tvWrong = findViewById(R.id.tv_wrong_score);
-//        tvUncheck = findViewById(R.id.tv_uncheck_score);
-//        tvNumberOfQues = findViewById(R.id.tv_numberOfQuestion);
-//        btnReAttempt = findViewById(R.id.btn_reattemp);
-//        btnHome = findViewById(R.id.btn_back_to_home);
-//        termController = new TermController();
-//
-//        btnReAttempt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ScoreActivity.this, StartTestActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnHome.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//
-//        Intent intent = getIntent();
-//        //String studySetId = intent.getStringExtra("studySetId");
-//        termController.listAllTerms("rdKlzh42W3RR3r8T59hp", studySet -> {
-//            tvNumberOfQues.setText(String.valueOf(studySet.size()));
-//        });
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_score);
+        tvScore = findViewById(R.id.tv_score);
+        tvCorrect = findViewById(R.id.tv_correct_ques);
+        tvWrong = findViewById(R.id.tv_wrong_score);
+        tvUncheck = findViewById(R.id.tv_uncheck_score);
+        tvNumberOfQues = findViewById(R.id.tv_numberOfQuestion);
+        btnReAttempt = findViewById(R.id.btn_reattemp);
+        btnHome = findViewById(R.id.btn_back_to_home);
+        termController = new TermController();
+
+        btnReAttempt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScoreActivity.this, StartTestActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        Intent intent = getIntent();
+        //String studySetId = intent.getStringExtra("studySetId");
+        termController.listAllTerms("CQtc0QhQ3WkaRtC2Ntz5", studySet -> {
+            tvNumberOfQues.setText(String.valueOf(studySet.size()));
+        });
 //        loadData();
-//    }
+    }
 //
 //    private void loadData() {
 //        int correctAns = 0;
@@ -80,6 +80,6 @@ public class ScoreActivity extends AppCompatActivity {
 //
 //        tvScore.setText(String.valueOf(finalScore));
 //    }
-
+//
 
 }

@@ -25,7 +25,7 @@ public class UserProfileActivity extends AppCompatActivity {
         name = findViewById(R.id.name_user);
         nick_name = findViewById(R.id.nickname_user);
         email=findViewById(R.id.email_user);
-        nameFirstWord = findViewById(R.id.nameFirst);
+        nameFirstWord = findViewById(R.id.nameFirstWord);
         String id = getIntent().getStringExtra("ID");
         accountController = new AccountController();
         accountController.findAccount(id,account -> {

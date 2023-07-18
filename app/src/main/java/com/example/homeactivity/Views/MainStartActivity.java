@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -16,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +37,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     StudySetController studySetController;
     MainStartAdapter mainStartAdapter;
     RecyclerView popularView;
-    TextView first_word,name_user;
+    TextView first_word,name_user,first_word_name;
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
     private AccountController accountController;
@@ -48,10 +51,13 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         first_word = findViewById(R.id.first_word);
         name_user = findViewById(R.id.name_user);
         studySetController = new StudySetController();
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        popularView.addItemDecoration(itemDecoration);
+
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
         studySetController.listAllStudySets( termList ->{
-            mainStartAdapter = new MainStartAdapter(termList);
+            mainStartAdapter = new MainStartAdapter(termList,this);
             popularView.setAdapter(mainStartAdapter);
         });
         accountController = new AccountController();
@@ -72,6 +78,8 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        updateNavHeader();
+
     }
 
     @Override
@@ -87,8 +95,11 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.search){
+            Intent intent_course = new Intent(MainStartActivity.this,SearchActivity.class);
+            startActivity(intent_course);}
 
-        if(item.getItemId() == R.id.nav_course){
+        if(item.getItemId() == R.id.nav_studyset){
             Intent intent_course = new Intent(MainStartActivity.this,StudySetActivity.class);
             startActivity(intent_course);}
 
@@ -98,11 +109,46 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             intent_profine.putExtra("ID",id);
             startActivity(intent_profine);}
 
-        if(item.getItemId() == R.id.nav_logout){
-            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
-            startActivity(intent_logout);}
+//        if(item.getItemId() == R.id.nav_logout){
+//            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
+//            startActivity(intent_logout);}
+        return true;
+    }
+    public void updateNavHeader() {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView first_word_name = headerView.findViewById(R.id.first_word_name);
+        ImageView head_search = headerView.findViewById(R.id.head_search);
+
+        accountController = new AccountController();
+        accountController.findAccount(id,account -> {
+            name_user.setText(account.getName());
+            String account_name = name_user.getText().toString().trim().substring(0,1);
+            first_word_name.setText(account_name);
+        });
+        head_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainStartActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu,menu);
         return true;
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.search_toolbar){
+            Intent intent = new Intent(MainStartActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

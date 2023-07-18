@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Views.MainStartActivity"
+
     >
 <!--    tools:openDrawer="start"-->
     <com.google.android.material.navigation.NavigationView
@@ -40,7 +41,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/menu" />
+                app:navigationIcon="@drawable/menu"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

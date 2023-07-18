@@ -37,12 +37,12 @@ public class StartTestActivity extends AppCompatActivity {
             tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
         });
 
-        ((ImageButton)findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StartTestActivity.this,StudySetActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ((ImageButton)findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(StartTestActivity.this,StudySetActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

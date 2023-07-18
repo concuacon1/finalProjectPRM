@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,33 +30,62 @@ import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     private RecyclerView questionView;
-    private TextView tvNumberOfQuestion, tvstudyName;
+    private TextView tvNumberOfQuestion, tvstudyName, tvCurrentQuestion;
     private Button submitB;
     private ImageButton prevQuestion, nextQuestion;
-    private ImageView menu;
+
     private int questionNumber;
     private StudySetController studySetController;
     private TermController termController;
 
-    Intent intent = getIntent();
-    String studySetId = "4uM1FetD6aRPQJbffDnf";
+    private List<Term> listTerm;
+    private List<Question> questions;
 
-    private List<Question> listOfQuestion = new ArrayList<>();
+    String studySetId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        studySetId = "4uM1FetD6aRPQJbffDnf";
+        studySetController = new StudySetController();
+        termController = new TermController();
+
         init();
-        QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
-        questionView.setAdapter(questionAdapter);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         questionView.setLayoutManager(layoutManager);
+
         setSnapHelper();
         setClickListeners();
-
-
     }
+
+    private void init() {
+        questionView = findViewById(R.id.tv_questions_view);
+        tvNumberOfQuestion = findViewById(R.id.tv_numberOfQuestion);
+        tvstudyName = findViewById(R.id.tv_study_name);
+        submitB = findViewById(R.id.btn_submit);
+        prevQuestion = findViewById(R.id.prev_question);
+        nextQuestion = findViewById(R.id.next_question);
+        tvCurrentQuestion = findViewById(R.id.tv_current_question);
+
+        questionNumber = 0;
+
+        studySetController.findStudySet(studySetId, studySet -> {
+            tvstudyName.setText(studySet.getTitle());
+        });
+
+        termController.listAllTerms(studySetId, terms -> {
+            tvNumberOfQuestion.setText("/" + String.valueOf(terms.size()));
+            listTerm = terms;
+            questions = generateQuestions(listTerm);
+            QuestionAdapter questionAdapter = new QuestionAdapter(questions);
+            questionView.setAdapter(questionAdapter);
+        });
+    }
+
     private List<Question> generateQuestions(List<Term> listTerm) {
         List<Question> questions = new ArrayList<>(listTerm.size());
         Random random = new Random();
@@ -83,34 +113,15 @@ public class TestActivity extends AppCompatActivity {
             q.setOptionC(shuffledOptions.get(2));
             q.setOptionD(shuffledOptions.get(3));
 
-            int correctAnswerIndex = shuffledOptions.indexOf(term.getDefinition());
-            q.setCorrectAns(correctAnswerIndex);
-            q.setSelectedAns(-1);
+            q.setCorrectAns(term.getDefinition());
 
             questions.add(q);
         }
 
         return questions;
     }
-    List<Term> listTerm = (List<Term>) getIntent().getSerializableExtra("terms");
-    List<Question> questions = generateQuestions(listTerm);
 
-    private void init() {
-        questionView = findViewById(R.id.tv_questions_view);
-        tvNumberOfQuestion = findViewById(R.id.tv_numberOfQuestion);
-        tvstudyName = findViewById(R.id.tv_study_name);
-        submitB = findViewById(R.id.btn_submit);
-        prevQuestion = findViewById(R.id.prev_question);
-        nextQuestion = findViewById(R.id.next_question);
-        menu = findViewById(R.id.test_menu);
-        questionNumber = 0;
-        studySetController.findStudySet(studySetId, studySet -> {
-            tvstudyName.setText(studySet.getTitle());
-        });
-        termController.listAllTerms(studySetId, terms -> {
-            tvNumberOfQuestion.setText("1/" + String.valueOf(terms.size()));
-        });
-    }
+
 
     private void setSnapHelper() {
         SnapHelper snapHelper = new PagerSnapHelper();
@@ -122,9 +133,7 @@ public class TestActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 View view = snapHelper.findSnapView(recyclerView.getLayoutManager());
                 questionNumber = recyclerView.getLayoutManager().getPosition(view);
-                studySetController.listAllStudySets(studySetId, studySet -> {
-                    tvNumberOfQuestion.setText(String.valueOf(questionNumber + 1) + " / " + String.valueOf(studySet.size()));
-                });
+                tvCurrentQuestion.setText(String.valueOf(questionNumber + 1));
             }
 
             @Override
@@ -147,7 +156,7 @@ public class TestActivity extends AppCompatActivity {
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (questionNumber < listOfQuestion.size() - 1) {
+                if (questionNumber < questions.size() - 1) {
                     questionView.smoothScrollToPosition(questionNumber + 1);
                 }
             }

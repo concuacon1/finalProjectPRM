@@ -29,7 +29,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.Serializable;
 
 public class MainStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String ID = "ID";
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     StudySetController studySetController;
@@ -39,7 +38,6 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
     private AccountController accountController;
-    private static final String id = "pRUsw0OO4gXmPBZ73XHm";
     SessionManager sessionManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +94,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         if(item.getItemId() == R.id.nav_profile){
             Intent intent_profine = new Intent(MainStartActivity.this,UserProfileActivity.class);
-            intent_profine.putExtra("ID",id);
+            intent_profine.putExtra("ID",sessionManager.getId());
             startActivity(intent_profine);}
 
         if(item.getItemId() == R.id.nav_logout){

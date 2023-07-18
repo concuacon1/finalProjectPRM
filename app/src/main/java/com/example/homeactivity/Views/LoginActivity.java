@@ -1,5 +1,6 @@
 package com.example.homeactivity.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextUsername;
     private EditText editTextPassword;
     private Button buttonLogin;
+    private Button buttonRegister;
 
     // Đối tượng HashMap để lưu trữ thông tin tài khoản người dùng
     private HashMap<String, String> userAccounts;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonRegister = findViewById(R.id.buttonRegister);
 
         // Khởi tạo HashMap và thêm một tài khoản mẫu (chỉ để minh họa)
         userAccounts = new HashMap<>();
@@ -47,9 +50,21 @@ public class LoginActivity extends AppCompatActivity {
                 if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
                     // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                    //TO DO !! chưa có màn main page
+                    Intent intent = new Intent(LoginActivity.this, StudySetActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }

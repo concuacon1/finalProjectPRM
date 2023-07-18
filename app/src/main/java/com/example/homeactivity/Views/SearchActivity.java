@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.SearchSuggestionProvider;
@@ -27,10 +28,8 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity{
 
-    ListView listView;
-    TextView tvDelAll, tvSearchHistory;
-    ImageButton btnDelAll;
 
+    RecyclerView results;
     Toolbar toolbar;
     SearchView searchView;
 
@@ -41,10 +40,7 @@ public class SearchActivity extends AppCompatActivity{
 
         handleSearch(getIntent());
 
-        listView = findViewById(R.id.lst_hint);
-        tvDelAll = findViewById(R.id.tv_delete_history);
-        btnDelAll = findViewById(R.id.btn_delete_history);
-        tvSearchHistory = findViewById(R.id.tv_search_history);
+        results = findViewById(R.id.rv_search_result);
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -86,6 +82,19 @@ public class SearchActivity extends AppCompatActivity{
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint(getResources().getString(R.string.search_hint));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }

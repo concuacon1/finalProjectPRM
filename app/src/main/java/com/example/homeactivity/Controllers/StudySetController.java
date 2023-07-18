@@ -140,7 +140,7 @@ public class StudySetController {
             });
     }
 
-    public void searchStudySets(String queryText, Consumer<List<String>> onSuccess) {
+    public void searchStudySets(String queryText, Consumer<List<StudySet>> onSuccess) {
         String lowercaseQueryText = queryText.toLowerCase();
 
         connector.getCollectionReference()
@@ -149,18 +149,18 @@ public class StudySetController {
                 .endAt(lowercaseQueryText + "\uf8ff")
                 .get()
                 .addOnCompleteListener(task -> {
-
                     if (task.isSuccessful()) {
-                        List<String> searchResults = new ArrayList<>();
+                        List<StudySet> searchResults = new ArrayList<>();
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             StudySet studySet = document.toObject(StudySet.class);
-                            searchResults.add(studySet.getTitle());
+                            searchResults.add(studySet);
                         }
 
                         onSuccess.accept(searchResults);
                     } else {
                         Log.e("FirestoreError", "Failed to search for study sets: " + task.getException());
+                        onSuccess.accept(new ArrayList<>()); // Return an empty list in case of failure
                     }
                 });
     }

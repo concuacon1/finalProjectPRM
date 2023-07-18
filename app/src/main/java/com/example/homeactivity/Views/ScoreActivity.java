@@ -52,34 +52,34 @@ public class ScoreActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        //String studySetId = intent.getStringExtra("studySetId");
+        String studySetId = intent.getStringExtra("studySetId");
         termController.listAllTerms("CQtc0QhQ3WkaRtC2Ntz5", studySet -> {
             tvNumberOfQues.setText(String.valueOf(studySet.size()));
         });
-//        loadData();
+        loadData();
     }
-//
-//    private void loadData() {
-//        int correctAns = 0;
-//        int wrongAns = 0;
-//        int uncheckAns = 0;
-//        for (int i = 0; i < listOfQuestion.size(); i++) {
-//            if (listOfQuestion.get(i).getSelectedAns() == -1) {
-//                uncheckAns++;
-//            } else {
-//                if (listOfQuestion.get(i).getSelectedAns() == listOfQuestion.get(i).getCorrectAns()) {
-//                    correctAns++;
-//                } else wrongAns++;
-//            }
-//        }
-//        tvCorrect.setText(String.valueOf(correctAns));
-//        tvWrong.setText(String.valueOf(wrongAns));
-//        tvUncheck.setText(String.valueOf(uncheckAns));
-//
-//        int finalScore = (correctAns*100)/listOfQuestion.size();
-//
-//        tvScore.setText(String.valueOf(finalScore));
-//    }
-//
+
+    private void loadData() {
+        int correctAns = 0;
+        int wrongAns = 0;
+        int uncheckAns = 0;
+        for (int i = 0; i < listOfQuestion.size(); i++) {
+            if (listOfQuestion.get(i).getSelectedAns() == null) {
+                uncheckAns++;
+            } else {
+                if (listOfQuestion.get(i).getSelectedAns() == listOfQuestion.get(i).getCorrectAns()) {
+                    correctAns++;
+                } else wrongAns++;
+            }
+        }
+        tvCorrect.setText(String.valueOf(correctAns));
+        tvWrong.setText(String.valueOf(wrongAns));
+        tvUncheck.setText(String.valueOf(uncheckAns));
+
+        int finalScore = (correctAns*100)/listOfQuestion.size();
+
+        tvScore.setText(String.valueOf(finalScore));
+    }
+
 
 }

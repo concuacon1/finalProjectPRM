@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
-import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.TermAdapter;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class StudySetActivity extends AppCompatActivity {
 
@@ -26,8 +26,9 @@ public class StudySetActivity extends AppCompatActivity {
     private TermAdapter termAdapter;
     private TextView tvTermsNumber;
     private StudySetController studySetController;
-    private TermController termList;
+    private TermController termController;
     private TextView tvTitle;
+    private TextView tvAuthor;
 
     private static final String id = "4uM1FetD6aRPQJbffDnf";;
     @Override
@@ -36,6 +37,7 @@ public class StudySetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_study_set);
         tvTermsNumber = findViewById(R.id.tv_terms_number);
         tvTitle = findViewById(R.id.txtTitle);
+        tvAuthor = findViewById(R.id.tv_author);
         rcvTerm = findViewById(R.id.rcv_list_term);
         termAdapter = new TermAdapter(this);
 
@@ -44,36 +46,47 @@ public class StudySetActivity extends AppCompatActivity {
 
         //load data
         studySetController = new StudySetController();
-        termList = new TermController();
+        termController = new TermController();
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(id, studySet -> {
+        studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
+            tvAuthor.setText("Mai Viet Hung");
         });
 
-        termList.listAllTerms(id, termList ->{
+        termController.listAllTerms(studySetId, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
+
+            ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(StudySetActivity.this, FlashcardActivity.class);
+                    intent.putExtra("terms", (Serializable) termList);
+                    startActivity(intent);
+                }
+            });
+
         });
 
         rcvTerm.setAdapter(termAdapter);
-        ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StudySetActivity.this, FlashcardActivity.class);
-                startActivity(intent);
-            }
-        });
+
         ((Button) findViewById(R.id.btnTest)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
-                intent.putExtra("studySetID", studySetId);
-                startActivity(intent);
+                intent.putExtra("studySetID1",studySetId);
                 startActivity(intent);
             }
         });
-
+        ((Button) findViewById(R.id.btnEdit)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
+                intent.putExtra("updateStudySet", studySetId);
+                startActivity(intent);
+            }
+        });
     }
 }

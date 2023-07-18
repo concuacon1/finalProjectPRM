@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/term_background"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_term"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:text="kkkkkkkk\nkkkkkkkkkkkkkkkk\nkkkkkkkkkk"/>
+
+        <TextView
+            android:id="@+id/tv_definition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:text="kkkkkkkk\nkkkkkkkkkkkkkkkk\nkkkkkkkkkk"
+            android:layout_below="@+id/tv_term"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -50,7 +50,7 @@ public class StudySetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(studySetId, studySet -> {
+        studySetController.findStudySet(id, studySet -> {
             tvTitle.setText(studySet.getTitle());
             tvAuthor.setText("Mai Viet Hung");
         });

@@ -105,10 +105,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.selected_button));
                 q.setSelectedAns(chosenOption);
                 prevSelectedBtn = btn;
-                Log.i("prevBtn", "a: " + prevSelectedBtn);
 
             } else {
-                Log.i("prevBtn", "b: " + prevSelectedBtn);
                 if (prevSelectedBtn.getId() == btn.getId()) {
                     Log.i("prevBtn", "c: " + prevSelectedBtn);
                     btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.unselected_button));

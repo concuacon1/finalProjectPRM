@@ -52,33 +52,24 @@ public class ScoreActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String studySetId = intent.getStringExtra("studySetId");
+        int correctAns = intent.getIntExtra("correctAns", 0);
+        int wrongAns = intent.getIntExtra("wrongAns", 0);
+        int uncheckAns = intent.getIntExtra("uncheckAns", 0);
+        int finalScore = intent.getIntExtra("finalScore", 0);
         termController.listAllTerms("CQtc0QhQ3WkaRtC2Ntz5", studySet -> {
             tvNumberOfQues.setText(String.valueOf(studySet.size()));
         });
-        loadData();
+        setData(correctAns, wrongAns, uncheckAns, finalScore);
     }
 
-    private void loadData() {
-        int correctAns = 0;
-        int wrongAns = 0;
-        int uncheckAns = 0;
-        for (int i = 0; i < listOfQuestion.size(); i++) {
-            if (listOfQuestion.get(i).getSelectedAns() == null) {
-                uncheckAns++;
-            } else {
-                if (listOfQuestion.get(i).getSelectedAns() == listOfQuestion.get(i).getCorrectAns()) {
-                    correctAns++;
-                } else wrongAns++;
-            }
-        }
+    private void setData(int correctAns, int wrongAns, int uncheckAns, int finalScore) {
+
         tvCorrect.setText(String.valueOf(correctAns));
         tvWrong.setText(String.valueOf(wrongAns));
         tvUncheck.setText(String.valueOf(uncheckAns));
 
-        int finalScore = 0;
-        if (listOfQuestion.size()>0){
-            finalScore = (correctAns*100)/listOfQuestion.size();
+        if (listOfQuestion.size() > 0) {
+            finalScore = (correctAns * 100) / listOfQuestion.size();
         }
 
         tvScore.setText(String.valueOf(finalScore));

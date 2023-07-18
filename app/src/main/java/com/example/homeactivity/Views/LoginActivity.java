@@ -1,5 +1,6 @@
 package com.example.homeactivity.Views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -20,8 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private AccountController accountController;
     private SessionManager sessionManager;
-    private Button buttonRegister;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,45 +30,30 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
-        AccountController accountController= new AccountController();
+        accountController= new AccountController();
         sessionManager = new SessionManager(this);
-        if (sessionManager.isLoggedIn()) {
-
-            redirectToHome();
-        }
-
+        Context context = this;
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
-
-                
-
-                // Kiểm tra xem tài khoản có tồn tại và mật khẩu có đúng hay không
-//                if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
-//                    // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
-//                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
-//                }
-            }
-        });
-
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                accountController.login(username,password,account -> {
+                    if(account==null){
+                        Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
+                        sessionManager.saveSession(account.getName(), account.getEmail(), account.getId());
+                        Intent intent = new Intent(context, MainStartActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
             }
         });
     }
     public void onRegisterClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-    }
-    private void redirectToHome() {
-
     }
 
     // Phương thức xử lý khi người dùng nhấp vào "Forgot Password?"

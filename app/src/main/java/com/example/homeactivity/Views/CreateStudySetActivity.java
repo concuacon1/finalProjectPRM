@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.homeactivity.Controllers.StudySetController;
@@ -19,6 +21,7 @@ import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.CreateTermAdapter;
 import com.example.homeactivity.Utils.LoadingDialog;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private CreateTermAdapter createTermAdapter;
     LoadingDialog loadingDialog;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +94,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
             }
         });
 
-
+        ((ImageButton) findViewById(R.id.close_button_1)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void createStudySet() {

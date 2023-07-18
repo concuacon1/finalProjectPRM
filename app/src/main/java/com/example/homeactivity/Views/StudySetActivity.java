@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
@@ -30,6 +32,7 @@ public class StudySetActivity extends AppCompatActivity {
     private TextView tvTitle;
 
     private static final String id = "4zT2o8R6a1uJm3cnWE9G";
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,12 @@ public class StudySetActivity extends AppCompatActivity {
                 Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
                 intent.putExtra("updateStudySet", id);
                 startActivity(intent);
+            }
+        });
+        ((ImageButton) findViewById(R.id.close_button_2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

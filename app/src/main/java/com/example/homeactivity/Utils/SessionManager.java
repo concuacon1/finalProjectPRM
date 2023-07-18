@@ -21,7 +21,6 @@ public class SessionManager {
         editor.putString(KEY_EMAIL, email);
         editor.apply();
     }
-
     public boolean isLoggedIn() {
         return sharedPreferences.contains(KEY_USERNAME) && sharedPreferences.contains(KEY_EMAIL);
     }

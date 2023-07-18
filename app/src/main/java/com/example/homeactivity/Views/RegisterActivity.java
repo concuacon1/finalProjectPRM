@@ -32,12 +32,13 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String fullName = ((EditText) findViewById(R.id.editTextFullName)).getText().toString();
                 String username = editTextUsername.getText().toString();
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
 
-                if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty()||fullName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "\n" +
                                     "Please enter full information",
                             Toast.LENGTH_SHORT).show();

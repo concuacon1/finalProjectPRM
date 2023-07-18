@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,21 +23,17 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonRegister;
-    private ImageButton btnClose;
     private AccountController accountController;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
-        btnClose = findViewById(R.id.close_button_4);
-        accountController = new AccountController();
-        context = this;
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,21 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(this, "\n" +
                 "Sign Up Success!", Toast.LENGTH_SHORT).show();
         finish();
-    }
-    private void sendEmailVerification() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "Vui lòng kiểm tra email để xác thực tài khoản", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Lỗi gửi email xác thực: " + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
     }
 
 }

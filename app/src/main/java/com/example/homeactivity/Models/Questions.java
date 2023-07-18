@@ -1,19 +1,18 @@
 package com.example.homeactivity.Models;
 
-public class Question {
-    private String question;
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    private String correctAns;
-    private String selectedAns;
+public class Questions {
+    String question;
+    String optionA;
+    String optionB;
+    String optionC;
+    String optionD;
+    int correctAns;
+    int selectedAns;
 
-    public Question() {
+    public Questions() {
     }
 
-    public Question(String question, String optionA, String optionB, String optionC, String optionD,
-                    String correctAns, String selectedAns) {
+    public Questions(String question, String optionA, String optionB, String optionC, String optionD, int correctAns, int selectedAns) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
@@ -63,19 +62,19 @@ public class Question {
         this.optionD = optionD;
     }
 
-    public String getCorrectAns() {
+    public int getCorrectAns() {
         return correctAns;
     }
 
-    public void setCorrectAns(String correctAns) {
+    public void setCorrectAns(int correctAns) {
         this.correctAns = correctAns;
     }
 
-    public String getSelectedAns() {
+    public int getSelectedAns() {
         return selectedAns;
     }
 
-    public void setSelectedAns(String selectedAns) {
+    public void setSelectedAns(int selectedAns) {
         this.selectedAns = selectedAns;
     }
 }

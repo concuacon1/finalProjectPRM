@@ -1,28 +1,27 @@
 package com.example.homeactivity.Views;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Utils.SessionManager;
 
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextEmail;
     private Button buttonLogin;
-    private AccountController accountController;
-    private SessionManager sessionManager;
+
+    // Đối tượng HashMap để lưu trữ thông tin tài khoản người dùng
+    private HashMap<String, String> userAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

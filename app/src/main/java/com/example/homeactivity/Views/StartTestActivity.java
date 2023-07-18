@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.homeactivity.Controllers.TermController;
+import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 
 public class StartTestActivity extends AppCompatActivity {
@@ -36,7 +36,6 @@ public class StartTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this,TestActivity.class);
-                intent.putExtra("studySetID2",studySetId);
                 startActivity(intent);
             }
         });

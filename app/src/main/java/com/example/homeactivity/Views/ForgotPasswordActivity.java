@@ -7,12 +7,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +24,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void onResetPasswordClick(View view) {
+        // Xử lý gửi yêu cầu reset mật khẩu ở đây
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
 
         if (email.isEmpty()) {
-            Toast.makeText(this, "Please enter email to reset password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng nhập email để reset mật khẩu", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Password reset request has been sent to your email", Toast.LENGTH_SHORT).show();
+            // Xử lý gửi yêu cầu reset mật khẩu thành công
+            Toast.makeText(this, "Yêu cầu reset mật khẩu đã được gửi đến email của bạn", Toast.LENGTH_SHORT).show();
         }
     }
 }

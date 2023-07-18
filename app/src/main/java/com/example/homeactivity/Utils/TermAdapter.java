@@ -31,7 +31,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     @NonNull
     @Override
     public TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_result,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_term,parent,false);
         return new TermAdapter.TermViewHolder(view);
     }
 
@@ -62,8 +62,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTerm = itemView.findViewById(R.id.tv_title);
-            tvDefinition = itemView.findViewById(R.id.tv_title);
+            tvTerm = itemView.findViewById(R.id.tv_term);
+            tvDefinition = itemView.findViewById(R.id.tv_definition);
         }
     }
 

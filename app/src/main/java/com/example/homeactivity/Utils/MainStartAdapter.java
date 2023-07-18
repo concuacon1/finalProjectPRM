@@ -1,9 +1,11 @@
 package com.example.homeactivity.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,14 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Views.LoginActivity;
+import com.example.homeactivity.Views.MainStartActivity;
+import com.example.homeactivity.Views.StudySetActivity;
 
 import java.util.List;
 
 public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.TermViewHolder >{
+    private Context context;
     private List<StudySet> studySetList;
 
-    public MainStartAdapter(List<StudySet> list) {
+    public MainStartAdapter(List<StudySet> list, Context context) {
         this.studySetList = list;
+        this.context = context;
     }
 
     @NonNull
@@ -36,6 +43,15 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
             return;
         }
         holder.quiz_name.setText(studySet.getTitle());
+
+        holder.startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, StudySetActivity.class);
+                intent.putExtra("studySetId",studySet.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -45,11 +61,13 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
         private TextView quiz_name;
+        private Button startButton;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
 
             quiz_name = itemView.findViewById(R.id.quiz_name);
+            startButton = itemView.findViewById(R.id.btnStart);
         }
     }
 }

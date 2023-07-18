@@ -51,7 +51,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
         studySetController.listAllStudySets( termList ->{
-            mainStartAdapter = new MainStartAdapter(termList);
+            mainStartAdapter = new MainStartAdapter(termList,this);
             popularView.setAdapter(mainStartAdapter);
         });
         accountController = new AccountController();

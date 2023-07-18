@@ -50,8 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
                     // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    //TO DO !! chưa có màn main page
-                    Intent intent = new Intent(LoginActivity.this, StudySetActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainStartActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

@@ -51,7 +51,8 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        studySetId = "CQtc0QhQ3WkaRtC2Ntz5";
+        Intent intent = getIntent();
+        studySetId = intent.getStringExtra("studySetID2");
         studySetController = new StudySetController();
         termController = new TermController();
 

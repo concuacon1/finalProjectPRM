@@ -88,7 +88,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnTest" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="47dp"

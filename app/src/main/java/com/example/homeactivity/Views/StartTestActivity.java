@@ -21,20 +21,22 @@ public class StartTestActivity extends AppCompatActivity {
 
         termController = new TermController();
 
+
+        tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
+
+        Intent intent = getIntent();
+        String studySetId = intent.getStringExtra("studySetID1");
+        termController.listAllTerms(studySetId, studySet -> {
+            tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
+        });
+
         ((Button)findViewById(R.id.btn_start)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this,TestActivity.class);
+                intent.putExtra("studySetID2",studySetId);
                 startActivity(intent);
             }
         });
-        tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
-
-        Intent intent = getIntent();
-        //String studySetId = intent.getStringExtra("studySetId");
-        termController.listAllTerms("rdKlzh42W3RR3r8T59hp", studySet -> {
-            tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
-        });
-
     }
 }

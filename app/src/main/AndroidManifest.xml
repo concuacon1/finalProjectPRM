@@ -16,6 +16,12 @@
             android:name=".Views.TestActivity"
             android:exported="false" />
         <activity
+            android:name=".Views.MainStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.CreateStudySetActivity"
             android:exported="false" />
         <activity
@@ -28,7 +34,7 @@
             android:name=".Views.StartTestActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.SearchActivity"
+            android:name=".Views.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

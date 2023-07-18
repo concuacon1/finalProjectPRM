@@ -61,6 +61,7 @@ public class TestActivity extends AppCompatActivity {
         nextQuestion = findViewById(R.id.next_question);
         menu = findViewById(R.id.test_menu);
         questionNumber = 0;
+        studySetId = intent.getStringExtra("studySetID2");
         studySetController.findStudySet(studySetId, studySet -> {
             tvstudyName.setText(studySet.getTitle());
         });

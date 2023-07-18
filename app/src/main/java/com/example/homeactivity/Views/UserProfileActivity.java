@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.AccountController;
@@ -26,6 +27,12 @@ public class UserProfileActivity extends AppCompatActivity {
         nick_name = findViewById(R.id.nickname_user);
         email=findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirstWord);
+        ((ImageView)findViewById(R.id.btn_back_userprofile)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         String id = getIntent().getStringExtra("ID");
         accountController = new AccountController();
         accountController.findAccount(id,account -> {

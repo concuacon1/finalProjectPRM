@@ -52,7 +52,7 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     }
     private void OnClickStudySet(StudySet studySet) {
         Intent intent = new Intent(mContext, StudySetActivity.class);
-        intent.putExtra("ID",studySet.getId());
+        intent.putExtra("studySetId",studySet.getId());
         mContext.startActivity(intent);
     }
 

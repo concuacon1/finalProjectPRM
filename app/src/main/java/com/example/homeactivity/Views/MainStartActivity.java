@@ -101,6 +101,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         if(item.getItemId() == R.id.nav_studyset){
             Intent intent_course = new Intent(MainStartActivity.this,StudySetActivity.class);
+            intent_course.putExtra("studySetId",id);
             startActivity(intent_course);}
 
 

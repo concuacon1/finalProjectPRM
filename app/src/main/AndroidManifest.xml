@@ -25,6 +25,12 @@
             android:name=".Views.StartTestActivity"
             android:exported="false" />
         <activity
+            android:name=".Views.MainStartActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Views.UserProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".Views.StudySetActivity"
             android:exported="true"></activity>
         <activity

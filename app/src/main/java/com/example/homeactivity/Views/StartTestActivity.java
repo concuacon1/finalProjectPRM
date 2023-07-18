@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
@@ -23,6 +24,12 @@ public class StartTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this,TestActivity.class);
                 startActivity(intent);
+            }
+        });
+        ((ImageView)findViewById(R.id.btn_back_start_test)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
         tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);

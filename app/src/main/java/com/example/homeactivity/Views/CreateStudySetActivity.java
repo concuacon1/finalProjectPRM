@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.homeactivity.Controllers.StudySetController;
@@ -47,7 +48,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         termController = new TermController();
 
         loadingDialog = new LoadingDialog(CreateStudySetActivity.this);
-
+        ((ImageView)findViewById(R.id.btn_back_create_studyset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         Intent intent = getIntent();
         createTermAdapter = new CreateTermAdapter(this);
         String studySetId = intent.getStringExtra("updateStudySet");

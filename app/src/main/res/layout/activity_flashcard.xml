@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/app_background"
     tools:context=".Views.CreateStudySetActivity">
-
+    <ImageView
+        android:id="@+id/back_btn_FlashCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="16dp"
+        android:background="@color/term_background"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <FrameLayout
         android:id="@+id/flash_card"
         android:layout_width="match_parent"

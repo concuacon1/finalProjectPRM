@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
@@ -41,13 +42,18 @@ public class StudySetActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvTerm.setLayoutManager(linearLayoutManager);
-
+        ((ImageView)findViewById(R.id.btn_back_studyset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         //load data
         studySetController = new StudySetController();
         termList = new TermController();
 
         Intent intent = getIntent();
-        String studySetId = intent.getStringExtra("studySetId");
+        String id = intent.getStringExtra("studySetId");
         studySetController.findStudySet(id, studySet -> {
             tvTitle.setText(studySet.getTitle());
         });
@@ -69,7 +75,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
-                intent.putExtra("studySetID", studySetId);
+                intent.putExtra("studySetID", id);
                 startActivity(intent);
                 startActivity(intent);
             }

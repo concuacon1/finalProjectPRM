@@ -14,13 +14,24 @@
         android:layout_height="match_parent"
         android:background="@color/app_background"
         tools:context=".Views.StudySetActivity">
+        <ImageView
+            android:id="@+id/btn_back_studyset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="16dp"
+            android:background="@color/term_background"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="68dp"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/text_color"

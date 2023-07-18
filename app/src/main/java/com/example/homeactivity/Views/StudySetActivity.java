@@ -9,12 +9,14 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.Models.Term;
@@ -57,9 +59,12 @@ public class StudySetActivity extends AppCompatActivity {
 
         intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(id, studySet -> {
+        studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
-            tvAuthor.setText("Mai Viet Hung");
+            AccountController controller = new AccountController();
+            controller.findAccount(studySet.getUserId(), account -> {
+                tvAuthor.setText(account.getName());
+            });
         });
 
         termController.listAllTerms(studySetId, termList ->{
@@ -83,7 +88,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
-                intent.putExtra("studySetID1",studySetId);
+                intent.putExtra("studySetID",studySetId);
                 startActivity(intent);
             }
         });

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +55,12 @@ public class StudySetActivity extends AppCompatActivity {
         rcvTerm = findViewById(R.id.rcv_list_term);
         btnEdit = findViewById(R.id.btnEdit);
         btnDelete = findViewById(R.id.btnDelete);
-
+        ((ImageView)findViewById(R.id.btn_back_studyset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         sessionManager = new SessionManager(this);
 
         termAdapter = new TermAdapter(this);

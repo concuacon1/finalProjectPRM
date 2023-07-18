@@ -8,8 +8,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Views.MainStartActivity"
+
     >
-<!--    tools:openDrawer="start"-->
+    <!--    tools:openDrawer="start"-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_gravity="start"
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lineat1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,21 +36,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/term_background"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/menu" />
 
             <LinearLayout
+                android:id="@+id/layout_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#7EC5E4"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingTop="32dp"
-                android:paddingBottom="30dp">
+                android:paddingBottom="30dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="93dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Wellcome to Wizard Test"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -86,25 +101,100 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:elevation="5dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_name">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="MyStudySet"
+                        android:textSize="18sp"
+                        android:padding="3dp"/>
+                    <TextView
+                        android:id="@+id/num_mystudyset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:layout_marginTop="8dp"
+                        android:textSize="22sp"
+                        android:textColor="@color/black"
+
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_view_studyset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="View MyStudySet" />
+
+                    <Button
+                        android:id="@+id/btn_create_studyset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Create StudySet" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewPopular"/>
+
             <TextView
                 android:id="@+id/textViewPopular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Popular"
                 android:textAlignment="center"
-                android:textSize="30dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/popularView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:textSize="30dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:layout_editor_absoluteY="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_profile"/>
 
             <Button
                 android:id="@+id/popularBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VIEW MORE" />
+                android:text="VIEW MORE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/popularView"/>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.drawerlayout.widget.DrawerLayout>

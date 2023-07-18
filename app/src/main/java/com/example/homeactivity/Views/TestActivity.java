@@ -180,15 +180,16 @@ public class TestActivity extends AppCompatActivity {
         builder.show();
         AlertDialog alertDialog = builder.create();
         cancelB.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
 
         confirmB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDialog.dismiss();
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
                 startActivity(intent);
                 TestActivity.this.finish();

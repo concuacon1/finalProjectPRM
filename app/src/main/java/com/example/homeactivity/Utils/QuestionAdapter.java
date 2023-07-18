@@ -13,35 +13,35 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homeactivity.Controllers.StudySetController;
-import com.example.homeactivity.Models.Questions;
+import com.example.homeactivity.Models.Question;
 import com.example.homeactivity.R;
 
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    private List<Questions> questionsList;
+    private List<Question> questionList;
 
-    public QuestionAdapter(List<Questions> questionsList) {
-        this.questionsList = questionsList;
+    public QuestionAdapter(List<Question> questionList) {
+        this.questionList = questionList;
     }
 
     @NonNull
     @Override
     public QuestionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.question_item_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_question, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
-        holder.setData(position);
+        Question question = questionList.get(position);
+        holder.setData(question);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return questionList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,38 +58,42 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             optionC = itemView.findViewById(R.id.optionC);
             optionD = itemView.findViewById(R.id.optionD);
             prevSelectedBtn = null;
-            prevSelectedBtn = null;
         }
 
-        private void setData(final int position) {
-            ques.setText(questionsList.get(position).getQuestion());
-            optionA.setText(questionsList.get(position).getOptionA());
-            optionB.setText(questionsList.get(position).getOptionB());
-            optionC.setText(questionsList.get(position).getOptionC());
-            optionD.setText(questionsList.get(position).getOptionD());
+        private void setData(Question q) {
+            question.setText(q.getQuestion());
+            optionA.setText(q.getOptionA());
+            optionB.setText(q.getOptionB());
+            optionC.setText(q.getOptionC());
+            optionD.setText(q.getOptionD());
 
             optionA.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectOption(optionA, 1, position);
+                    Log.i("Btn", "BTN A");
+                    selectOption(optionA, q.getOptionA(), q);
                 }
             });
             optionB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectOption(optionB, 2, position);
+                    Log.i("Btn", "BTN B");
+                    selectOption(optionB, q.getOptionB(), q);
                 }
             });
             optionC.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectOption(optionC, 3, position);
+
+                    Log.i("Btn", "BTN C");
+                    selectOption(optionC, q.getOptionC(), q);
                 }
             });
             optionD.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectOption(optionD, 4, position);
+                    Log.i("Btn", "BTN D");
+                    selectOption(optionD, q.getOptionD(), q);
                 }
             });
         }

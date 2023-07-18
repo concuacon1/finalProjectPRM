@@ -12,27 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Models.StudySet;
-import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Views.LoginActivity;
-import com.example.homeactivity.Views.MainStartActivity;
 import com.example.homeactivity.Views.StudySetActivity;
 
 import java.util.List;
 
 public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.TermViewHolder >{
+    private Context context;
     private List<StudySet> studySetList;
-    private Context mContext;
 
-    public MainStartAdapter(List<StudySet> list, Context mContext) {
-        this.mContext = mContext;
+    public MainStartAdapter(List<StudySet> list, Context context) {
         this.studySetList = list;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public MainStartAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quiz_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_study_set_main,parent,false);
         return new MainStartAdapter.TermViewHolder(view);
     }
 
@@ -43,17 +40,15 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
             return;
         }
         holder.quiz_name.setText(studySet.getTitle());
-        holder.view_quiz.setOnClickListener(new View.OnClickListener() {
+
+        holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnClickStudySet(studySet);
+                Intent intent = new Intent(context, StudySetActivity.class);
+                intent.putExtra("studySetId",studySet.getId());
+                context.startActivity(intent);
             }
         });
-    }
-    private void OnClickStudySet(StudySet studySet) {
-        Intent intent = new Intent(mContext, StudySetActivity.class);
-        intent.putExtra("studySetId",studySet.getId());
-        mContext.startActivity(intent);
     }
 
     @Override
@@ -63,12 +58,13 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
         private TextView quiz_name;
-        private Button view_quiz;
+        private Button startButton;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
+
             quiz_name = itemView.findViewById(R.id.quiz_name);
-            view_quiz = itemView.findViewById(R.id.button);
+            startButton = itemView.findViewById(R.id.btnStart);
         }
     }
 }

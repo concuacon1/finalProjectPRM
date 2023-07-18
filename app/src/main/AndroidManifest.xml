@@ -29,7 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".Views.StudySetActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Views.SearchActivity"
             android:exported="true">

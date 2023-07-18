@@ -15,10 +15,10 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/first_word"
+        android:id="@+id/first_word_name"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/circle"
         android:backgroundTint="#4CAF50"

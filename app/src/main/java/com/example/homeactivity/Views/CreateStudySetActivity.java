@@ -204,14 +204,14 @@ public class CreateStudySetActivity extends AppCompatActivity {
                         Toast.makeText(CreateStudySetActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 }
+                loadingDialog.dismisssDialog();
+                Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
+                intent.putExtra("studySetId",studySet.getId());
+                startActivity(intent);
+                finish();
             }
 
         });
-        loadingDialog.dismisssDialog();
-        Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
-        intent.putExtra("studySetId",studySet.getId());
-        startActivity(intent);
-        finish();
     }
 
 }

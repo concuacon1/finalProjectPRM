@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,8 @@ public class SearchActivity extends AppCompatActivity {
     Toolbar toolbar;
     SearchView searchView;
     SearchResultAdapter adapter;
+    private final Handler searchHandler = new Handler();
+    private final long SEARCH_DELAY = 3000; // 5 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,21 +68,20 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                StudySetController controller = new StudySetController();
-                controller.searchStudySets(query, studySets -> {
-                    Log.i("List", studySets.size() + " a");
-                    adapter = new SearchResultAdapter(studySets);
-                    recyclerView.setAdapter(adapter);
-                });
-
+                doSearch(query);
                 // Save the recent query
                 handleSearch(query);
+
+                searchView.clearFocus();
 
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // Cancel the previous search and schedule a new one after a delay
+                searchHandler.removeCallbacksAndMessages(null);
+                searchHandler.postDelayed(() -> doSearch(newText), SEARCH_DELAY);
                 return false;
             }
         });
@@ -112,10 +114,26 @@ public class SearchActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void doSearch(String query) {
+        StudySetController controller = new StudySetController();
+        controller.searchStudySets(query, studySets -> {
+            adapter = new SearchResultAdapter(studySets);
+            recyclerView.setAdapter(adapter);
+        });
+    }
+
+
     public void handleSearch(String query) {
         SearchRecentSuggestions searchRecentSuggestions = new SearchRecentSuggestions(this,
                 SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 
         searchRecentSuggestions.saveRecentQuery(query, null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Remove any pending search requests when the activity is destroyed
+        searchHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }

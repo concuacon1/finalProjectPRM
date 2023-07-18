@@ -32,10 +32,10 @@
             android:exported="false" />
 
         <activity
-            android:name=".Views.StartTestActivity"
+            android:name=".Views.StudySetActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.LoginActivity"
+            android:name=".Views.StartTestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +50,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        studySetId = "4uM1FetD6aRPQJbffDnf";
+        studySetId = "CQtc0QhQ3WkaRtC2Ntz5";
         studySetController = new StudySetController();
         termController = new TermController();
 
@@ -123,7 +124,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-
     private void setSnapHelper() {
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(questionView);
@@ -170,15 +170,15 @@ public class TestActivity extends AppCompatActivity {
         });
 
     }
-    public void submitTest(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
-        builder.setCancelable(true);
 
-        View view = getLayoutInflater().inflate(R.layout.dialog_layout,null);
+    private void submitTest() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_layout, null);
         Button cancelB = view.findViewById(R.id.btn_cancel);
         Button confirmB = view.findViewById(R.id.btn_confirm);
         builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
+        builder.show();
+        AlertDialog alertDialog = builder.create();
         cancelB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

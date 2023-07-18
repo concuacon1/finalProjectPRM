@@ -20,6 +20,7 @@ import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.CreateTermAdapter;
 import com.example.homeactivity.Utils.LoadingDialog;
+import com.example.homeactivity.Utils.SessionManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private EditText etDescription;
     private CreateTermAdapter createTermAdapter;
     LoadingDialog loadingDialog;
+    SessionManager sessionManager;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -49,7 +51,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         etDescription = findViewById(R.id.etDescription);
         studySetController = new StudySetController();
         termController = new TermController();
-
+        sessionManager = new SessionManager(this);
         loadingDialog = new LoadingDialog(CreateStudySetActivity.this);
 
         Intent intent = getIntent();
@@ -107,6 +109,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         StudySet studySet = new StudySet();
         studySet.setTitle(etTitle.getText().toString());
         studySet.setDescription(etDescription.getText().toString());
+        studySet.setUserId(sessionManager.getId());
         if (studySet.getTitle() == null || studySet.getTitle().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
             return;
@@ -151,6 +154,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         studySet.setId(studySetId);
         studySet.setTitle(etTitle.getText().toString());
         studySet.setDescription(etDescription.getText().toString());
+        studySet.setUserId(sessionManager.getId());
         if (studySet.getTitle().matches("")) {
             Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
             return;

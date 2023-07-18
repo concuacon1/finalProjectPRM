@@ -36,6 +36,8 @@ public class SessionManager {
         return sharedPreferences.getString(KEY_EMAIL, "");
     }
 
+    public String getId() {return  sharedPreferences.getString(KEY_ACCOUNT_ID, "");}
+
     public void clearSession() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();

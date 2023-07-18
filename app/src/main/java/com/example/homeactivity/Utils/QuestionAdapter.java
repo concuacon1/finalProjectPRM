@@ -1,5 +1,7 @@
 package com.example.homeactivity.Utils;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Models.Question;
@@ -43,15 +46,18 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView question;
-        private Button optionA, optionB, optionC, optionD;;
+        private Button optionA, optionB, optionC, optionD, prevSelectedBtn;
+        private Context context;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
             question = itemView.findViewById(R.id.tv_question);
             optionA = itemView.findViewById(R.id.optionA);
             optionB = itemView.findViewById(R.id.optionB);
             optionC = itemView.findViewById(R.id.optionC);
             optionD = itemView.findViewById(R.id.optionD);
+            prevSelectedBtn = null;
         }
 
         private void setData(Question q) {
@@ -93,14 +99,27 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         private void selectOption(Button btn, String chosenOption, Question q) {
-            // Set the selected button background
-            btn.setBackgroundResource(R.drawable.selected_button);
-            q.setSelectedAns(chosenOption);
 
-            // Loop through all option buttons and set unselected background for non-selected options
-            for (Button optionButton : new Button[]{optionA, optionB, optionC, optionD}) {
-                if (optionButton != btn) {
-                    optionButton.setBackgroundResource(R.drawable.unselected_button);
+            if (prevSelectedBtn == null) {
+                // Set the selected button background
+                btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.selected_button));
+                q.setSelectedAns(chosenOption);
+                prevSelectedBtn = btn;
+                Log.i("prevBtn", "a: " + prevSelectedBtn);
+
+            } else {
+                Log.i("prevBtn", "b: " + prevSelectedBtn);
+                if (prevSelectedBtn.getId() == btn.getId()) {
+                    Log.i("prevBtn", "c: " + prevSelectedBtn);
+                    btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.unselected_button));
+                    q.setSelectedAns(null);
+                    prevSelectedBtn = null;
+                } else {
+                    Log.i("prevBtn", "d: " + prevSelectedBtn);
+                    prevSelectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.unselected_button));
+                    btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.selected_button));
+                    q.setSelectedAns(chosenOption);
+                    prevSelectedBtn = btn;
                 }
             }
         }

@@ -25,6 +25,15 @@
             android:name=".Views.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".Views.StartTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.CreateStudySetActivity"
             android:exported="false" />
         <activity
@@ -35,7 +44,7 @@
             android:name=".Views.StudySetActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.StartTestActivity"
+            android:name=".Views.LoginActivity"
             android:exported="true">
         </activity>
         <activity

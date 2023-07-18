@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.SessionManager;
 import com.google.firebase.Timestamp;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private AccountController accountController;
     private EditText name, nick_name, email;
 
-    private static final String id = "pRUsw0OO4gXmPBZ73XHm";
+    SessionManager sessionManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
         nick_name = findViewById(R.id.nickname);
         email=findViewById(R.id.email);
         update_btn = findViewById(R.id.update_btn);
-
+        sessionManager = new SessionManager(this);
         accountController = new AccountController();
-        accountController.findAccount(id,account -> {
+        accountController.findAccount(sessionManager.getId(),account -> {
             name.setText(account.getName());
             nick_name.setText(account.getNickname());
             email.setText(account.getEmail());
@@ -52,7 +53,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         String account_name = name.getText().toString().trim();
         String account_nickname = nick_name.getText().toString().trim();
         String account_email = email.getText().toString().trim();
-        return new Account(id,account_name, account_nickname, account_email, currentTimestamp);
+        return new Account(sessionManager.getId(),account_name, account_nickname, account_email, currentTimestamp);
 
     }
 

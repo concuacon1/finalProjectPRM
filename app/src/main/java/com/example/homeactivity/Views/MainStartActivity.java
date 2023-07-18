@@ -23,12 +23,12 @@ import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.MainStartAdapter;
+import com.example.homeactivity.Utils.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
 
 public class MainStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String ID = "ID";
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     StudySetController studySetController;
@@ -38,11 +38,13 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
     private AccountController accountController;
-    private static final String id = "pRUsw0OO4gXmPBZ73XHm";
+    SessionManager sessionManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_start);
+        sessionManager = new SessionManager(this);
+        String username = sessionManager.getUsername();
         /*---------------------recycleview------------------------*/
         popularView = findViewById(R.id.popularView);
         first_word = findViewById(R.id.first_word);
@@ -54,12 +56,9 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             mainStartAdapter = new MainStartAdapter(termList,this);
             popularView.setAdapter(mainStartAdapter);
         });
-        accountController = new AccountController();
-        accountController.findAccount(id,account -> {
-            name_user.setText(account.getName());
+            name_user.setText(username);
             String account_name = name_user.getText().toString().trim().substring(0,1);
             first_word.setText(account_name);
-        });
 
         /*---------------------Hooks------------------------*/
 
@@ -95,7 +94,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         if(item.getItemId() == R.id.nav_profile){
             Intent intent_profine = new Intent(MainStartActivity.this,UserProfileActivity.class);
-            intent_profine.putExtra("ID",id);
+            intent_profine.putExtra("ID",sessionManager.getId());
             startActivity(intent_profine);}
 
         if(item.getItemId() == R.id.nav_logout){

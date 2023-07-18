@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private AccountController accountController;
     private SessionManager sessionManager;
+    private Button buttonRegister;
 
 
     @Override
@@ -42,14 +43,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
-                AccountController accountController = new AccountController();
-                accountController.login(username,password,account -> {
-                    if(account==null){
-                        Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                // Kiểm tra xem tài khoản có tồn tại và mật khẩu có đúng hay không
+                if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
+                    // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }

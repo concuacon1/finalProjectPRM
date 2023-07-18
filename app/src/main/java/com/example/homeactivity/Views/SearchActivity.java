@@ -1,71 +1,46 @@
 package com.example.homeactivity.Views;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-
-import android.widget.ListView;
+import android.widget.CursorAdapter;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.SearchResultAdapter;
 import com.example.homeactivity.Utils.SearchSuggestionProvider;
 
-import java.util.ArrayList;
+public class SearchActivity extends AppCompatActivity {
 
-public class SearchActivity extends AppCompatActivity{
-
-    ListView listView;
-    TextView tvDelAll, tvSearchHistory;
-    ImageButton btnDelAll;
-
+    RecyclerView recyclerView;
     Toolbar toolbar;
     SearchView searchView;
+    SearchResultAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        handleSearch(getIntent());
+        recyclerView = findViewById(R.id.rv_search_result);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
 
-        listView = findViewById(R.id.lst_hint);
-        tvDelAll = findViewById(R.id.tv_delete_history);
-        btnDelAll = findViewById(R.id.btn_delete_history);
-        tvSearchHistory = findViewById(R.id.tv_search_history);
         toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-    }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        handleSearch(intent);
-    }
-
-    public void handleSearch( Intent intent)
-    {
-        if (Intent.ACTION_SEARCH.equalsIgnoreCase(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            SearchRecentSuggestions searchRecentSuggestions=new SearchRecentSuggestions(this,
-                    SearchSuggestionProvider.AUTHORITY,SearchSuggestionProvider.MODE);
-
-            searchRecentSuggestions.saveRecentQuery(query,null);
-        }
     }
 
     @Override
@@ -81,12 +56,66 @@ public class SearchActivity extends AppCompatActivity{
         searchView.setIconifiedByDefault(true); // Set to true for iconified view by default
         searchView.setSubmitButtonEnabled(true); // Disable submit button
 
-        SearchManager searchManager = (SearchManager) getSystemService(SearchActivity.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint(getResources().getString(R.string.search_hint));
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                StudySetController controller = new StudySetController();
+                controller.searchStudySets(query, studySets -> {
+                    Log.i("List", studySets.size() + " a");
+                    adapter = new SearchResultAdapter(studySets);
+                    recyclerView.setAdapter(adapter);
+                });
+
+                // Save the recent query
+                handleSearch(query);
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                // Retrieve the suggestion and update the RecyclerView
+                CursorAdapter suggestionAdapter = searchView.getSuggestionsAdapter();
+                Cursor cursor = suggestionAdapter.getCursor();
+                if (cursor.moveToPosition(position)) {
+                    @SuppressLint("Range") String suggestion = cursor
+                            .getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1));
+                    StudySetController controller = new StudySetController();
+                    controller.searchStudySets(suggestion, studySets -> {
+                        adapter = new SearchResultAdapter(studySets);
+                        recyclerView.setAdapter(adapter);
+                    });
+                }
+
+                return true;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void handleSearch(String query) {
+        SearchRecentSuggestions searchRecentSuggestions = new SearchRecentSuggestions(this,
+                SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+
+        searchRecentSuggestions.saveRecentQuery(query, null);
     }
 }

@@ -86,19 +86,19 @@ public class LoginActivity extends AppCompatActivity {
     // Xử lý đặt lại mật khẩu, kiểm tra email và gửi thông báo cho người dùng
     private void resetPassword(String email) {
         // Kiểm tra email trong danh sách tài khoản
-        boolean emailExists = false;
-        for (String username : userAccounts.keySet()) {
-            if (userAccounts.get(username).equals(email)) {
-                emailExists = true;
-                break;
-            }
-        }
-
-        if (emailExists) {
-            // Gửi email chứa mật khẩu tới người dùng (trong trường hợp thực tế, bạn sẽ gửi thông báo đặt lại mật khẩu)
-            Toast.makeText(this, "Reset password email sent", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Email not found", Toast.LENGTH_SHORT).show();
-        }
+//        boolean emailExists = false;
+//        for (String username : userAccounts.keySet()) {
+//            if (userAccounts.get(username).equals(email)) {
+//                emailExists = true;
+//                break;
+//            }
+//        }
+//
+//        if (emailExists) {
+//            // Gửi email chứa mật khẩu tới người dùng (trong trường hợp thực tế, bạn sẽ gửi thông báo đặt lại mật khẩu)
+//            Toast.makeText(this, "Reset password email sent", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Email not found", Toast.LENGTH_SHORT).show();
+//        }
     }
 }

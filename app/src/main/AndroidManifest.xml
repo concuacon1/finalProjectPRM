@@ -25,6 +25,9 @@
             android:name=".Views.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".Views.StartTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.CreateStudySetActivity"
             android:exported="false" />
         <activity

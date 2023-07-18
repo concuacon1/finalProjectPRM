@@ -50,7 +50,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(ResetPasswordActivity.this,
                                     "\n" +
-                                            "Password reset link could not be sent. Please check your email address again or try again later.",
+                                            "Password reset link could not be sent. Please check your email address again or try again laterdB.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

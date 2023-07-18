@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.TermController;
-import com.example.homeactivity.Models.Questions;
+import com.example.homeactivity.Models.Question;
 import com.example.homeactivity.R;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private TextView tvScore, tvCorrect, tvWrong, tvUncheck, tvNumberOfQues;
     private Button btnReAttempt, btnHome;
-    private List<Questions> listOfQuestion = new ArrayList<>();
+    private List<Question> listOfQuestion = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

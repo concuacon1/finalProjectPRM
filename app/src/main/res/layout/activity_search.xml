@@ -16,50 +16,16 @@
         android:background="@color/button_color"
         android:tint="@android:color/white"/>
 
-
-    <ListView
-        android:id="@+id/lst_hint"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_result"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_delete_history" />
-
-    <TextView
-        android:id="@+id/tv_search_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:text="Search history"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_delete_history"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <ImageButton
-        android:id="@+id/btn_delete_history"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/app_background"
-        android:onClick="onDeleteAll"
-        app:layout_constraintEnd_toStartOf="@+id/tv_delete_history"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@drawable/baseline_delete_24" />
-
-    <TextView
-        android:id="@+id/tv_delete_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Delete all"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_delete_history"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_delete_history"
-        android:onClick="onDeleteAll"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

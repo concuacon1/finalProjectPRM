@@ -33,13 +33,14 @@ public class TestActivity extends AppCompatActivity {
     private StudySetController studySetController;
 
     Intent intent = getIntent();
-    String studySetId = intent.getStringExtra("studySetId");
+    String studySetId = "4uM1FetD6aRPQJbffDnf";
 
     private List<Questions> listOfQuestion = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        studySetController = new StudySetController();
         init();
         QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
         questionView.setAdapter(questionAdapter);

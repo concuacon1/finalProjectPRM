@@ -43,7 +43,7 @@ public class StartTestActivity extends AppCompatActivity {
 
         //Intent intent = getIntent();
         //String studySetId = intent.getStringExtra("studySetId");
-        termController.listAllTerms("rdKlzh42W3RR3r8T59hp", studySet -> {
+        termController.listAllTerms("CQtc0QhQ3WkaRtC2Ntz5", studySet -> {
             tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
         });
 

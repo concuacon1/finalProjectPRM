@@ -49,7 +49,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        studySetId = "4uM1FetD6aRPQJbffDnf";
+        studySetId = "CQtc0QhQ3WkaRtC2Ntz5";
         studySetController = new StudySetController();
         termController = new TermController();
 
@@ -166,6 +166,8 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitTest();
+                Log.i("btn_submit","bbbbbbb");
+
             }
         });
 
@@ -173,7 +175,7 @@ public class TestActivity extends AppCompatActivity {
     public void submitTest(){
         AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
         builder.setCancelable(true);
-
+        Log.i("btn_submit","aaaaaaa");
         View view = getLayoutInflater().inflate(R.layout.dialog_layout,null);
         Button cancelB = view.findViewById(R.id.btn_cancel);
         Button confirmB = view.findViewById(R.id.btn_confirm);

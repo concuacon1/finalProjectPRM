@@ -12,7 +12,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -25,50 +24,30 @@ public class AccountController {
     }
 
 
-    public void createAccount(Account account, Consumer<String> onSuccess, Consumer<String> onError) {
-        String email = account.getEmail();
-        String nickname = account.getNickname();
+    public String createAccount(Account account) {
 
-        // Create a query to check if either email or nickname already exists
-        connector.getCollectionReference()
-                .whereIn("email", Arrays.asList(email, nickname))
-                .limit(1)
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        for (DocumentSnapshot documentSnapshot : querySnapshot) {
-                            // Check which field (email or nickname) matched the query
-                            String field = documentSnapshot.getString("email");
-                            if (field != null && field.equals(email)) {
-                                onError.accept("An account with this email already exists.");
-                            } else {
-                                onError.accept("An account with this nickname already exists.");
-                            }
-                            return;
-                        }
-                    }
+        account.setCreatedAt(Timestamp.now());
 
-                    // No existing account found, proceed with creating the new account
-                    account.setCreatedAt(Timestamp.now());
-                    WriteBatch batch = connector.getBatch();
-                    DocumentReference accountRef = connector.getDocumentReference();
-                    String id = accountRef.getId();
-                    account.setId(id);
-                    batch.set(accountRef, account);
-                    batch.commit()
-                            .addOnSuccessListener(aVoid -> {
-                                // Account creation successful
-                                onSuccess.accept("Register account success");
-                            })
-                            .addOnFailureListener(e -> {
-                                // Batch write failed
-                                Log.e("FireStoreError", "Failed to create Account: " + e.getMessage());
-                                onError.accept("Failed to create Account");
-                            });
-                })
-                .addOnFailureListener(e -> {
-                    throw new RuntimeException("Failed to check email/nickname availability: " + e.getMessage());
-                });
+        WriteBatch batch = connector.getBatch();
+
+        DocumentReference accountRef = connector.getDocumentReference();
+
+        // Set the ID for the Account object
+        String id = accountRef.getId();
+        account.setId(id);
+
+        // Add the document insertion operation to the batch
+        batch.set(accountRef, account);
+
+        // Commit the batch write operation
+        batch.commit()
+            .addOnFailureListener(e -> {
+                // Batch write failed
+                Log.e("FireStoreError", "Failed to create Account: " + e.getMessage());
+                throw new RuntimeException("Failed to create Account", e);
+            });
+
+        return id;
     }
 
 

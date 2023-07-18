@@ -1,7 +1,6 @@
 package com.example.homeactivity.Views;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,26 +17,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.homeactivity.Controllers.StudySetController;
-import com.example.homeactivity.Controllers.TermController;
-import com.example.homeactivity.Models.Question;
-import com.example.homeactivity.Models.Term;
+import com.example.homeactivity.Models.Questions;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.QuestionAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     private RecyclerView questionView;
-    private TextView tvNumberOfQuestion, tvstudyName, tvCurrentQuestion;
+    private TextView tvNumberOfQuestion, tvstudyName;
     private Button submitB;
     private ImageButton prevQuestion, nextQuestion;
-
+    private ImageView menu;
     private int questionNumber;
     private StudySetController studySetController;
-    private TermController termController;
 
     private List<Term> listTerm;
     private List<Question> listOfQuestion;
@@ -57,13 +50,14 @@ public class TestActivity extends AppCompatActivity {
         termController = new TermController();
 
         init();
-
+        QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
+        questionView.setAdapter(questionAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         questionView.setLayoutManager(layoutManager);
-
         setSnapHelper();
         setClickListeners();
+
     }
 
     private void init() {
@@ -73,10 +67,8 @@ public class TestActivity extends AppCompatActivity {
         submitB = findViewById(R.id.btn_submit);
         prevQuestion = findViewById(R.id.prev_question);
         nextQuestion = findViewById(R.id.next_question);
-        tvCurrentQuestion = findViewById(R.id.tv_current_question);
-
+        menu = findViewById(R.id.test_menu);
         questionNumber = 0;
-
         studySetController.findStudySet(studySetId, studySet -> {
             tvstudyName.setText(studySet.getTitle());
         });
@@ -136,7 +128,9 @@ public class TestActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 View view = snapHelper.findSnapView(recyclerView.getLayoutManager());
                 questionNumber = recyclerView.getLayoutManager().getPosition(view);
-                tvCurrentQuestion.setText(String.valueOf(questionNumber + 1));
+                studySetController.listAllStudySets(studySetId, studySet -> {
+                    tvNumberOfQuestion.setText(String.valueOf(questionNumber + 1) + " / " + String.valueOf(studySet.size()));
+                });
             }
 
             @Override
@@ -159,6 +153,7 @@ public class TestActivity extends AppCompatActivity {
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (questionNumber < listOfQuestion.size() - 1) {
                 if (questionNumber < listOfQuestion.size() - 1) {
                     questionView.smoothScrollToPosition(questionNumber + 1);
                 }

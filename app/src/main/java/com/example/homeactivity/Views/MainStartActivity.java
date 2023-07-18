@@ -24,11 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
+import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.MainStartAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MainStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String ID = "ID";
@@ -37,7 +39,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     StudySetController studySetController;
     MainStartAdapter mainStartAdapter;
     RecyclerView popularView;
-    TextView first_word,name_user,first_word_name;
+    TextView first_word,name_user,num_mystudyset;
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
     private AccountController accountController;
@@ -50,16 +52,26 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         popularView = findViewById(R.id.popularView);
         first_word = findViewById(R.id.first_word);
         name_user = findViewById(R.id.name_user);
+        num_mystudyset = findViewById(R.id.num_mystudyset);
         studySetController = new StudySetController();
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         popularView.addItemDecoration(itemDecoration);
 
+        ((Button)findViewById(R.id.btn_create_studyset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_course = new Intent(MainStartActivity.this, CreateStudySetActivity.class);
+                startActivity(intent_course);
+            }
+        });
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
         studySetController.listAllStudySets( termList ->{
             mainStartAdapter = new MainStartAdapter(termList,this);
             popularView.setAdapter(mainStartAdapter);
         });
+
+
         accountController = new AccountController();
         accountController.findAccount(id,account -> {
             name_user.setText(account.getName());
@@ -95,9 +107,6 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.search){
-            Intent intent_course = new Intent(MainStartActivity.this,SearchActivity.class);
-            startActivity(intent_course);}
 
         if(item.getItemId() == R.id.nav_studyset){
             Intent intent_course = new Intent(MainStartActivity.this,StudySetActivity.class);
@@ -110,9 +119,9 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             intent_profine.putExtra("ID",id);
             startActivity(intent_profine);}
 
-//        if(item.getItemId() == R.id.nav_logout){
-//            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
-//            startActivity(intent_logout);}
+        if(item.getItemId() == R.id.nav_logout){
+            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
+            startActivity(intent_logout);}
         return true;
     }
     public void updateNavHeader() {
@@ -120,7 +129,6 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView first_word_name = headerView.findViewById(R.id.first_word_name);
-        ImageView head_search = headerView.findViewById(R.id.head_search);
 
         accountController = new AccountController();
         accountController.findAccount(id,account -> {
@@ -128,13 +136,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             String account_name = name_user.getText().toString().trim().substring(0,1);
             first_word_name.setText(account_name);
         });
-        head_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainStartActivity.this, SearchActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override

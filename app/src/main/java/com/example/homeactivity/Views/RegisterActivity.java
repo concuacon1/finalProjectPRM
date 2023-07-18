@@ -7,6 +7,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.homeactivity.Controllers.AccountController;
+import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -15,12 +18,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonRegister;
+    private AccountController accountController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
@@ -35,7 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin",
+                    Toast.makeText(RegisterActivity.this, "\n" +
+                                    "Please enter full information",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     registerUser(username, email, password);
@@ -45,8 +49,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String username, String email, String password) {
-
-        Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+        AccountController accountController = new AccountController();
+        Account account = new Account();
+        account.setNickname(username);
+        account.setEmail(email);
+        account.setPassword(password);
+        accountController.createAccount(account,s -> {
+            Toast.makeText(this,s, Toast.LENGTH_SHORT).show();
+        }, e->{
+            Toast.makeText(this,e, Toast.LENGTH_SHORT).show();
+        });
+        Toast.makeText(this, "\n" +
+                "Sign Up Success!", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 }

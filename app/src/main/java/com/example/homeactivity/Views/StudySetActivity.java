@@ -37,8 +37,7 @@ public class StudySetActivity extends AppCompatActivity {
     Intent intent;
 
 
-    private static final String id = "4zT2o8R6a1uJm3cnWE9G";
-    @SuppressLint("MissingInflatedId")
+    private static final String id = "4uM1FetD6aRPQJbffDnf";;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,7 @@ public class StudySetActivity extends AppCompatActivity {
 
         intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(studySetId, studySet -> {
+        studySetController.findStudySet(id, studySet -> {
             tvTitle.setText(studySet.getTitle());
             tvAuthor.setText("Mai Viet Hung");
         });

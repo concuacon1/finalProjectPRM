@@ -1,16 +1,19 @@
 package com.example.homeactivity.Views;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
@@ -31,6 +34,8 @@ public class StudySetActivity extends AppCompatActivity {
     private TermController termController;
     private TextView tvTitle;
     private TextView tvAuthor;
+    Intent intent;
+
 
     private static final String id = "4zT2o8R6a1uJm3cnWE9G";
     @SuppressLint("MissingInflatedId")
@@ -51,7 +56,7 @@ public class StudySetActivity extends AppCompatActivity {
         studySetController = new StudySetController();
         termController = new TermController();
 
-        Intent intent = getIntent();
+        intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
         studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
@@ -96,6 +101,40 @@ public class StudySetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+        });        ((Button) findViewById(R.id.btnDelete)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteStudySet(studySetId);
+            }
         });
     }
+
+    private void deleteStudySet(String studySetId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Do you want to delete this study set?");
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                try {
+                    studySetController.deleteStudySet(studySetId);
+                    Toast.makeText(StudySetActivity.this, "Delete successfully", Toast.LENGTH_SHORT).show();
+                    finish();
+                } catch (Exception e) {
+                    Toast.makeText(StudySetActivity.this, "Delete error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
+

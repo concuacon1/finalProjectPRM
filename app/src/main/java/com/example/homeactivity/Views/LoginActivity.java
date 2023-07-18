@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
 
                 if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
-                    // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
                     Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();

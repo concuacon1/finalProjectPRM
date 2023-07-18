@@ -25,7 +25,7 @@ public class StartTestActivity extends AppCompatActivity {
 
 
         tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
-        backBtn=findViewById(R.id.btn_back);
+        backBtn=findViewById(R.id.btn_back_start_test);
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetID1");
         termController.listAllTerms(studySetId, studySet -> {

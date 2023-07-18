@@ -35,7 +35,7 @@
             android:name=".Views.StudySetActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.StartTestActivity"
+            android:name=".Views.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

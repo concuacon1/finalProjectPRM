@@ -21,10 +21,12 @@ import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.SessionManager;
 import com.example.homeactivity.Utils.TermAdapter;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class StudySetActivity extends AppCompatActivity {
@@ -36,7 +38,11 @@ public class StudySetActivity extends AppCompatActivity {
     private TermController termController;
     private TextView tvTitle;
     private TextView tvAuthor;
+
+    private Button btnEdit;
+    private Button btnDelete;
     Intent intent;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,11 @@ public class StudySetActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.txtTitle);
         tvAuthor = findViewById(R.id.tv_author);
         rcvTerm = findViewById(R.id.rcv_list_term);
+        btnEdit = findViewById(R.id.btnEdit);
+        btnDelete = findViewById(R.id.btnDelete);
+
+        sessionManager = new SessionManager(this);
+
         termAdapter = new TermAdapter(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -63,6 +74,13 @@ public class StudySetActivity extends AppCompatActivity {
             controller.findAccount(studySet.getUserId(), account -> {
                 tvAuthor.setText(account.getName());
             });
+            if (!Objects.equals(sessionManager.getId(), studySet.getUserId())) {
+                btnEdit.setVisibility(View.INVISIBLE);
+                btnDelete.setVisibility(View.INVISIBLE);
+            } else {
+                btnEdit.setVisibility(View.VISIBLE);
+                btnDelete.setVisibility(View.VISIBLE);
+            }
         });
 
         termController.listAllTerms(studySetId, termList ->{
@@ -86,11 +104,11 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
-                intent.putExtra("studySetID",studySetId);
+                intent.putExtra("studySetID1",studySetId);
                 startActivity(intent);
             }
         });
-        ((Button) findViewById(R.id.btnEdit)).setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
@@ -103,7 +121,8 @@ public class StudySetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-        });        ((Button) findViewById(R.id.btnDelete)).setOnClickListener(new View.OnClickListener() {
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteStudySet(studySetId);

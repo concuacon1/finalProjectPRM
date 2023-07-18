@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -123,7 +124,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-
     private void setSnapHelper() {
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(questionView);
@@ -166,32 +166,29 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitTest();
-                Log.i("btn_submit","bbbbbbb");
-
             }
         });
 
     }
-    public void submitTest(){
+
+    private void submitTest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
-        builder.setCancelable(true);
-        Log.i("btn_submit","aaaaaaa");
-        View view = getLayoutInflater().inflate(R.layout.dialog_layout,null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_layout, null);
         Button cancelB = view.findViewById(R.id.btn_cancel);
         Button confirmB = view.findViewById(R.id.btn_confirm);
         builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
+        builder.show();
+        AlertDialog alertDialog = builder.create();
         cancelB.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
             }
         });
 
         confirmB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
                 startActivity(intent);
                 TestActivity.this.finish();

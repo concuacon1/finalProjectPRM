@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchResultHolder> {
 
@@ -31,8 +34,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SearchResultHolder holder, int position) {
-        StudySet s =  studySetList.get(position);
-        holder.tvSearchResult.setText(s.getTitle());
+        if (studySetList != null && studySetList.size() > 0) {
+            StudySet s = studySetList.get(position);
+
+            holder.tvSearchResult.setText(s.getTitle());
+            if (s.getCreatedAt() != null){
+                Date date = s.getCreatedAt().toDate();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMM yyyy", Locale.ENGLISH);
+                holder.tvDate.setText(dateFormat.format(date));
+            }
+            else {
+                holder.tvDate.setText("Unknown");
+            }
+
+        }
     }
 
     @Override
@@ -42,11 +57,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     public class SearchResultHolder extends RecyclerView.ViewHolder {
         private TextView tvSearchResult;
-
+        private TextView tvDate;
 
         public SearchResultHolder(@NonNull View itemView) {
             super(itemView);
-            tvSearchResult = itemView.findViewById(R.id.tv_search_result);
+            tvSearchResult = itemView.findViewById(R.id.tv_title);
+            tvDate = itemView.findViewById(R.id.tv_created_date);
         }
     }
 }

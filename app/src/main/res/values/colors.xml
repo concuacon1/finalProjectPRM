@@ -12,4 +12,5 @@
     <color name="selected_button">#9AFFF6</color>
     <color name="unselected_button">#FFFFFFFF</color>
     <color name="danger">#FF2B2B</color>
+    <color name="soft_text">#535353</color>
 </resources>

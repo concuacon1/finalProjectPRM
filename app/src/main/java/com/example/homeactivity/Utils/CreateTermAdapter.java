@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Views.CreateStudySetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,9 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
     public void NewList() {
         mListTerm = new ArrayList<>();
-        mListTerm.add(new Term());
+        for (int i =0; i<5; i++) {
+            mListTerm.add(new Term());
+        }
     }
     @NonNull
     @Override
@@ -67,11 +71,16 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String inputValue = holder.etTerm.getText().toString();
+                if (mListTerm.size()>5) {
+                    String inputValue = holder.etTerm.getText().toString();
 
-                mListTerm.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mListTerm.size());
+                    mListTerm.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, mListTerm.size());
+                } else {
+                    Toast.makeText(mContext, "Need at least 5 terms", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         holder.etTerm.addTextChangedListener(new TextWatcher() {

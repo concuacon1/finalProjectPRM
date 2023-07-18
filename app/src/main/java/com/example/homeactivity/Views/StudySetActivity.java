@@ -38,8 +38,6 @@ public class StudySetActivity extends AppCompatActivity {
     private TextView tvAuthor;
     Intent intent;
 
-
-    private static final String id = "4uM1FetD6aRPQJbffDnf";;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

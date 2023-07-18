@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                // Kiểm tra xem tài khoản có tồn tại và mật khẩu có đúng hay không
                 if (userAccounts.containsKey(username) && userAccounts.get(username).equals(password)) {
                     // Xử lý đăng nhập thành công, bạn có thể chuyển người dùng đến màn hình chính của ứng dụng
                     Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();

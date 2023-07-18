@@ -13,7 +13,9 @@ import com.example.homeactivity.R;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public class RegisterActivity extends AppCompatActivity {
+        // ...
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

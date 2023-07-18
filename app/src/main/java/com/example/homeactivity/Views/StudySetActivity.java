@@ -30,6 +30,7 @@ public class StudySetActivity extends AppCompatActivity {
     private StudySetController studySetController;
     private TermController termController;
     private TextView tvTitle;
+    private TextView tvAuthor;
 
     private static final String id = "4zT2o8R6a1uJm3cnWE9G";
     @SuppressLint("MissingInflatedId")
@@ -39,6 +40,7 @@ public class StudySetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_study_set);
         tvTermsNumber = findViewById(R.id.tv_terms_number);
         tvTitle = findViewById(R.id.txtTitle);
+        tvAuthor = findViewById(R.id.tv_author);
         rcvTerm = findViewById(R.id.rcv_list_term);
         termAdapter = new TermAdapter(this);
 
@@ -51,11 +53,12 @@ public class StudySetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetId");
-        studySetController.findStudySet(id, studySet -> {
+        studySetController.findStudySet(studySetId, studySet -> {
             tvTitle.setText(studySet.getTitle());
+            tvAuthor.setText("Mai Viet Hung");
         });
 
-        termController.listAllTerms(id, termList ->{
+        termController.listAllTerms(studySetId, termList ->{
             termAdapter.SetData(termList);
             tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
 
@@ -76,6 +79,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
+                intent.putExtra("studySetID1",studySetId);
                 startActivity(intent);
             }
         });
@@ -83,7 +87,7 @@ public class StudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, CreateStudySetActivity.class);
-                intent.putExtra("updateStudySet", id);
+                intent.putExtra("updateStudySet", studySetId);
                 startActivity(intent);
             }
         });

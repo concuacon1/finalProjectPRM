@@ -17,15 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Views.CreateStudySetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.CreateStudySetViewHolder>{
+public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.CreateStudySetViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Term> mListTerm;
 
     public CreateTermAdapter(Context mContext) {
@@ -44,14 +43,15 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
 
     public void NewList() {
         mListTerm = new ArrayList<>();
-        for (int i =0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             mListTerm.add(new Term());
         }
     }
+
     @NonNull
     @Override
     public CreateStudySetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_create_edit_term,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_create_edit_term, parent, false);
         return new CreateStudySetViewHolder(view);
     }
 
@@ -62,7 +62,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
             return;
         }
 
-        holder.tvTermNumber.setText(String.valueOf(position+1));
+        holder.tvTermNumber.setText(String.valueOf(position + 1));
         holder.tvTerm.setText("TERM");
         holder.tvDefinition.setText("DEFINITION");
 
@@ -71,7 +71,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mListTerm.size()>5) {
+                if (mListTerm.size() > 5) {
                     String inputValue = holder.etTerm.getText().toString();
 
                     mListTerm.remove(position);
@@ -79,7 +79,6 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
                     notifyItemRangeChanged(position, mListTerm.size());
                 } else {
                     Toast.makeText(mContext, "Need at least 5 terms", Toast.LENGTH_SHORT).show();
-                    return;
                 }
             }
         });
@@ -127,6 +126,7 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
         });
 
     }
+
     @Override
     public int getItemCount() {
         if (mListTerm != null) {
@@ -138,17 +138,17 @@ public class CreateTermAdapter extends RecyclerView.Adapter<CreateTermAdapter.Cr
     public List<Term> GetData() {
         return mListTerm;
     }
-    public class CreateStudySetViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvTermNumber;
-        private EditText etTerm;
-        private TextView tvTerm;
-        private EditText etDefinition;
-        private TextView tvDefinition;
-        private TextView tvSpace;
+    public class CreateStudySetViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageButton deleteButton;
         boolean isTextWatcherEnabled;
+        private final TextView tvTermNumber;
+        private final EditText etTerm;
+        private final TextView tvTerm;
+        private final EditText etDefinition;
+        private final TextView tvDefinition;
+        private final TextView tvSpace;
+        private final ImageButton deleteButton;
 
         public CreateStudySetViewHolder(@NonNull View itemView) {
             super(itemView);

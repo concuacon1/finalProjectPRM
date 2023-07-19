@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {

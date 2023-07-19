@@ -2,13 +2,10 @@ package com.example.homeactivity.Controllers;
 
 import android.util.Log;
 
-import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.Models.TestResult;
 import com.example.homeactivity.Utils.DatabaseConnector;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Date;
-import java.util.function.Consumer;
 
 public class TestController {
     private final DatabaseConnector connector;

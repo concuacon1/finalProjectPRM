@@ -24,7 +24,8 @@ public class Account {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-    public Account(String id ,String name, String nickname, String email,
+
+    public Account(String id, String name, String nickname, String email,
                    Timestamp updatedAt) {
         this.id = id;
         this.name = name;

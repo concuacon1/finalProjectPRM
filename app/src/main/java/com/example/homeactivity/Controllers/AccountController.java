@@ -1,11 +1,9 @@
 package com.example.homeactivity.Controllers;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.Utils.DatabaseConnector;
-import com.example.homeactivity.Views.RegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -16,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,28 +79,28 @@ public class AccountController {
 
     public void findAccount(String userId, Consumer<Account> onSuccess) {
         connector.getDocumentSnapshot(userId)
-            .addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    throw new RuntimeException("Failed to find account", task.getException());
-                }
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to find account", task.getException());
+                    }
 
-                DocumentSnapshot documentSnapshot = task.getResult();
-                if (!documentSnapshot.exists()) {
-                    onSuccess.accept(null);
-                    return;
-                }
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (!documentSnapshot.exists()) {
+                        onSuccess.accept(null);
+                        return;
+                    }
 
-                Account account = documentSnapshot.toObject(Account.class);
-                onSuccess.accept(account);
-            });
+                    Account account = documentSnapshot.toObject(Account.class);
+                    onSuccess.accept(account);
+                });
     }
 
     public void deleteAccount(String userId) {
         connector.deleteDocument(userId)
-            .addOnFailureListener(e -> {
-                Log.e("FireStoreError", e.getMessage());
-                throw new RuntimeException("Failed to delete user", e);
-            });
+                .addOnFailureListener(e -> {
+                    Log.e("FireStoreError", e.getMessage());
+                    throw new RuntimeException("Failed to delete user", e);
+                });
     }
 
     public void updateAccount(Account updatedAccount) {
@@ -110,12 +109,11 @@ public class AccountController {
         findAccount(updatedAccount.getId(), account -> {
             if (account != null) {
                 connector.updateDocument(updatedAccount.getId(), updatedAccount)
-                    .addOnFailureListener(e -> {
-                        Log.e("FireStoreError", e.getMessage());
-                        throw new RuntimeException("Failed to update user", e);
-                    });
-            }
-            else {
+                        .addOnFailureListener(e -> {
+                            Log.e("FireStoreError", e.getMessage());
+                            throw new RuntimeException("Failed to update user", e);
+                        });
+            } else {
                 throw new RuntimeException("User does not exist");
             }
         });
@@ -125,25 +123,25 @@ public class AccountController {
     //List all accounts exist in db, for debug purpose only
     public void listAllAccounts(Consumer<List<Account>> onSuccess) {
         connector.getAllDocuments()
-            .addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    throw new RuntimeException("Failed to find all users", task.getException());
-                }
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to find all users", task.getException());
+                    }
 
-                QuerySnapshot querySnapshot = task.getResult();
+                    QuerySnapshot querySnapshot = task.getResult();
 
-                List<Account> accountList = new ArrayList<>();
+                    List<Account> accountList = new ArrayList<>();
 
-                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                    Account account = documentSnapshot.toObject(Account.class);
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        Account account = documentSnapshot.toObject(Account.class);
 
-                    //Because account don't have userId field in db
-                    account.setId(documentSnapshot.getId());
-                    accountList.add(account);
-                }
+                        //Because account don't have userId field in db
+                        account.setId(documentSnapshot.getId());
+                        accountList.add(account);
+                    }
 
-                onSuccess.accept(accountList);
-            });
+                    onSuccess.accept(accountList);
+                });
     }
 
     public void login(String emailOrNickname, String password, Consumer<Account> onSuccess) {
@@ -193,7 +191,7 @@ public class AccountController {
     }
 
     public Task<Void> sendEmailVerification() {
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null)
             ((FirebaseUser) user).sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

@@ -9,12 +9,13 @@ import com.example.homeactivity.R;
 public class LoadingDialog {
 
 
-    private Activity activity;
+    private final Activity activity;
     private AlertDialog dialog;
 
     public LoadingDialog(Activity myActivity) {
         activity = myActivity;
     }
+
     public void startLoadingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 

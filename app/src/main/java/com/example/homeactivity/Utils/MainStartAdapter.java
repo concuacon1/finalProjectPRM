@@ -17,9 +17,9 @@ import com.example.homeactivity.Views.StudySetActivity;
 
 import java.util.List;
 
-public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.TermViewHolder >{
-    private Context context;
-    private List<StudySet> studySetList;
+public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.TermViewHolder> {
+    private final Context context;
+    private final List<StudySet> studySetList;
 
     public MainStartAdapter(List<StudySet> list, Context context) {
         this.studySetList = list;
@@ -29,7 +29,7 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     @NonNull
     @Override
     public MainStartAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_study_set_main,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_study_set_main, parent, false);
         return new MainStartAdapter.TermViewHolder(view);
     }
 
@@ -45,7 +45,7 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, StudySetActivity.class);
-                intent.putExtra("studySetId",studySet.getId());
+                intent.putExtra("studySetId", studySet.getId());
                 context.startActivity(intent);
             }
         });
@@ -55,10 +55,11 @@ public class MainStartAdapter extends RecyclerView.Adapter<MainStartAdapter.Term
     public int getItemCount() {
         return studySetList.size();
     }
+
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView quiz_name;
-        private Button startButton;
+        private final TextView quiz_name;
+        private final Button startButton;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);

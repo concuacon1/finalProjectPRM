@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.MainStartAdapter;
@@ -34,8 +33,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     RecyclerView popularView;
     TextView first_word, name_user;
     androidx.appcompat.widget.Toolbar toolbar;
-    Menu menu;
-    private AccountController accountController;
+
     SessionManager sessionManager;
 
     @Override
@@ -49,34 +47,34 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         popularView = findViewById(R.id.popularView);
         first_word = findViewById(R.id.first_word);
         name_user = findViewById(R.id.name_user);
-        ((Button)findViewById(R.id.btn_create_studyset)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.btn_create_studyset)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_course = new Intent(MainStartActivity.this, CreateStudySetActivity.class);
                 startActivity(intent_course);
             }
         });
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         popularView.addItemDecoration(itemDecoration);
         studySetController = new StudySetController();
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         popularView.setLayoutManager(linearLayoutManager_popular);
-        studySetController.listAllStudySets( termList ->{
-            mainStartAdapter = new MainStartAdapter(termList,this);
+        studySetController.listAllStudySets(termList -> {
+            mainStartAdapter = new MainStartAdapter(termList, this);
             popularView.setAdapter(mainStartAdapter);
         });
-            name_user.setText(username);
-            String account_name = name_user.getText().toString().trim().substring(0,1);
-            first_word.setText(account_name);
+        name_user.setText(username);
+        String account_name = name_user.getText().toString().trim().substring(0, 1);
+        first_word.setText(account_name);
 
         /*---------------------Hooks------------------------*/
 
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
-        toolbar=findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -86,10 +84,9 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onBackPressed() {
 
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -97,17 +94,19 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == R.id.nav_profile) {
+        if (item.getItemId() == R.id.nav_profile) {
             Intent intentProfile = new Intent(MainStartActivity.this, UserProfileActivity.class);
             intentProfile.putExtra("ID", sessionManager.getId());
             startActivity(intentProfile);
         }
 
-        if(item.getItemId() == R.id.nav_logout){
-            Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
-            startActivity(intent_logout);}
+        if (item.getItemId() == R.id.nav_logout) {
+            Intent intent_logout = new Intent(MainStartActivity.this, LoginActivity.class);
+            startActivity(intent_logout);
+        }
         return true;
     }
+
     public void updateNavHeader() {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -123,13 +122,13 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu,menu);
+        menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.search_toolbar){
+        if (item.getItemId() == R.id.search_toolbar) {
             Intent intent = new Intent(MainStartActivity.this, SearchActivity.class);
             startActivity(intent);
         }

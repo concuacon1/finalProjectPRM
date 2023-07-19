@@ -39,7 +39,7 @@ public class TestHistoryActivity extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this);
 
         testController.getTestResultsForAccount(sessionManager.getId(), testResults -> {
-            if (testResults != null) {
+            if (testResults.size() > 0) {
                 tvResult.setVisibility(View.INVISIBLE);
                 adapter = new TestHistoryAdapter(testResults);
                 rvHistoryList.setAdapter(adapter);

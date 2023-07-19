@@ -78,7 +78,7 @@ public class StudySetActivity extends AppCompatActivity {
             tvTitle.setText(studySet.getTitle());
             AccountController controller = new AccountController();
             controller.findAccount(studySet.getUserId(), account -> {
-                tvAuthor.setText(account.getName());
+                tvAuthor.setText(account.getNickname());
             });
             if (!Objects.equals(sessionManager.getId(), studySet.getUserId())) {
                 btnEdit.setVisibility(View.INVISIBLE);

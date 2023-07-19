@@ -60,9 +60,11 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         Intent intent = getIntent();
         createTermAdapter = new CreateTermAdapter(this);
         String studySetId = intent.getStringExtra("updateStudySet");
+
         if (studySetId!=null) {
             studySetController.findStudySet(studySetId, studySet -> {
                 etTitle.setText(studySet.getTitle());
@@ -118,10 +120,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         studySet.setUserId(sessionManager.getId());
         if (studySet.getTitle() == null || studySet.getTitle().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismisssDialog();
             return;
         }
         if (studySet.getDescription() == null || studySet.getDescription().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty description", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismisssDialog();
             return;
         }
         List<Term> termList = createTermAdapter.GetData();
@@ -129,10 +133,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         ) {
             if (t.getTerm() == null || t.getTerm().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty term", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismisssDialog();
                 return;
             }
             if (t.getDefinition() == null || t.getDefinition().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty definition", Toast.LENGTH_SHORT).show();
+                loadingDialog.dismisssDialog();
                 return;
             }
         }
@@ -147,10 +153,13 @@ public class CreateStudySetActivity extends AppCompatActivity {
             Toast.makeText(CreateStudySetActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
             return;
         }
+
         loadingDialog.dismisssDialog();
+
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
         intent.putExtra("studySetId",studySet.getId());
         startActivity(intent);
+
         finish();
     }
 

@@ -14,25 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".Views.CreateStudySetActivity">
+
         <ImageView
             android:id="@+id/btn_back_create_studyset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
             android:layout_marginStart="16dp"
-            android:background="@color/term_background"
             android:layout_marginTop="16dp"
+            android:background="@color/button_color"
             android:padding="8dp"
+            android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/close_button_1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="16dp"
             android:background="@color/app_background"
             android:src="@drawable/balloon_overlay_close"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +47,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="32dp"
             android:ems="10"
+            android:hint="Add a description..."
             android:inputType="text"
             android:textColor="@color/text_color"
+            android:textColorHint="@color/text_hint_color"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            android:hint="Add a description..."
-            android:textColorHint="@color/text_hint_color"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/textView5"
@@ -60,8 +62,8 @@
             android:layout_marginTop="1dp"
             android:text="DESCRIPTION"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="14sp"
             android:textColor="@color/text_color"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
@@ -69,13 +71,14 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="24dp"
             android:text="Create a new study set"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/close_button_1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_back_create_studyset"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -83,14 +86,14 @@
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="56dp"
             android:ems="10"
+            android:hint="Enter a title..."
             android:inputType="text"
             android:textColor="@color/text_color"
+            android:textColorHint="@color/text_hint_color"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            android:hint="Enter a title..."
-            android:textColorHint="@color/text_hint_color" />
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <TextView
             android:id="@+id/textView4"
@@ -99,8 +102,8 @@
             android:layout_marginStart="30dp"
             android:text="TITLE"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="14sp"
             android:textColor="@color/text_color"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
@@ -109,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="32dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
@@ -125,10 +128,10 @@
             android:layout_marginTop="22dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="30dp"
-            android:text="Create"
-            app:backgroundTint="@null"
             android:background="@drawable/custom_button"
+            android:text="Create"
             android:textColor="@color/white"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rcv_create_term" />
@@ -140,10 +143,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="30dp"
-            android:text="+ Add card"
-            app:backgroundTint="@null"
             android:background="@drawable/custom_button"
+            android:text="+ Add card"
             android:textColor="@color/white"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rcv_create_term" />

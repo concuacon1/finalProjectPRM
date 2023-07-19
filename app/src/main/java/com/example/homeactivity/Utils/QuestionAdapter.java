@@ -73,14 +73,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             optionA.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("Btn", "BTN A");
                     selectOption(optionA, q.getOptionA(), q);
                 }
             });
             optionB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("Btn", "BTN B");
                     selectOption(optionB, q.getOptionB(), q);
                 }
             });
@@ -88,14 +86,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
 
-                    Log.i("Btn", "BTN C");
                     selectOption(optionC, q.getOptionC(), q);
                 }
             });
             optionD.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("Btn", "BTN D");
                     selectOption(optionD, q.getOptionD(), q);
                 }
             });
@@ -111,12 +107,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
             } else {
                 if (prevSelectedBtn.getId() == btn.getId()) {
-                    Log.i("prevBtn", "c: " + prevSelectedBtn);
                     btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.unselected_button));
                     q.setSelectedAns(null);
                     prevSelectedBtn = null;
                 } else {
-                    Log.i("prevBtn", "d: " + prevSelectedBtn);
                     prevSelectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.unselected_button));
                     btn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.selected_button));
                     q.setSelectedAns(chosenOption);

@@ -1,13 +1,19 @@
 package com.example.homeactivity.Models;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class TestResult {
     private String userId;
     private String studySetId;
     private Date timeTest;
     private boolean isFinished;
     private float score;
+
+    private StudySet studySet;
 
     public TestResult() {
     }
@@ -18,6 +24,15 @@ public class TestResult {
         this.timeTest = timeTest;
         this.isFinished = isFinished;
         this.score = score;
+    }
+
+    @Exclude
+    public StudySet getStudySet() {
+        return studySet;
+    }
+
+    public void setStudySet(StudySet studySet) {
+        this.studySet = studySet;
     }
 
     public String getUserId() {

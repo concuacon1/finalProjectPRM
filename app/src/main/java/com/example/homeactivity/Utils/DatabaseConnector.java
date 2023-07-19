@@ -105,6 +105,10 @@ public class DatabaseConnector {
         return collectionReference;
     }
 
+    public CollectionReference getCollectionReference(String collectionName) {
+        return db.collection(collectionName);
+    }
+
     public WriteBatch getBatch() {
         return db.batch();
     }

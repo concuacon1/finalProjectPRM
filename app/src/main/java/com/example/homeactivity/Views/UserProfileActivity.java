@@ -1,5 +1,10 @@
 package com.example.homeactivity.Views;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +14,18 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homeactivity.Controllers.AccountController;
+import com.example.homeactivity.Controllers.StudySetController;
+import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.MainStartAdapter;
 
 public class UserProfileActivity extends AppCompatActivity {
     private Button update_btn;
     private AccountController accountController;
+    private StudySetController studySetController;
     private TextView name, nick_name, email,nameFirstWord;
+    private RecyclerView myrv;
+    MainStartAdapter mainStartAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,14 @@ public class UserProfileActivity extends AppCompatActivity {
             email.setText(account.getEmail());
             nameFirstWord.setText(String.valueOf(account.getNickname().charAt(0)));
         });
+        LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        myrv.setLayoutManager(linearLayoutManager_popular);
+        studySetController = new StudySetController();
+        studySetController.listAllStudySets( termList ->{
+            mainStartAdapter = new MainStartAdapter(termList,this);
+            myrv.setAdapter(mainStartAdapter);
+        });
+
 
     }
 }

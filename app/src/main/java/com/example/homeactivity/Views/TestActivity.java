@@ -214,7 +214,10 @@ public class TestActivity extends AppCompatActivity {
                 studySetController.increaseParticipant(studySetId);
                 TestController testController = new TestController();
                 SessionManager sessionManager = new SessionManager(TestActivity.this);
-                testController.recordTestHistory(sessionManager.getId(), studySetId, finalScore);
+
+                studySetController.findStudySet(studySetId, studySet -> {
+                    testController.recordTestHistory(sessionManager.getId(), studySet, finalScore);
+                });
 
                 alertDialog.dismiss();
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);

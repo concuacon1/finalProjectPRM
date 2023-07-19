@@ -9,30 +9,27 @@ import java.util.Date;
 public class TestResult {
     private String userId;
     private String studySetId;
+    private String studyTitle;
     private Date timeTest;
-    private boolean isFinished;
     private float score;
-
-    private StudySet studySet;
 
     public TestResult() {
     }
 
-    public TestResult(String userId, String studySetId, Date timeTest, boolean isFinished, float score) {
+    public TestResult(String userId, String studySetId, String studyTitle, Date timeTest, float score) {
         this.userId = userId;
         this.studySetId = studySetId;
+        this.studyTitle = studyTitle;
         this.timeTest = timeTest;
-        this.isFinished = isFinished;
         this.score = score;
     }
 
-    @Exclude
-    public StudySet getStudySet() {
-        return studySet;
+    public String getStudyTitle() {
+        return studyTitle;
     }
 
-    public void setStudySet(StudySet studySet) {
-        this.studySet = studySet;
+    public void setStudyTitle(String studyTitle) {
+        this.studyTitle = studyTitle;
     }
 
     public String getUserId() {
@@ -57,14 +54,6 @@ public class TestResult {
 
     public void setTimeTest(Date timeTest) {
         this.timeTest = timeTest;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public void setFinished(boolean finished) {
-        isFinished = finished;
     }
 
     public float getScore() {

@@ -112,6 +112,12 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
             Intent intent_logout = new Intent(MainStartActivity.this, LoginActivity.class);
             startActivity(intent_logout);
         }
+
+        if (item.getItemId() == R.id.nav_history) {
+            Intent intent_history = new Intent(MainStartActivity.this, TestHistoryActivity.class);
+            startActivity(intent_history);
+        }
+
         return true;
     }
 

@@ -108,7 +108,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         ((ImageButton) findViewById(R.id.close_button_1)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                showCancelDiaglog();
             }
         });
     }
@@ -233,8 +233,13 @@ public class CreateStudySetActivity extends AppCompatActivity {
 
         });
     }
+
     @Override
     public void onBackPressed() {
+        showCancelDiaglog();
+    }
+
+    private void showCancelDiaglog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_exit_studyset);
         builder.setMessage(R.string.messeage_exit_studyset).
@@ -253,7 +258,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
     }
 
 }

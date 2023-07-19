@@ -109,8 +109,14 @@ public class TestActivity extends AppCompatActivity {
 
             for (int i = 0; i < 3; i++) {
                 int randomIndex = random.nextInt(options.size());
-                shuffledOptions.add(options.get(randomIndex).getDefinition());
-                options.remove(randomIndex);
+                String randomDefinition = options.get(randomIndex).getDefinition();
+                if (shuffledOptions.contains(randomDefinition)) {
+                    options.remove(randomIndex);
+                    i--;
+                } else {
+                    shuffledOptions.add(randomDefinition);
+                    options.remove(randomIndex);
+                }
             }
 
             Collections.shuffle(shuffledOptions);
@@ -119,7 +125,6 @@ public class TestActivity extends AppCompatActivity {
             q.setOptionB(shuffledOptions.get(1));
             q.setOptionC(shuffledOptions.get(2));
             q.setOptionD(shuffledOptions.get(3));
-
             q.setCorrectAns(term.getDefinition());
 
             questions.add(q);
@@ -127,7 +132,6 @@ public class TestActivity extends AppCompatActivity {
 
         return questions;
     }
-
 
     private void setSnapHelper() {
         SnapHelper snapHelper = new PagerSnapHelper();
@@ -212,12 +216,12 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
                 intent.putExtra("correctAns", correctAns);
                 intent.putExtra("wrongAns", wrongAns);
                 intent.putExtra("uncheckAns", uncheckAns);
                 intent.putExtra("finalScore", finalScore);
+                intent.putExtra("studySetId", studySetId);
                 startActivity(intent);
                 TestActivity.this.finish();
             }

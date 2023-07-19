@@ -1,7 +1,5 @@
 package com.example.homeactivity.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.os.Bundle;
@@ -10,10 +8,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardActivity extends AppCompatActivity {

@@ -1,9 +1,5 @@
 package com.example.homeactivity.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +10,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.Models.StudySet;
@@ -23,7 +23,6 @@ import com.example.homeactivity.Utils.CreateTermAdapter;
 import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.SessionManager;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {

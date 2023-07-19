@@ -2,7 +2,6 @@ package com.example.homeactivity.Utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import java.util.Locale;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchResultHolder> {
 
-    private List<StudySet> studySetList;
+    private final List<StudySet> studySetList;
 
     public SearchResultAdapter(List<StudySet> studySetList) {
         this.studySetList = studySetList;
@@ -52,11 +51,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     public class SearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvSearchResult;
-        private TextView tvDate;
+        private final TextView tvSearchResult;
+        private final TextView tvDate;
 
         private StudySet s = new StudySet();
-        private Context context;
+        private final Context context;
 
         public SearchResultHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,12 +68,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public void setData(StudySet s) {
             this.s = s;
             tvSearchResult.setText(s.getTitle());
-            if (s.getCreatedAt() != null){
+            if (s.getCreatedAt() != null) {
                 Date date = s.getCreatedAt().toDate();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("d, MMM yyyy", Locale.ENGLISH);
                 tvDate.setText(dateFormat.format(date));
-            }
-            else {
+            } else {
                 tvDate.setText("Unknown");
             }
 
@@ -83,7 +81,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, StudySetActivity.class);
-            intent.putExtra("studySetId",s.getId());
+            intent.putExtra("studySetId", s.getId());
             context.startActivity(intent);
         }
     }

@@ -54,7 +54,7 @@ public class DatabaseConnector {
     }
 
     public Task<Void> updateDocument(String documentId, Object updatedData) {
-        return  collectionReference.document(documentId).set(updatedData);
+        return collectionReference.document(documentId).set(updatedData);
     }
 
     public Task<Void> deleteDocument(String documentId) {
@@ -105,7 +105,7 @@ public class DatabaseConnector {
         return collectionReference;
     }
 
-    public WriteBatch getBatch(){
+    public WriteBatch getBatch() {
         return db.batch();
     }
 }

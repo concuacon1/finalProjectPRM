@@ -1,5 +1,12 @@
 package com.example.homeactivity.Views;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,22 +15,14 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
+import com.example.homeactivity.Controllers.TestController;
 import com.example.homeactivity.Models.Question;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.QuestionAdapter;
+import com.example.homeactivity.Utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,17 +32,14 @@ import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     private RecyclerView questionView;
-    private TextView tvNumberOfQuestion, tvstudyName, tvCurrentQuestion;
+    private TextView tvNumberOfQuestion, tvStudyName, tvCurrentQuestion;
     private Button submitB;
     private ImageButton prevQuestion, nextQuestion;
-
     private int questionNumber;
     private StudySetController studySetController;
     private TermController termController;
-
     private List<Term> listTerm;
     private List<Question> listOfQuestion;
-
     String studySetId;
     int correctAns, wrongAns, uncheckAns, finalScore;
 
@@ -70,7 +66,7 @@ public class TestActivity extends AppCompatActivity {
     private void init() {
         questionView = findViewById(R.id.tv_questions_view);
         tvNumberOfQuestion = findViewById(R.id.tv_numberOfQuestion);
-        tvstudyName = findViewById(R.id.tv_study_name);
+        tvStudyName = findViewById(R.id.tv_study_name);
         submitB = findViewById(R.id.btn_submit);
         prevQuestion = findViewById(R.id.prev_question);
         nextQuestion = findViewById(R.id.next_question);
@@ -79,7 +75,7 @@ public class TestActivity extends AppCompatActivity {
         questionNumber = 0;
 
         studySetController.findStudySet(studySetId, studySet -> {
-            tvstudyName.setText(studySet.getTitle());
+            tvStudyName.setText(studySet.getTitle());
         });
 
         termController.listAllTerms(studySetId, terms -> {
@@ -211,6 +207,11 @@ public class TestActivity extends AppCompatActivity {
         confirmB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                studySetController.increaseParticipant(studySetId);
+                TestController testController = new TestController();
+                SessionManager sessionManager = new SessionManager(TestActivity.this);
+                testController.recordTestHistory(sessionManager.getId(), studySetId, finalScore);
+
                 alertDialog.dismiss();
 
                 Intent intent = new Intent(TestActivity.this, ScoreActivity.class);
@@ -219,6 +220,7 @@ public class TestActivity extends AppCompatActivity {
                 intent.putExtra("uncheckAns", uncheckAns);
                 intent.putExtra("finalScore", finalScore);
                 startActivity(intent);
+
                 TestActivity.this.finish();
             }
         });

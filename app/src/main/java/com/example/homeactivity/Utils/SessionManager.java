@@ -19,6 +19,7 @@ public class SessionManager {
         editor.putString(KeyPreference.KEY_ACCOUNT_ID, id);
         editor.apply();
     }
+
     public boolean isLoggedIn() {
         return sharedPreferences.contains(KeyPreference.KEY_USERNAME)
                 && sharedPreferences.contains(KeyPreference.KEY_EMAIL);
@@ -32,7 +33,9 @@ public class SessionManager {
         return sharedPreferences.getString(KeyPreference.KEY_EMAIL, "");
     }
 
-    public String getId() {return  sharedPreferences.getString(KeyPreference.KEY_ACCOUNT_ID, "");}
+    public String getId() {
+        return sharedPreferences.getString(KeyPreference.KEY_ACCOUNT_ID, "");
+    }
 
     public void clearSession() {
         SharedPreferences.Editor editor = sharedPreferences.edit();

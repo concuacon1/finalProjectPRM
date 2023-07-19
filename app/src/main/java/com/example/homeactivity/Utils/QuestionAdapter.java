@@ -1,7 +1,6 @@
 package com.example.homeactivity.Utils;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    private List<Question> questionList;
+    private final List<Question> questionList;
 
     public QuestionAdapter(List<Question> questionList) {
         this.questionList = questionList;
@@ -45,9 +44,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView question;
-        private Button optionA, optionB, optionC, optionD, prevSelectedBtn;
-        private Context context;
+        private final TextView question;
+        private final Button optionA;
+        private final Button optionB;
+        private final Button optionC;
+        private final Button optionD;
+        private Button prevSelectedBtn;
+        private final Context context;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -6,7 +6,7 @@ import android.provider.SearchRecentSuggestions;
 
 public class SearchRecentSuggestionsLimited extends SearchRecentSuggestions {
 
-    private int limit;
+    private final int limit;
 
     public SearchRecentSuggestionsLimited(Context context, String authority, int mode, int limit) {
         super(context, authority, mode);

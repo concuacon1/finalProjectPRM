@@ -14,9 +14,9 @@ import com.example.homeactivity.R;
 
 import java.util.List;
 
-public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder>{
+public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Term> mListTerm;
 
     public TermAdapter(Context mContext) {
@@ -31,7 +31,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     @NonNull
     @Override
     public TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_term,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_term, parent, false);
         return new TermAdapter.TermViewHolder(view);
     }
 
@@ -56,8 +56,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTerm;
-        private TextView tvDefinition;
+        private final TextView tvTerm;
+        private final TextView tvDefinition;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);

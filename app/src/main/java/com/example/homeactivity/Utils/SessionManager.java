@@ -6,11 +6,7 @@ import android.preference.PreferenceManager;
 
 public class SessionManager {
 
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_ACCOUNT_ID = "accountID";
-
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public SessionManager(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -18,24 +14,25 @@ public class SessionManager {
 
     public void saveSession(String username, String email, String id) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USERNAME, username);
-        editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_ACCOUNT_ID, id);
+        editor.putString(KeyPreference.KEY_USERNAME, username);
+        editor.putString(KeyPreference.KEY_EMAIL, email);
+        editor.putString(KeyPreference.KEY_ACCOUNT_ID, id);
         editor.apply();
     }
     public boolean isLoggedIn() {
-        return sharedPreferences.contains(KEY_USERNAME) && sharedPreferences.contains(KEY_EMAIL);
+        return sharedPreferences.contains(KeyPreference.KEY_USERNAME)
+                && sharedPreferences.contains(KeyPreference.KEY_EMAIL);
     }
 
     public String getUsername() {
-        return sharedPreferences.getString(KEY_USERNAME, "");
+        return sharedPreferences.getString(KeyPreference.KEY_USERNAME, "");
     }
 
     public String getEmail() {
-        return sharedPreferences.getString(KEY_EMAIL, "");
+        return sharedPreferences.getString(KeyPreference.KEY_EMAIL, "");
     }
 
-    public String getId() {return  sharedPreferences.getString(KEY_ACCOUNT_ID, "");}
+    public String getId() {return  sharedPreferences.getString(KeyPreference.KEY_ACCOUNT_ID, "");}
 
     public void clearSession() {
         SharedPreferences.Editor editor = sharedPreferences.edit();

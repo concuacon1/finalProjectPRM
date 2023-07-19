@@ -36,7 +36,6 @@ public class UserProfileActivity extends AppCompatActivity {
         email=findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirst);
         myrv = findViewById(R.id.rv_mystudyset);
-
         ((ImageView)findViewById(R.id.btn_back_userprofile)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

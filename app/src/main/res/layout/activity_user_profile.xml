@@ -39,18 +39,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         >
-
         <TextView
             android:id="@+id/nameFirst"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/circle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:gravity="center"
+            android:layout_marginBottom="16dp"
             android:text="A"
-            android:textColor="@color/button_color"
+            android:background="@drawable/circle"
             android:textSize="48sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
 
     </LinearLayout>
@@ -82,7 +81,7 @@
         android:paddingLeft="16dp"
         android:paddingTop="32dp"
         android:paddingRight="16dp"
-        android:paddingBottom="64dp"
+        android:paddingBottom="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider">

@@ -15,4 +15,6 @@
     <string name="drawer_open">open drawer</string>
     <string name="drawer_close">close drawer</string>
     <string name="search_hint">Search Study Set</string>
+    <string name="title_exit_studyset">Exit Create StudySet</string>
+    <string name="messeage_exit_studyset">Do you want to stop create studyset ?</string>
 </resources>

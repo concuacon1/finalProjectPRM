@@ -99,12 +99,6 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        if(item.getItemId() == R.id.nav_course){
-            Intent intent_course = new Intent(MainStartActivity.this,StudySetActivity.class);
-            startActivity(intent_course);}
-
-
         if(item.getItemId() == R.id.nav_profile){
             Intent intent_profine = new Intent(MainStartActivity.this,UserProfileActivity.class);
             intent_profine.putExtra("ID",sessionManager.getId());

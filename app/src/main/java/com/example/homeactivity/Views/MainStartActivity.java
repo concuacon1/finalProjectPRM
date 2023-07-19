@@ -54,6 +54,14 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent_course);
             }
         });
+        ((Button) findViewById(R.id.btn_view_studyset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentProfile = new Intent(MainStartActivity.this, UserProfileActivity.class);
+                intentProfile.putExtra("ID", sessionManager.getId());
+                startActivity(intentProfile);
+            }
+        });
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         popularView.addItemDecoration(itemDecoration);
         studySetController = new StudySetController();

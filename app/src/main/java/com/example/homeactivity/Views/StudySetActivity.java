@@ -158,31 +158,5 @@ public class StudySetActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_exit_studyset);
-        builder.setMessage(R.string.messeage_exit_studyset).setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        int width = (int)(getResources().getDisplayMetrics().widthPixels = (int) 0.85);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels = (int) 0.35);
-        alertDialog.getWindow().setLayout(width,height);
-
-
-    }
 }
 

@@ -34,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
         nick_name = findViewById(R.id.nickname_user);
         email=findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirst);
+
         ((ImageView)findViewById(R.id.btn_back_userprofile)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +47,7 @@ public class UserProfileActivity extends AppCompatActivity {
             name.setText(account.getName());
             nick_name.setText(account.getNickname());
             email.setText(account.getEmail());
-            String account_name = name.getText().toString().trim().substring(0,1);
-            nameFirstWord.setText(account_name);
+            nameFirstWord.setText(String.valueOf(account.getNickname().charAt(0)));
         });
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         myrv.setLayoutManager(linearLayoutManager_popular);

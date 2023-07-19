@@ -2,15 +2,12 @@ package com.example.homeactivity.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,25 +26,25 @@ import com.example.homeactivity.Utils.MainStartAdapter;
 import com.example.homeactivity.Utils.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.Serializable;
-
 public class MainStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     StudySetController studySetController;
     MainStartAdapter mainStartAdapter;
     RecyclerView popularView;
-    TextView first_word,name_user;
+    TextView first_word, name_user;
     androidx.appcompat.widget.Toolbar toolbar;
     Menu menu;
     private AccountController accountController;
     SessionManager sessionManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_start);
         sessionManager = new SessionManager(this);
         String username = sessionManager.getUsername();
+
         /*---------------------recycleview------------------------*/
         popularView = findViewById(R.id.popularView);
         first_word = findViewById(R.id.first_word);
@@ -99,10 +96,12 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.nav_profile){
-            Intent intent_profine = new Intent(MainStartActivity.this,UserProfileActivity.class);
-            intent_profine.putExtra("ID",sessionManager.getId());
-            startActivity(intent_profine);}
+
+        if(item.getItemId() == R.id.nav_profile) {
+            Intent intentProfile = new Intent(MainStartActivity.this, UserProfileActivity.class);
+            intentProfile.putExtra("ID", sessionManager.getId());
+            startActivity(intentProfile);
+        }
 
         if(item.getItemId() == R.id.nav_logout){
             Intent intent_logout = new Intent(MainStartActivity.this,LoginActivity.class);
@@ -113,13 +112,11 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView first_word_name = headerView.findViewById(R.id.first_word_name);
-        accountController = new AccountController();
-        accountController.findAccount(sessionManager.getId(),account -> {
-            name_user.setText(account.getName());
-            String account_name = name_user.getText().toString().trim().substring(0,1);
-            first_word_name.setText(account_name);
-        });
+        TextView first_word_name = headerView.findViewById(R.id.tv_firstword);
+        TextView full_name = headerView.findViewById(R.id.tv_fullname);
+
+        first_word_name.setText(String.valueOf(sessionManager.getUsername().charAt(0)));
+        full_name.setText(sessionManager.getUsername());
 
     }
 

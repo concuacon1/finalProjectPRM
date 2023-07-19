@@ -28,6 +28,7 @@ import com.example.homeactivity.Utils.QuestionAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
@@ -98,7 +99,9 @@ public class TestActivity extends AppCompatActivity {
             Question q = new Question();
             q.setQuestion(term.getTerm());
 
+            //Create options list to random
             List<Term> options = new ArrayList<>(listTerm);
+            //Already has
             options.remove(term);
 
             List<String> shuffledOptions = new ArrayList<>();
@@ -176,7 +179,7 @@ public class TestActivity extends AppCompatActivity {
                     if (listOfQuestion.get(i).getSelectedAns() == null) {
                         uncheckAns++;
                     } else {
-                        if (listOfQuestion.get(i).getSelectedAns() == listOfQuestion.get(i).getCorrectAns()) {
+                        if (Objects.equals(listOfQuestion.get(i).getSelectedAns(), listOfQuestion.get(i).getCorrectAns())) {
                             correctAns++;
                         } else wrongAns++;
                     }

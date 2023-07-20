@@ -8,6 +8,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -172,6 +173,28 @@ public class StudySetController {
                 .addOnFailureListener(e -> {
                     Log.e("FireStoreError", e.getMessage());
                     throw new RuntimeException("Failed to update Study Set", e);
+                });
+    }
+
+    public void listTop10StudySetsByParticipants(Consumer<List<StudySet>> onSuccess) {
+        connector.getCollectionReference()
+                .orderBy("numberOfParticipants", Query.Direction.DESCENDING) // Sort by number of participants in descending order
+                .limit(5) // Limit the results to the top 5 study sets
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        throw new RuntimeException("Failed to retrieve Study Sets", task.getException());
+                    }
+
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<StudySet> studySetList = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        StudySet studySet = documentSnapshot.toObject(StudySet.class);
+                        studySetList.add(studySet);
+                    }
+
+                    onSuccess.accept(studySetList);
                 });
     }
 

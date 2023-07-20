@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                         sessionManager.saveSession(account.getNickname(), account.getEmail(), account.getId());
-                        Intent intent = new Intent(context, MainStartActivity.class);
+                        Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                         finish();
                     }

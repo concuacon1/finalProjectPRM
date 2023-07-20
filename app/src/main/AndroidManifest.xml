@@ -24,7 +24,7 @@
             android:name=".Views.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.MainStartActivity"
+            android:name=".Views.MainActivity"
             android:exported="false"/>
         <activity
             android:name=".Views.RegisterActivity"

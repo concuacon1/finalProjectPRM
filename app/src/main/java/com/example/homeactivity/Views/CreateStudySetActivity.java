@@ -152,6 +152,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             termController.createTerms(termList);
         } catch (Exception e) {
             Toast.makeText(CreateStudySetActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+            loadingDialog.dismisssDialog();
             return;
         }
 
@@ -165,7 +166,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
     }
 
     private void updateStudySet(String studySetId) {
-        loadingDialog.startLoadingDialog();
         StudySet studySet = new StudySet();
         studySet.setId(studySetId);
         studySet.setTitle(etTitle.getText().toString());
@@ -214,6 +214,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             }
 
         }
+        loadingDialog.startLoadingDialog();
         termController.listAllTerms(studySetId, termList1 -> {
             for (Term t : termList1
             ) {

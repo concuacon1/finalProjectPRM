@@ -13,12 +13,11 @@ import com.example.homeactivity.R;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        ((ImageView)findViewById(R.id.btn_back_forgot_pass)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_back_forgot_pass).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

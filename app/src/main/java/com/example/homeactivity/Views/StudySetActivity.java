@@ -27,6 +27,8 @@ import java.util.Objects;
 
 public class StudySetActivity extends AppCompatActivity {
 
+    Intent intent;
+    SessionManager sessionManager;
     private RecyclerView rcvTerm;
     private TermAdapter termAdapter;
     private TextView tvTermsNumber;
@@ -34,11 +36,8 @@ public class StudySetActivity extends AppCompatActivity {
     private TermController termController;
     private TextView tvTitle;
     private TextView tvAuthor;
-
     private Button btnEdit;
     private Button btnDelete;
-    Intent intent;
-    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class StudySetActivity extends AppCompatActivity {
         rcvTerm = findViewById(R.id.rcv_list_term);
         btnEdit = findViewById(R.id.btnEdit);
         btnDelete = findViewById(R.id.btnDelete);
-        ((ImageView)findViewById(R.id.btn_back_studyset)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_back_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -84,11 +83,11 @@ public class StudySetActivity extends AppCompatActivity {
             }
         });
 
-        termController.listAllTerms(studySetId, termList ->{
+        termController.listAllTerms(studySetId, termList -> {
             termAdapter.SetData(termList);
-            tvTermsNumber.setText("Terms in this set ("+termList.size()+")");
+            tvTermsNumber.setText("Terms in this set (" + termList.size() + ")");
 
-            ((Button) findViewById(R.id.btnFlashcard)).setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.btnFlashcard).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(StudySetActivity.this, FlashcardActivity.class);
@@ -101,11 +100,11 @@ public class StudySetActivity extends AppCompatActivity {
 
         rcvTerm.setAdapter(termAdapter);
 
-        ((Button) findViewById(R.id.btnTest)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnTest).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudySetActivity.this, StartTestActivity.class);
-                intent.putExtra("studySetID1",studySetId);
+                intent.putExtra("studySetID1", studySetId);
                 startActivity(intent);
             }
         });
@@ -117,7 +116,7 @@ public class StudySetActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ((ImageButton) findViewById(R.id.close_button_2)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.close_button_2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

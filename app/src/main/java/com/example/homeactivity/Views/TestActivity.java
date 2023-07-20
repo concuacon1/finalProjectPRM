@@ -31,6 +31,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
+    String studySetId;
+    int correctAns, wrongAns, uncheckAns, finalScore;
     private RecyclerView questionView;
     private TextView tvNumberOfQuestion, tvStudyName, tvCurrentQuestion;
     private Button submitB;
@@ -40,8 +42,6 @@ public class TestActivity extends AppCompatActivity {
     private TermController termController;
     private List<Term> listTerm;
     private List<Question> listOfQuestion;
-    String studySetId;
-    int correctAns, wrongAns, uncheckAns, finalScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
         termController.listAllTerms(studySetId, terms -> {
-            tvNumberOfQuestion.setText("/" + String.valueOf(terms.size()));
+            tvNumberOfQuestion.setText("/" + terms.size());
             listTerm = terms;
             listOfQuestion = generateQuestions(listTerm);
             QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);

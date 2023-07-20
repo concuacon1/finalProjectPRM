@@ -29,6 +29,8 @@ import java.util.List;
 
 public class CreateStudySetActivity extends AppCompatActivity {
 
+    LoadingDialog loadingDialog;
+    SessionManager sessionManager;
     private StudySetController studySetController;
     private TermController termController;
     private RecyclerView rcvCreateStudySet;
@@ -37,8 +39,6 @@ public class CreateStudySetActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etDescription;
     private CreateTermAdapter createTermAdapter;
-    LoadingDialog loadingDialog;
-    SessionManager sessionManager;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -55,7 +55,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         termController = new TermController();
         sessionManager = new SessionManager(this);
         loadingDialog = new LoadingDialog(CreateStudySetActivity.this);
-        ((ImageView)findViewById(R.id.btn_back_create_studyset)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_back_create_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -66,7 +66,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         createTermAdapter = new CreateTermAdapter(this);
         String studySetId = intent.getStringExtra("updateStudySet");
 
-        if (studySetId!=null) {
+        if (studySetId != null) {
             studySetController.findStudySet(studySetId, studySet -> {
                 etTitle.setText(studySet.getTitle());
                 etDescription.setText(studySet.getDescription());
@@ -101,11 +101,11 @@ public class CreateStudySetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createTermAdapter.AddItem();
-                rcvCreateStudySet.scrollToPosition(createTermAdapter.getItemCount()-1);
+                rcvCreateStudySet.scrollToPosition(createTermAdapter.getItemCount() - 1);
             }
         });
 
-        ((ImageButton) findViewById(R.id.close_button_1)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.close_button_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCancelDiaglog();
@@ -130,7 +130,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
             return;
         }
         List<Term> termList = createTermAdapter.GetData();
-        for (Term t: termList
+        for (Term t : termList
         ) {
             if (t.getTerm() == null || t.getTerm().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty term", Toast.LENGTH_SHORT).show();
@@ -145,7 +145,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         }
         try {
             String studySetId = studySetController.createStudySet(studySet);
-            for (Term t: termList
+            for (Term t : termList
             ) {
                 t.setStudySetId(studySetId);
             }
@@ -158,7 +158,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         loadingDialog.dismisssDialog();
 
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
-        intent.putExtra("studySetId",studySet.getId());
+        intent.putExtra("studySetId", studySet.getId());
         startActivity(intent);
 
         finish();
@@ -187,7 +187,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
         }
         List<Term> termList = createTermAdapter.GetData();
 
-        for (Term t: termList
+        for (Term t : termList
         ) {
             if (t.getTerm() == null || t.getTerm().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty term", Toast.LENGTH_SHORT).show();
@@ -205,7 +205,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                     Toast.makeText(CreateStudySetActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
-            if (t.getId()!= null) {
+            if (t.getId() != null) {
                 try {
                     termController.updateTerm(t);
                 } catch (Exception e) {
@@ -215,7 +215,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
 
         }
         termController.listAllTerms(studySetId, termList1 -> {
-            for (Term t: termList1
+            for (Term t : termList1
             ) {
                 if (!termList.contains(t)) {
                     try {
@@ -226,7 +226,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                 }
                 loadingDialog.dismisssDialog();
                 Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
-                intent.putExtra("studySetId",studySet.getId());
+                intent.putExtra("studySetId", studySet.getId());
                 startActivity(intent);
                 finish();
             }

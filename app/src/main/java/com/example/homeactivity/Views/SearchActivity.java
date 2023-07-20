@@ -29,13 +29,13 @@ import com.example.homeactivity.Utils.SearchSuggestionProvider;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private final Handler searchHandler = new Handler();
+    private final long SEARCH_DELAY = 3000; // 3 seconds delay
     RecyclerView recyclerView;
     TextView tvResult;
     Toolbar toolbar;
     SearchView searchView;
     SearchResultAdapter adapter;
-    private final Handler searchHandler = new Handler();
-    private final long SEARCH_DELAY = 3000; // 3 seconds delay
     Context context;
 
     @Override
@@ -52,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         context = this;
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -90,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (TextUtils.isEmpty(query)){
+                if (TextUtils.isEmpty(query)) {
                     tvResult.setText("Search something...");
                     tvResult.setVisibility(View.VISIBLE);
                     return false;

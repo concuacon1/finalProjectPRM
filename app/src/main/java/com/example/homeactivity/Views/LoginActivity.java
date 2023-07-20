@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
-        accountController= new AccountController();
+        accountController = new AccountController();
         sessionManager = new SessionManager(this);
         if (sessionManager.isLoggedIn()) {
 
@@ -44,10 +44,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
-                accountController.login(username,password,account -> {
-                    if(account==null){
+                accountController.login(username, password, account -> {
+                    if (account == null) {
                         Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                         sessionManager.saveSession(account.getNickname(), account.getEmail(), account.getId());
                         Intent intent = new Intent(context, MainStartActivity.class);
@@ -58,13 +58,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     public void onRegisterClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
+
     private void redirectToHome() {
 
     }
+
     private void loginUser() {
         String emailOrUsername = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
@@ -76,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
         if (password.isEmpty()) {
             Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show();
-            return;
         }
 
         // Phương thức xử lý khi người dùng nhấp vào "Forgot Password?"

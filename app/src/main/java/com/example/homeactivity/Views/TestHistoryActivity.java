@@ -1,7 +1,6 @@
 package com.example.homeactivity.Views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Controllers.TestController;
-import com.example.homeactivity.Models.TestResult;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Utils.SessionManager;
 import com.example.homeactivity.Utils.TestHistoryAdapter;

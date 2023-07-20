@@ -38,8 +38,8 @@ public class FlashcardActivity extends AppCompatActivity {
         loadAnimations();
         changeCameraDistance();
         loadData();
-        position =0;
-        ((ImageView)findViewById(R.id.back_btn_FlashCard)).setOnClickListener(new View.OnClickListener() {
+        position = 0;
+        findViewById(R.id.back_btn_FlashCard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -48,7 +48,7 @@ public class FlashcardActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position<termList.size()-1) {
+                if (position < termList.size() - 1) {
                     position++;
                     tvPosition.setText(String.format("%d/%d", position + 1, termList.size()));
                     tvFront.setText(termList.get(position).getTerm());
@@ -59,7 +59,7 @@ public class FlashcardActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position>0) {
+                if (position > 0) {
                     position--;
                     tvPosition.setText(String.format("%d/%d", position + 1, termList.size()));
                     tvFront.setText(termList.get(position).getTerm());
@@ -67,7 +67,7 @@ public class FlashcardActivity extends AppCompatActivity {
                 }
             }
         });
-        ((ImageButton) findViewById(R.id.close_button_3)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.close_button_3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

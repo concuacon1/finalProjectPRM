@@ -14,10 +14,11 @@ import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.R;
 
 public class StartTestActivity extends AppCompatActivity {
-    private TextView tvNumberOfQuestionStt, tvParticipants;
-    private ImageButton backBtn;
     TermController termController;
     StudySetController studySetController;
+    private TextView tvNumberOfQuestionStt, tvParticipants;
+    private ImageButton backBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,7 @@ public class StartTestActivity extends AppCompatActivity {
         tvNumberOfQuestionStt = findViewById(R.id.tv_numberOfQuestionStt);
         tvParticipants = findViewById(R.id.tv_participants);
 
-        backBtn=findViewById(R.id.btn_back_start_test);
+        backBtn = findViewById(R.id.btn_back_start_test);
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetID1");
         termController.listAllTerms(studySetId, studySet -> {
@@ -39,11 +40,11 @@ public class StartTestActivity extends AppCompatActivity {
             });
         });
 
-        ((Button)findViewById(R.id.btn_start)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartTestActivity.this,TestActivity.class);
-                intent.putExtra("studySetID2",studySetId);
+                Intent intent = new Intent(StartTestActivity.this, TestActivity.class);
+                intent.putExtra("studySetID2", studySetId);
                 startActivity(intent);
             }
         });
@@ -51,7 +52,7 @@ public class StartTestActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartTestActivity.this,StudySetActivity.class);
+                Intent intent = new Intent(StartTestActivity.this, StudySetActivity.class);
                 startActivity(intent);
             }
         });

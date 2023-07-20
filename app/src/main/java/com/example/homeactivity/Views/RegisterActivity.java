@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
+    Context context;
     private FirebaseAuth mAuth;
     private EditText editTextUsername;
     private EditText editTextEmail;
@@ -26,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button buttonRegister;
     private ImageButton btnClose;
     private AccountController accountController;
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                if (username.isEmpty() || email.isEmpty() || password.isEmpty()||fullName.isEmpty()) {
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty() || fullName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "\n" +
                                     "Please enter full information",
                             Toast.LENGTH_SHORT).show();
@@ -72,15 +72,16 @@ public class RegisterActivity extends AppCompatActivity {
         account.setNickname(username);
         account.setEmail(email);
         account.setPassword(password);
-        accountController.createAccount(account,s -> {
-            Toast.makeText(this,s, Toast.LENGTH_SHORT).show();
-        }, e->{
-            Toast.makeText(this,e, Toast.LENGTH_SHORT).show();
+        accountController.createAccount(account, s -> {
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        }, e -> {
+            Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
         });
         Toast.makeText(this, "\n" +
                 "Sign Up Success!", Toast.LENGTH_SHORT).show();
         finish();
     }
+
     private void sendEmailVerification() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {

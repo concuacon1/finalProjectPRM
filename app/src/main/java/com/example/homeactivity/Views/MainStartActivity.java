@@ -47,14 +47,14 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
         popularView = findViewById(R.id.popularView);
         first_word = findViewById(R.id.first_word);
         name_user = findViewById(R.id.name_user);
-        ((Button) findViewById(R.id.btn_create_studyset)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_create_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_course = new Intent(MainStartActivity.this, CreateStudySetActivity.class);
                 startActivity(intent_course);
             }
         });
-        ((Button) findViewById(R.id.btn_view_studyset)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_view_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentProfile = new Intent(MainStartActivity.this, UserProfileActivity.class);
@@ -124,7 +124,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
     public void updateNavHeader() {
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView first_word_name = headerView.findViewById(R.id.tv_firstword);
         TextView full_name = headerView.findViewById(R.id.tv_fullname);

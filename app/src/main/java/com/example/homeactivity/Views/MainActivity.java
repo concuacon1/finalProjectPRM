@@ -13,15 +13,11 @@ import com.example.homeactivity.R;
 
 
 public class MainActivity extends AppCompatActivity {
-    public class RegisterActivity extends AppCompatActivity {
-        // ...
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((Button) findViewById(R.id.btn_test)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StartTestActivity.class);
@@ -31,13 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         StudySetController services = new StudySetController();
         services.findStudySet("id", studySet -> {
-            if (studySet !=null) {
-                Log.i("Debug",studySet.getId());
+            if (studySet != null) {
+                Log.i("Debug", studySet.getId());
             }
         });
 
 
+    }
 
+    public class RegisterActivity extends AppCompatActivity {
+        // ...
     }
 
 }

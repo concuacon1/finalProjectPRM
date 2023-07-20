@@ -19,4 +19,5 @@
     <color name="text_main">#076338</color>
     <color name="text_top">#95D3CF</color>
     <color name="rounded_card">#BEF1EE</color>
+    <color name="link">#22A1F6</color>
 </resources>

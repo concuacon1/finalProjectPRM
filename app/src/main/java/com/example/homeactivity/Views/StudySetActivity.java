@@ -1,8 +1,11 @@
 package com.example.homeactivity.Views;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,11 +38,11 @@ public class StudySetActivity extends AppCompatActivity {
     private TextView tvTermsNumber;
     private StudySetController studySetController;
     private TermController termController;
-    private TextView tvTitle;
+    private TextView tvTitle, tvDetail;
     private TextView tvAuthor;
     private Button btnEdit;
     private Button btnDelete;
-
+    Context context;
     LoadingDialog loadingDialog;
 
     @Override
@@ -52,8 +55,10 @@ public class StudySetActivity extends AppCompatActivity {
         rcvTerm = findViewById(R.id.rcv_list_term);
         btnEdit = findViewById(R.id.btnEdit);
         btnDelete = findViewById(R.id.btnDelete);
+        tvDetail = findViewById(R.id.tv_detail);
         loadingDialog = new LoadingDialog(this);
         loadingDialog.startLoadingDialog();
+        context = this;
 
         findViewById(R.id.btn_back_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,17 +83,30 @@ public class StudySetActivity extends AppCompatActivity {
             tvTitle.setText(studySet.getTitle());
             AccountController controller = new AccountController();
             controller.findAccount(studySet.getUserId(), account -> {
-                tvAuthor.setText(account.getNickname());
+                SpannableString content = new SpannableString(account.getNickname());
+                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                tvAuthor.setText(content);
+                tvAuthor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent(context, UserProfileActivity.class);
+                        profileIntent.putExtra("ID",account.getId());
+                        context.startActivity(profileIntent);
+                    }
+                });
                 loadingDialog.dismissDialog();
             });
             if (!Objects.equals(sessionManager.getId(), studySet.getUserId())) {
                 btnEdit.setVisibility(View.INVISIBLE);
                 btnDelete.setVisibility(View.INVISIBLE);
+                tvDetail.setVisibility(View.VISIBLE);
             } else {
                 btnEdit.setVisibility(View.VISIBLE);
                 btnDelete.setVisibility(View.VISIBLE);
+                tvDetail.setVisibility(View.INVISIBLE);
             }
         });
+
 
         termController.listAllTerms(studySetId, termList -> {
             termAdapter.SetData(termList);

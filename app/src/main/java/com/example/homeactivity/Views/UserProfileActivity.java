@@ -18,7 +18,7 @@ public class UserProfileActivity extends AppCompatActivity {
     MainPageAdapter mainStartAdapter;
     private AccountController accountController;
     private StudySetController studySetController;
-    private TextView name, nick_name, email, nameFirstWord;
+    private TextView name, nick_name, email, nameFirstWord, headerStudySet;
     private RecyclerView rvMyStudySet;
     LoadingDialog loadingDialog;
 
@@ -30,6 +30,7 @@ public class UserProfileActivity extends AppCompatActivity {
         nick_name = findViewById(R.id.nickname_user);
         email = findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirst);
+        headerStudySet = findViewById(R.id.tv_header_studyset);
         rvMyStudySet = findViewById(R.id.rv_mystudyset);
         loadingDialog = new LoadingDialog(this);
 
@@ -44,17 +45,19 @@ public class UserProfileActivity extends AppCompatActivity {
 
         String id = getIntent().getStringExtra("ID");
         accountController = new AccountController();
+
         accountController.findAccount(id, account -> {
             name.setText(account.getName());
             nick_name.setText(account.getNickname());
             email.setText(account.getEmail());
             nameFirstWord.setText(String.valueOf(account.getNickname().charAt(0)));
+            headerStudySet.setText(account.getNickname() + "'s Study Set");
         });
 
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rvMyStudySet.setLayoutManager(linearLayoutManager_popular);
         studySetController = new StudySetController();
-        studySetController.listAllStudySets(termList -> {
+        studySetController.listAllStudySets(id, termList -> {
             mainStartAdapter = new MainPageAdapter(termList);
             rvMyStudySet.setAdapter(mainStartAdapter);
             loadingDialog.dismissDialog();

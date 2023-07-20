@@ -21,6 +21,7 @@ import com.example.homeactivity.Controllers.TestController;
 import com.example.homeactivity.Models.Question;
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.QuestionAdapter;
 import com.example.homeactivity.Utils.SessionManager;
 
@@ -43,10 +44,14 @@ public class TestActivity extends AppCompatActivity {
     private List<Term> listTerm;
     private List<Question> listOfQuestion;
 
+    LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
 
         Intent intent = getIntent();
         studySetId = intent.getStringExtra("studySetID2");
@@ -84,6 +89,7 @@ public class TestActivity extends AppCompatActivity {
             listOfQuestion = generateQuestions(listTerm);
             QuestionAdapter questionAdapter = new QuestionAdapter(listOfQuestion);
             questionView.setAdapter(questionAdapter);
+            loadingDialog.dismissDialog();
         });
     }
 

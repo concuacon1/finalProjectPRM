@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.MainPageAdapter;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -18,7 +19,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private AccountController accountController;
     private StudySetController studySetController;
     private TextView name, nick_name, email, nameFirstWord;
-    private RecyclerView myrv;
+    private RecyclerView rvMyStudySet;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,8 @@ public class UserProfileActivity extends AppCompatActivity {
         nick_name = findViewById(R.id.nickname_user);
         email = findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirst);
-        myrv = findViewById(R.id.rv_mystudyset);
+        rvMyStudySet = findViewById(R.id.rv_mystudyset);
+        loadingDialog = new LoadingDialog(this);
 
         findViewById(R.id.btn_back_userprofile).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +39,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        loadingDialog.startLoadingDialog();
 
         String id = getIntent().getStringExtra("ID");
         accountController = new AccountController();
@@ -47,11 +52,12 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        myrv.setLayoutManager(linearLayoutManager_popular);
+        rvMyStudySet.setLayoutManager(linearLayoutManager_popular);
         studySetController = new StudySetController();
         studySetController.listAllStudySets(termList -> {
             mainStartAdapter = new MainPageAdapter(termList);
-            myrv.setAdapter(mainStartAdapter);
+            rvMyStudySet.setAdapter(mainStartAdapter);
+            loadingDialog.dismissDialog();
         });
 
 

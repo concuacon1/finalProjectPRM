@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homeactivity.Controllers.TestController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.SessionManager;
 import com.example.homeactivity.Utils.TestHistoryAdapter;
 
@@ -23,6 +24,8 @@ public class TestHistoryActivity extends AppCompatActivity {
     TestHistoryAdapter adapter;
     TextView tvResult;
 
+    LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +33,13 @@ public class TestHistoryActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back_create_studyset2);
         rvHistoryList = findViewById(R.id.rc_test_history);
         tvResult = findViewById(R.id.tv_history_result);
+        loadingDialog = new LoadingDialog(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvHistoryList.setLayoutManager(layoutManager);
         testController = new TestController();
 
+        loadingDialog.startLoadingDialog();
         SessionManager sessionManager = new SessionManager(this);
 
         testController.getTestResultsForAccount(sessionManager.getId(), testResults -> {
@@ -42,8 +47,10 @@ public class TestHistoryActivity extends AppCompatActivity {
                 adapter = new TestHistoryAdapter(testResults);
                 rvHistoryList.setAdapter(adapter);
                 tvResult.setVisibility(View.INVISIBLE);
+                loadingDialog.dismissDialog();
             } else {
                 tvResult.setVisibility(View.VISIBLE);
+                loadingDialog.dismissDialog();
             }
 
         });

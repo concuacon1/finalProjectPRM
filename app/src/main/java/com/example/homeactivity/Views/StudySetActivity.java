@@ -19,6 +19,7 @@ import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.SessionManager;
 import com.example.homeactivity.Utils.TermAdapter;
 
@@ -39,6 +40,8 @@ public class StudySetActivity extends AppCompatActivity {
     private Button btnEdit;
     private Button btnDelete;
 
+    LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,9 @@ public class StudySetActivity extends AppCompatActivity {
         rcvTerm = findViewById(R.id.rcv_list_term);
         btnEdit = findViewById(R.id.btnEdit);
         btnDelete = findViewById(R.id.btnDelete);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
+
         findViewById(R.id.btn_back_studyset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +79,7 @@ public class StudySetActivity extends AppCompatActivity {
             AccountController controller = new AccountController();
             controller.findAccount(studySet.getUserId(), account -> {
                 tvAuthor.setText(account.getNickname());
+                loadingDialog.dismissDialog();
             });
             if (!Objects.equals(sessionManager.getId(), studySet.getUserId())) {
                 btnEdit.setVisibility(View.INVISIBLE);

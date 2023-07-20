@@ -2,13 +2,10 @@ package com.example.homeactivity.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,13 +25,11 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     TextView tvHello;
-    Button btnCreateStudySet;
     RecyclerView rvHomePage;
     SessionManager sessionManager;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     androidx.appcompat.widget.Toolbar toolbar;
-
     StudySetController studySetController;
     MainPageAdapter adapter;
 
@@ -75,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        updateNavHeader();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);

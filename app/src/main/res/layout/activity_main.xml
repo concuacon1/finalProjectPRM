@@ -14,7 +14,7 @@
         android:layout_gravity="start"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:headerLayout="@layout/header"
+        app:headerLayout="@layout/header_layout"
         app:menu="@menu/main_menu" />
 
 

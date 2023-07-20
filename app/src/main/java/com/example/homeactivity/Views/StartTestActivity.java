@@ -12,17 +12,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 
 public class StartTestActivity extends AppCompatActivity {
     TermController termController;
     StudySetController studySetController;
     private TextView tvNumberOfQuestionStt, tvParticipants;
     private ImageButton backBtn;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_test);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
 
         termController = new TermController();
         studySetController = new StudySetController();
@@ -33,10 +37,12 @@ public class StartTestActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.btn_back_start_test);
         Intent intent = getIntent();
         String studySetId = intent.getStringExtra("studySetID1");
+
         termController.listAllTerms(studySetId, studySet -> {
             tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
             studySetController.findStudySet(studySetId, studySet1 -> {
                 tvParticipants.setText(String.valueOf(studySet1.getNumberOfParticipants()));
+                loadingDialog.dismissDialog();
             });
         });
 
@@ -56,10 +62,6 @@ public class StartTestActivity extends AppCompatActivity {
                 intent.putExtra("studySetId", studySetId);
                 startActivity(intent);
             }
-        });
-
-        termController.listAllTerms(studySetId, studySet -> {
-            tvNumberOfQuestionStt.setText(String.valueOf(studySet.size()));
         });
 
     }

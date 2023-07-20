@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -121,12 +119,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         studySet.setUserId(sessionManager.getId());
         if (studySet.getTitle() == null || studySet.getTitle().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
-            loadingDialog.dismisssDialog();
+            loadingDialog.dismissDialog();
             return;
         }
         if (studySet.getDescription() == null || studySet.getDescription().isEmpty()) {
             Toast.makeText(CreateStudySetActivity.this, "Empty description", Toast.LENGTH_SHORT).show();
-            loadingDialog.dismisssDialog();
+            loadingDialog.dismissDialog();
             return;
         }
         List<Term> termList = createTermAdapter.GetData();
@@ -134,12 +132,12 @@ public class CreateStudySetActivity extends AppCompatActivity {
         ) {
             if (t.getTerm() == null || t.getTerm().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty term", Toast.LENGTH_SHORT).show();
-                loadingDialog.dismisssDialog();
+                loadingDialog.dismissDialog();
                 return;
             }
             if (t.getDefinition() == null || t.getDefinition().isEmpty()) {
                 Toast.makeText(CreateStudySetActivity.this, "Empty definition", Toast.LENGTH_SHORT).show();
-                loadingDialog.dismisssDialog();
+                loadingDialog.dismissDialog();
                 return;
             }
         }
@@ -152,11 +150,11 @@ public class CreateStudySetActivity extends AppCompatActivity {
             termController.createTerms(termList);
         } catch (Exception e) {
             Toast.makeText(CreateStudySetActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-            loadingDialog.dismisssDialog();
+            loadingDialog.dismissDialog();
             return;
         }
 
-        loadingDialog.dismisssDialog();
+        loadingDialog.dismissDialog();
 
         Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
         intent.putExtra("studySetId", studySet.getId());
@@ -225,7 +223,7 @@ public class CreateStudySetActivity extends AppCompatActivity {
                         Toast.makeText(CreateStudySetActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 }
-                loadingDialog.dismisssDialog();
+                loadingDialog.dismissDialog();
                 Intent intent = new Intent(CreateStudySetActivity.this, StudySetActivity.class);
                 intent.putExtra("studySetId", studySet.getId());
                 startActivity(intent);

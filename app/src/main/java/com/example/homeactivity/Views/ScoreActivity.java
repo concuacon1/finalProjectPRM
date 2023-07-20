@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homeactivity.Controllers.TermController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 
 public class ScoreActivity extends AppCompatActivity {
     TermController termController;
@@ -18,6 +19,7 @@ public class ScoreActivity extends AppCompatActivity {
     private TextView tvScore, tvCorrect, tvWrong, tvUncheck, tvNumberOfQues;
     private Button btnReAttempt;
     private ImageButton btnBack, btnHome;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class ScoreActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         btnHome = findViewById(R.id.btn_back_to_home);
         termController = new TermController();
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
 
         Intent intent = getIntent();
         int correctAns = intent.getIntExtra("correctAns", 0);
@@ -74,6 +78,8 @@ public class ScoreActivity extends AppCompatActivity {
         });
 
         setData(correctAns, wrongAns, uncheckAns, finalScore);
+
+        loadingDialog.dismissDialog();
     }
 
     private void setData(int correctAns, int wrongAns, int uncheckAns, float finalScore) {

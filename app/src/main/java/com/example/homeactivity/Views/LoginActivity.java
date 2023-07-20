@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 import com.example.homeactivity.Utils.SessionManager;
 
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private AccountController accountController;
     private SessionManager sessionManager;
+    LoadingDialog loadingDialog;
     Context context;
 
     @Override
@@ -34,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         accountController = new AccountController();
         sessionManager = new SessionManager(this);
+        loadingDialog = new LoadingDialog(this);
         context = this;
+
         if (sessionManager.isLoggedIn()) {
             redirectToHome();
         }
@@ -43,15 +47,18 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 String username = editTextUsernameEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
                 accountController.login(username, password, account -> {
                     if (account == null) {
                         Toast.makeText(LoginActivity.this, "Username or password incorrect", Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
                     } else {
                         Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                         sessionManager.saveSession(account.getNickname(), account.getEmail(), account.getId());
                         redirectToHome();
+                        loadingDialog.dismissDialog();
                         finish();
                     }
                 });

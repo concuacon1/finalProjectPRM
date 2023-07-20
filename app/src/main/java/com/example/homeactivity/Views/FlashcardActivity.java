@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homeactivity.Models.Term;
 import com.example.homeactivity.R;
+import com.example.homeactivity.Utils.LoadingDialog;
 
 import java.util.List;
 
@@ -29,15 +30,20 @@ public class FlashcardActivity extends AppCompatActivity {
     private TextView tvBack;
     private TextView tvPosition;
     private int position;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.startLoadingDialog();
+
         findViews();
         loadAnimations();
         changeCameraDistance();
         loadData();
+
         position = 0;
         findViewById(R.id.back_btn_FlashCard).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +80,7 @@ public class FlashcardActivity extends AppCompatActivity {
             }
         });
 
+        loadingDialog.dismissDialog();
     }
 
     private void changeCameraDistance() {

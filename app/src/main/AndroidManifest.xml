@@ -45,9 +45,6 @@
             android:name=".Views.StudySetActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.ResetPasswordActivity"
-            android:exported="false" />
-        <activity
             android:name=".Views.LoginActivity"
             android:exported="true">
             <intent-filter>

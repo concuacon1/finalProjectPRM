@@ -27,12 +27,12 @@ import com.example.homeactivity.Utils.SessionManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     String studySetId;
-    int correctAns, wrongAns, uncheckAns, finalScore;
+    int correctAns, wrongAns, uncheckAns;
+    float finalScore;
     private RecyclerView questionView;
     private TextView tvNumberOfQuestion, tvStudyName, tvCurrentQuestion;
     private Button submitB;
@@ -175,17 +175,24 @@ public class TestActivity extends AppCompatActivity {
                 correctAns = 0;
                 wrongAns = 0;
                 uncheckAns = 0;
-                for (int i = 0; i < listOfQuestion.size(); i++) {
-                    if (listOfQuestion.get(i).getSelectedAns() == null) {
+                int totalQuestions = listOfQuestion.size();
+
+                for (Question question : listOfQuestion) {
+                    String selectedAnswer = question.getSelectedAns();
+                    String correctAnswer = question.getCorrectAns();
+
+                    if (selectedAnswer == null) {
                         uncheckAns++;
+                    } else if (selectedAnswer.equals(correctAnswer)) {
+                        correctAns++;
                     } else {
-                        if (Objects.equals(listOfQuestion.get(i).getSelectedAns(), listOfQuestion.get(i).getCorrectAns())) {
-                            correctAns++;
-                        } else wrongAns++;
+                        wrongAns++;
                     }
                 }
-                if (listOfQuestion.size() > 0) {
-                    finalScore = (correctAns * 100) / listOfQuestion.size();
+
+                if (totalQuestions > 0) {
+                    finalScore = (float) (correctAns * 100) / totalQuestions;
+
                 }
                 submitTest();
             }
@@ -226,6 +233,7 @@ public class TestActivity extends AppCompatActivity {
                 intent.putExtra("uncheckAns", uncheckAns);
                 intent.putExtra("finalScore", finalScore);
                 intent.putExtra("studySetId", studySetId);
+
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
 

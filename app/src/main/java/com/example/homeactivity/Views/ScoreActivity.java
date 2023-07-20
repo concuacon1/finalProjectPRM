@@ -37,7 +37,8 @@ public class ScoreActivity extends AppCompatActivity {
         int correctAns = intent.getIntExtra("correctAns", 0);
         int wrongAns = intent.getIntExtra("wrongAns", 0);
         int uncheckAns = intent.getIntExtra("uncheckAns", 0);
-        int finalScore = intent.getIntExtra("finalScore", 0);
+        float finalScore = intent.getFloatExtra("finalScore", 0);
+
         String studySetId = intent.getStringExtra("studySetId");
         termController.listAllTerms(String.valueOf(studySetId), studySet -> {
             tvNumberOfQues.setText(String.valueOf(studySet.size()));
@@ -47,6 +48,7 @@ public class ScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScoreActivity.this, StartTestActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra("studySetID1", studySetId);
                 startActivity(intent);
             }
@@ -74,11 +76,11 @@ public class ScoreActivity extends AppCompatActivity {
         setData(correctAns, wrongAns, uncheckAns, finalScore);
     }
 
-    private void setData(int correctAns, int wrongAns, int uncheckAns, int finalScore) {
+    private void setData(int correctAns, int wrongAns, int uncheckAns, float finalScore) {
         tvCorrect.setText(String.valueOf(correctAns));
         tvWrong.setText(String.valueOf(wrongAns));
         tvUncheck.setText(String.valueOf(uncheckAns));
-        tvScore.setText(String.valueOf(finalScore));
+        tvScore.setText(String.format("%.1f", finalScore) + "%");
     }
 
 

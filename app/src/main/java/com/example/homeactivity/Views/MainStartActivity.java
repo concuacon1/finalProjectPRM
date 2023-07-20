@@ -115,6 +115,7 @@ public class MainStartActivity extends AppCompatActivity implements NavigationVi
 
         if (item.getItemId() == R.id.nav_history) {
             Intent intent_history = new Intent(MainStartActivity.this, TestHistoryActivity.class);
+            sessionManager.clearSession();
             startActivity(intent_history);
         }
 

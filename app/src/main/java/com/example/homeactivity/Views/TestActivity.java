@@ -226,11 +226,19 @@ public class TestActivity extends AppCompatActivity {
                 intent.putExtra("uncheckAns", uncheckAns);
                 intent.putExtra("finalScore", finalScore);
                 intent.putExtra("studySetId", studySetId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
 
                 TestActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Prevent the user from clicking the back button by leaving this method empty
+        // If you don't call super.onBackPressed(), the default back button behavior is disabled
+        // and nothing will happen when the user presses the back button.
     }
 
 }

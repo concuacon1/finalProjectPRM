@@ -155,6 +155,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             tvResult.setVisibility(View.INVISIBLE);
         });
+        searchView.clearFocus();
     }
 
 

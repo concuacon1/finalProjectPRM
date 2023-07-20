@@ -59,7 +59,8 @@ public class TestHistoryAdapter extends RecyclerView.Adapter<TestHistoryAdapter.
         public void setData(TestResult testResult) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             String time = dateFormat.format(testResult.getTimeTest());
-            tvHistory.setText("You've done " + testResult.getStudyTitle() + " at " + time);
+            String formatScore = String.format("%.1f", testResult.getScore());
+            tvHistory.setText("You've done " + testResult.getStudyTitle() + " at " + time + " and got " + formatScore + " score.");
 
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override

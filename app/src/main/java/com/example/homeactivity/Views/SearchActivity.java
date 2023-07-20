@@ -55,15 +55,14 @@ public class SearchActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        toolbar.setNavigationIcon(R.drawable.ic_left);  //your icon
+        toolbar.setNavigationIcon(R.drawable.ic_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MainStartActivity.class);
-                context.startActivity(intent);
+                onBackPressed();
             }
         });
     }
@@ -79,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // Customize the search view
         searchView.setIconifiedByDefault(true); // Set to true for iconified view by default
-        searchView.setSubmitButtonEnabled(true); // Disable submit button
+        searchView.setSubmitButtonEnabled(true); // Enable submit button
 
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));

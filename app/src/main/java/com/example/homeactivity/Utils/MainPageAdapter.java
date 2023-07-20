@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.R;
 import com.example.homeactivity.Views.CreateStudySetActivity;
+import com.example.homeactivity.Views.StudySetActivity;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +65,8 @@ public class MainPageAdapter extends RecyclerView.Adapter<MainPageAdapter.MainPa
             btnJoinNow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, CreateStudySetActivity.class);
+                    Intent intent = new Intent(context, StudySetActivity.class);
+                    intent.putExtra("studySetId", studySet.getId());
                     context.startActivity(intent);
                 }
             });

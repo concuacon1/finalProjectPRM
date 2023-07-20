@@ -53,6 +53,7 @@ public class StartTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartTestActivity.this, StudySetActivity.class);
+                intent.putExtra("studySetId", studySetId);
                 startActivity(intent);
             }
         });

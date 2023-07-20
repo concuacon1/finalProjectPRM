@@ -1,6 +1,7 @@
 package com.example.homeactivity.Views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,14 +39,15 @@ public class TestHistoryActivity extends AppCompatActivity {
 
         testController.getTestResultsForAccount(sessionManager.getId(), testResults -> {
             if (testResults.size() > 0) {
-                tvResult.setVisibility(View.INVISIBLE);
                 adapter = new TestHistoryAdapter(testResults);
                 rvHistoryList.setAdapter(adapter);
+                tvResult.setVisibility(View.INVISIBLE);
             } else {
                 tvResult.setVisibility(View.VISIBLE);
             }
 
         });
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

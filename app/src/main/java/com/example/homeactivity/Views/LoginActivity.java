@@ -16,33 +16,34 @@ import com.example.homeactivity.Utils.SessionManager;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText editTextUsername;
+
     private EditText editTextPassword;
-    private EditText editTextEmail;
+    private EditText editTextUsernameEmail;
     private Button buttonLogin;
     private AccountController accountController;
     private SessionManager sessionManager;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextUsernameEmail = findViewById(R.id.editTextUsernameEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         accountController = new AccountController();
         sessionManager = new SessionManager(this);
+        context = this;
         if (sessionManager.isLoggedIn()) {
-
             redirectToHome();
         }
-        buttonLogin.setOnClickListener(v -> loginUser());
-        Context context = this;
+
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = editTextUsername.getText().toString();
+                String username = editTextUsernameEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
                 accountController.login(username, password, account -> {
                     if (account == null) {
@@ -50,8 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                         sessionManager.saveSession(account.getNickname(), account.getEmail(), account.getId());
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startActivity(intent);
+                        redirectToHome();
                         finish();
                     }
                 });
@@ -65,21 +65,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void redirectToHome() {
-
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
     }
 
-    private void loginUser() {
-        String emailOrUsername = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString();
-
-        if (emailOrUsername.isEmpty()) {
-            Toast.makeText(this, "Please enter your email address or username", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show();
-        }
 
         // Phương thức xử lý khi người dùng nhấp vào "Forgot Password?"
 //    public void onForgotPasswordClick(View view) {
@@ -124,4 +113,3 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    }
     }
-}

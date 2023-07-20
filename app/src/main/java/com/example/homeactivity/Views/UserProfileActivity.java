@@ -2,8 +2,6 @@ package com.example.homeactivity.Views;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Controllers.StudySetController;
 import com.example.homeactivity.R;
-import com.example.homeactivity.Utils.MainStartAdapter;
+import com.example.homeactivity.Utils.MainPageAdapter;
 
 public class UserProfileActivity extends AppCompatActivity {
-    MainStartAdapter mainStartAdapter;
-    private Button update_btn;
+    MainPageAdapter mainStartAdapter;
     private AccountController accountController;
     private StudySetController studySetController;
     private TextView name, nick_name, email, nameFirstWord;
@@ -32,12 +29,14 @@ public class UserProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.email_user);
         nameFirstWord = findViewById(R.id.nameFirst);
         myrv = findViewById(R.id.rv_mystudyset);
+
         findViewById(R.id.btn_back_userprofile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
         String id = getIntent().getStringExtra("ID");
         accountController = new AccountController();
         accountController.findAccount(id, account -> {
@@ -46,11 +45,12 @@ public class UserProfileActivity extends AppCompatActivity {
             email.setText(account.getEmail());
             nameFirstWord.setText(String.valueOf(account.getNickname().charAt(0)));
         });
+
         LinearLayoutManager linearLayoutManager_popular = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         myrv.setLayoutManager(linearLayoutManager_popular);
         studySetController = new StudySetController();
         studySetController.listAllStudySets(termList -> {
-            mainStartAdapter = new MainStartAdapter(termList, this);
+            mainStartAdapter = new MainPageAdapter(termList);
             myrv.setAdapter(mainStartAdapter);
         });
 

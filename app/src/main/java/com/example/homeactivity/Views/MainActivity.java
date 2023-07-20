@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /*---------------------Navigation------------------------*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
@@ -74,7 +75,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        updateNavHeader();
+
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
     }
 
     @Override
@@ -98,12 +104,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (item.getItemId() == R.id.nav_logout) {
             Intent intent_logout = new Intent(MainActivity.this, LoginActivity.class);
+            sessionManager.clearSession();
             startActivity(intent_logout);
         }
 
         if (item.getItemId() == R.id.nav_history) {
             Intent intent_history = new Intent(MainActivity.this, TestHistoryActivity.class);
-            sessionManager.clearSession();
             startActivity(intent_history);
         }
 

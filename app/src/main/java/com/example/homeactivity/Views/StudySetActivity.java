@@ -39,7 +39,7 @@ public class StudySetActivity extends AppCompatActivity {
     private StudySetController studySetController;
     private TermController termController;
     private TextView tvTitle, tvDetail;
-    private TextView tvAuthor;
+    private TextView tvAuthor, avatar;
     private Button btnEdit;
     private Button btnDelete;
     Context context;
@@ -56,6 +56,7 @@ public class StudySetActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btnEdit);
         btnDelete = findViewById(R.id.btnDelete);
         tvDetail = findViewById(R.id.tv_detail);
+        avatar = findViewById(R.id.tv_avatar);
         loadingDialog = new LoadingDialog(this);
         loadingDialog.startLoadingDialog();
         context = this;
@@ -86,6 +87,7 @@ public class StudySetActivity extends AppCompatActivity {
                 SpannableString content = new SpannableString(account.getNickname());
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                 tvAuthor.setText(content);
+                avatar.setText(String.valueOf(account.getNickname().charAt(0)));
                 tvAuthor.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

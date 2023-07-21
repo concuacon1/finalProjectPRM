@@ -13,14 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homeactivity.Controllers.AccountController;
 import com.example.homeactivity.Models.Account;
 import com.example.homeactivity.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     Context context;
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     private EditText editTextUsername;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -53,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     "Please enter full information",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    registerUser(username, email, password);
+                    registerUser(username, email, password, fullName);
                 }
             }
         });
@@ -66,12 +62,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void registerUser(String username, String email, String password) {
+    private void registerUser(String username, String email, String password, String fullname) {
         accountController = new AccountController();
         Account account = new Account();
         account.setNickname(username);
         account.setEmail(email);
         account.setPassword(password);
+        account.setName(fullname);
         accountController.createAccount(account, s -> {
             Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         }, e -> {
@@ -82,20 +79,20 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    private void sendEmailVerification() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "Vui lòng kiểm tra email để xác thực tài khoản", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Lỗi gửi email xác thực: " + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-    }
+//    private void sendEmailVerification() {
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(Task<Void> task) {
+//                    if (task.isSuccessful()) {
+//                        Toast.makeText(RegisterActivity.this, "Vui lòng kiểm tra email để xác thực tài khoản", Toast.LENGTH_LONG).show();
+//                    } else {
+//                        Toast.makeText(RegisterActivity.this, "Lỗi gửi email xác thực: " + task.getException(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//        }
+//    }
 
 }

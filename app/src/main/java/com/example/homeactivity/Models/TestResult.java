@@ -5,7 +5,6 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 
 import java.util.Date;
 
-@IgnoreExtraProperties
 public class TestResult {
     private String userId;
     private String studySetId;

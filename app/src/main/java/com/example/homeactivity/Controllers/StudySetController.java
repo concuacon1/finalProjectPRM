@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.homeactivity.Models.StudySet;
 import com.example.homeactivity.Utils.DatabaseConnector;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -71,10 +72,48 @@ public class StudySetController {
     }
 
     public void deleteStudySet(String studySetId) {
-        connector.deleteDocument(studySetId)
+        WriteBatch batch = connector.getBatch();
+        CollectionReference termsRef = connector.getCollectionReference("Term");
+        Query query = termsRef.whereEqualTo("studySetId", studySetId);
+        query.get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for (DocumentSnapshot termDocument : querySnapshot.getDocuments()) {
+                        batch.delete(termDocument.getReference());
+                    }
+
+                    // Step 2: Delete associated test results using a batched write
+                    CollectionReference testResultsRef = connector.getCollectionReference("Testing");
+                    Query testResultsQuery = testResultsRef.whereEqualTo("studySetId", studySetId);
+                    testResultsQuery.get()
+                            .addOnSuccessListener(testResultsSnapshot -> {
+                                for (DocumentSnapshot testResultDocument : testResultsSnapshot.getDocuments()) {
+                                    batch.delete(testResultDocument.getReference());
+                                }
+
+                                // Step 3: Delete the study set document
+                                connector.deleteDocument("StudySet", studySetId)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // Step 4: Commit the batched write for term, test result, and study set deletion
+                                            batch.commit()
+                                                    .addOnSuccessListener(aVoid1 -> Log.d("FireStoreSuccess", "Batch write succeeded"))
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e("FireStoreError", "Error performing batch write", e);
+                                                        throw new RuntimeException("Failed to delete Study Set, Terms, and Test Results", e);
+                                                    });
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Log.e("FireStoreError", "Error deleting study set", e);
+                                            throw new RuntimeException("Failed to delete Study Set", e);
+                                        });
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FireStoreError", "Error deleting test results", e);
+                                throw new RuntimeException("Failed to delete Test Results", e);
+                            });
+                })
                 .addOnFailureListener(e -> {
-                    Log.e("FireStoreError", e.getMessage());
-                    throw new RuntimeException("Failed to delete Study Set", e);
+                    Log.e("FireStoreError", "Error deleting terms", e);
+                    throw new RuntimeException("Failed to delete Terms", e);
                 });
     }
 

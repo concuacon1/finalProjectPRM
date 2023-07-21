@@ -1,6 +1,7 @@
 package com.example.homeactivity.Utils;
 
 import android.content.Context;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             super(itemView);
             context = itemView.getContext();
             question = itemView.findViewById(R.id.tv_question);
+            question.setMovementMethod(new ScrollingMovementMethod());
             optionA = itemView.findViewById(R.id.optionA);
             optionB = itemView.findViewById(R.id.optionB);
             optionC = itemView.findViewById(R.id.optionC);
